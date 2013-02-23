@@ -440,9 +440,8 @@ In practice, you can do great things in Scala while remaining hazy on the differ
 
 实际上，就是你在区别函数和方法的问题上犯迷糊，你还是可以用Scala来做一些很出色的事情。如果你是一个Scala新手，并且你在google上阅读<a href="https://www.google.com/search?q=difference+scala+function+method">它们的区别</a>，你可能会不是很明白。但是这并不表示你会用不好Scala。它只能说明函数和方法的区别是比较微妙的，如果要解释的话，那么就需要对语言进行深入了解。
 
-
 ## Inheritance
-## <a href="inheritance">继承</a>
+## <a href="inheritance">基本继承</a>
 
 <pre>
 class ScientificCalculator(brand: String) extends Calculator(brand) {

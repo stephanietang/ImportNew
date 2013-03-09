@@ -1,0 +1,6 @@
+# *Understanding Scala Streams through Fibonacci*
+I took a look at Scala Streams tonight (or was that last night? When am I posting this?) and thought I’d share what I learned from Literate Programs and the Scala source code.
+
+# *通过Fibonacci求值理解Scala的Stream*
+
+我今晚（也可能是昨晚？我什么时候发表这篇文字的呢？）看了一下Scala的Stream，因此我想分享一下我从[Literate Programs](http://en.literateprograms.org/Fibonacci_numbers_%28Scala%29)和Scala源代码所学习到的东西。

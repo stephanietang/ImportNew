@@ -3,6 +3,7 @@
 * <a href="#about">关于这个教程</a>
 * <a href="#expression">表达式</a>
 * <a href="#value">值</a>
+* <a href="#variable">变量</a>
 * <a href="#function">函数</a>
 * <a href="#class">类</a>
 * <a href="#inheritance">基本继承</a>
@@ -17,7 +18,7 @@ Some examples will be given as if written in the interpreter, others as if writt
 
 Having an interpreter available makes it easy to explore a problem space.
 
-##<a name="about">关于这个教程</a>
+## <a name="about">关于这个教程</a>
 
 在最初的几个星期里，我们会讲解Scala的基本的语法和概念。然后我们会通过更多的练习来展示这些概念。有些例子是通过解释器里的几行代码来展示的，有些则是通过源码的形式进行展示。
 
@@ -64,7 +65,9 @@ Having an interpreter available makes it easy to explore a problem space.
 ### Think Scala
 
 Scala is not just a nicer Java.  You should learn it with a fresh mind, you will get more out of these classes.
+
 ### 按照Scala的方式思考
+
 Scala 不仅仅是Java的改善。你需要用一个全新的思维方式来学习它，你会从这些课程中学到更多。
 
 
@@ -76,8 +79,8 @@ Start the included <code>sbt console</code>.
 启动内置的<code>sbt console</code>
 
 
-<pre>
-$ sbt console
+<pre class="brush: java; gutter: true">
+$ sbt conole
 
 [...]
 
@@ -91,7 +94,7 @@ scala>
 
 ## Expressions
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> 1 + 1
 res0: Int = 2
 </pre>
@@ -101,19 +104,19 @@ res0 is an automatically created value name given by the interpreter to the resu
 (Almost) everything in Scala is an expression.
 
 ## <a name="expression">表达式</a>
-<pre>
+<pre class="brush: java; gutter: true">
 scala> 1 + 1
 res0: Int = 2
 </pre>
 
-res0是由解释器自动给你的表达式的结果生成的变量名。它的类型是Int，值是2.
+res0是由解释器自动给你的表达式的结果生成的变量名。它的类型是Int，值是2。
 在Scala里（几乎）所有的东西都是一个表达式。
 
-h2(#val). Values
+## Values
 
 You can give the result of an expression a name.
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val two = 1 + 1
 two: Int = 2
 </pre>
@@ -124,11 +127,11 @@ You cannot change the binding to a val.
 
 ## <a name="value">值</a>
 你可以给表达式的结果设定一个名字。
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val two = 1 + 1
 two: Int = 2
 </pre>
-你不可以改变val定义的变量的绑定。
+你不可以改变val变量的绑定。
 
 
 
@@ -136,10 +139,10 @@ two: Int = 2
 
 If you need to change the binding, you can use a <code>var</code> instead
 
-### 变量
+### <a name="variable">变量</a>
 如果你需要改变绑定，你可以使用<code>var</code>来代替。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> var name = "steve"
 name: java.lang.String = steve
 
@@ -154,7 +157,7 @@ You can create functions with def.
 ## <a name="function">函数</a>
 你可以用def来创建函数
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def addOne(m: Int): Int = m + 1
 addOne: (m: Int)Int
 </pre>
@@ -163,7 +166,7 @@ In Scala, you need to specify the type signature for function parameters.  The i
 
 在Scala里，你需要给函数的参数指定类型签名。解释器会回显你指定的类型签名。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val three = addOne(2)
 three: Int = 3
 </pre>
@@ -172,7 +175,7 @@ You can leave off parens on functions with no arguments
 
 对于没有参数的函数，在调用的时候可以省略掉括号
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def three() = 1 + 2
 three: ()Int
 
@@ -190,7 +193,7 @@ You can create anonymous functions.
 ### 匿名函数
 你可以通过下面的方式创建匿名函数
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> (x: Int) => x + 1
 res2: (Int) => Int = <function1>
 </pre>
@@ -199,7 +202,7 @@ This function adds 1 to an Int named x.
 
 这个函数给一个Int型的整数加一。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> res2(1)
 res3: Int = 2
 </pre>
@@ -208,7 +211,7 @@ You can pass anonymous functions around or save them into vals.
 
 你可以把匿名函数作为参数进行传递，或者把它们保存在val中。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val addOne = (x: Int) => x + 1
 addOne: (Int) => Int = <function1>
 
@@ -220,7 +223,7 @@ If your function is made up of many expressions, you can use {} to give yourself
 
 如果你的函数是由多个表达式组成的，你可以把它们写在一对{}里。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def timesTwo(i: Int): Int = {
   println("hello world")
   i * 2
@@ -231,7 +234,7 @@ This is also true of an anonymous function
 
 也可以通过下面的方式来创建一个匿名函数
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> { i: Int =>
   println("hello world")
   i * 2
@@ -249,14 +252,14 @@ You can partially apply a function with an underscore, which gives you another f
 
 ### 部分应用(偏函数)
 
-你可以使用下划线来部分应用一个函数，这样就可以产生一个新的函数。Scala用下划线来表示在不同上下文下的不同内容，不过你可以任务它是一个没有名字的神奇通配符。在`{ _ + 2}`这样的上下文里，它表示一个没有名字的参数。你也可以这样来使用它：
+你可以使用下划线来部分应用一个函数，这样就可以产生一个新的函数。Scala用下划线来表示在不同上下文下的不同内容，不过你可以认为它是一个没有名字的神奇通配符。在`{ _ + 2}`这样的上下文里，它表示一个没有名字的参数。你也可以这样来使用它：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def adder(m: Int, n: Int) = m + n
 adder: (m: Int,n: Int)Int
 </pre>
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val add2 = adder(2, _:Int)
 add2: (Int) => Int = <function1>
 
@@ -277,7 +280,9 @@ Here's an example of a function that lets you build multipliers of two numbers t
 ### Curried functions
 有时候，使用者会先给你的函数传入部分参数，后面再传入其他的参数，这样做是很有用的。
 
-<pre>
+下面的例子中，你可以对两个数进行乘法运算。在第一次调用时，你可以确定哪个是乘数，在第二次调用时，再确定被乘数。
+
+<pre class="brush: java; gutter: true">
 scala> def multiply(m: Int)(n: Int): Int = m * n
 multiply: (m: Int)(n: Int)Int
 </pre>
@@ -286,7 +291,7 @@ You can call it directly with both arguments.
 
 你可以直接把两个参数都传入。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> multiply(2)(3)
 res0: Int = 6
 </pre>
@@ -294,7 +299,7 @@ res0: Int = 6
 You can fill in the first parameter and partially apply the second.
 或者，你也可以先传入第一个参数，然后部分应用第二个参数。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val timesTwo = multiply(2) _
 timesTwo: (Int) => Int = <function1>
 
@@ -306,7 +311,7 @@ You can take any function of multiple arguments and curry it. Let's try with our
 
 你可以把任何有多个参数的函数当作curried function来使用。我们来用之前的<code>adder</code>做个示范。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> (adder _).curried
 res1: (Int) => (Int) => Int = <function1>
 </pre>
@@ -319,7 +324,7 @@ There is a special syntax for methods that can take parameters of a repeated typ
 ###  可变长度的参数
 对于方法，还有一个特别的语法用来接收多个相同类型的参数。对于一组字符串，要对它们应用String的`capitalize`函数，你可以这样写：
 
-<pre>
+<pre class="brush: java; gutter: true">
 def capitalizeAll(args: String*) = {
   args.map { arg =>
     arg.capitalize
@@ -334,7 +339,7 @@ res2: Seq[String] = ArrayBuffer(Rarity, Applejack)
 
 ## <a name="class">类</a>
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class Calculator {
      |   val brand: String = "HP"
      |   def add(m: Int, n: Int): Int = m + n
@@ -353,7 +358,7 @@ res2: String = "HP"
 
 Contained are examples are defining methods with def and fields with val.  methods are just functions that can access the state of the class.
 
-上面的例子中，展示了通过def定义方法已经使用val定义成员变量。方法也是函数，只不过它可以访问类的状态。
+上面的例子中，展示了通过def定义方法以及使用val定义成员变量。方法也是函数，只不过它可以访问类的状态。
 
 
 
@@ -363,9 +368,9 @@ Constructors aren't special methods, they are the code outside of method definit
 
 Constructor并不是特殊的方法，它们是当前类外部的一段代码。我们来扩展一下Calculator的例子，使得它能够接受一个参数，并且使用这个参数来初始化类的内部状态。
 
-<pre>
+<pre class="brush: java; gutter: true">
 class Calculator(brand: String) {
-  /    *
+  /*
    * A constructor.
    */
   val color: String = if (brand == "TI") {
@@ -389,7 +394,7 @@ You can use the constructor to construct an instance:
 
 你可以使用这个constructor来构造一个实例：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val calc = new Calculator("HP")
 calc: Calculator = Calculator@1e64cc4d
 
@@ -414,7 +419,7 @@ Functions and methods are largely interchangeable. Because functions and methods
 函数和方法在很大的程度上是可以相互替代的。因为函数和方法是如此的相似，以至于你可能无法分清你调用的对象是一个方法还是一个函数。当你考虑函数和方法的区别时，你就开始混乱了。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class C {
      |   var acc = 0
      |   def minc = { acc += 1 }
@@ -438,12 +443,12 @@ When you can call one "function" without parentheses but not another, you might 
 
 In practice, you can do great things in Scala while remaining hazy on the difference between methods and functions. If you're new to Scala and read <a href="https://www.google.com/search?q=difference+scala+function+method">explanations of the differences</a>, you might have trouble following them. That doesn't mean you're going to have trouble using Scala. It just means that the difference between functions and methods is subtle enough such that explanations tend to dig into deep parts of the language.
 
-实际上，就是你在区别函数和方法的问题上犯迷糊，你还是可以用Scala来做一些很出色的事情。如果你是一个Scala新手，并且你在google上阅读<a href="https://www.google.com/search?q=difference+scala+function+method">它们的区别</a>，你可能会不是很明白。但是这并不表示你会用不好Scala。它只能说明函数和方法的区别是比较微妙的，如果要解释的话，那么就需要对语言进行深入了解。
+实际上，就算你在区别函数和方法的问题上犯迷糊，你还是可以用Scala来做一些很出色的事情。如果你是一个Scala新手，并且你在google上阅读<a href="https://www.google.com/search?q=difference+scala+function+method">它们的区别</a>，你可能会不是很明白。但是这并不表示你会用不好Scala。它只能说明函数和方法的区别是比较微妙的，如果要解释的话，那么就需要对语言进行深入了解。
 
 ## Inheritance
 ## <a href="inheritance">基本继承</a>
 
-<pre>
+<pre class="brush: java; gutter: true">
 class ScientificCalculator(brand: String) extends Calculator(brand) {
   def log(m: Double, base: Double) = math.log(m) / math.log(base)
 }
@@ -451,13 +456,13 @@ class ScientificCalculator(brand: String) extends Calculator(brand) {
 
 *See Also* Effective Scala points out that a <a href="http://twitter.github.com/effectivescala/#Types%20and%20Generics-Type%20aliases">Type alias</a> is better than <code>extends</code> if the subclass isn't actually different from the superclass. A Tour of Scala describes <a href="http://www.scala-lang.org/node/125">Subclassing</a>.
 
-*参考* 《Effective Scala》中指出<a href="http://twitter.github.com/effectivescala/#Types%20and%20Generics-Type%20aliases">类型别名(Type alias)</a>比<code>extends</code>更好，如果子类和父类并没有什么大的区别的话。《A Tour of Scala》中讲述了<a href="http://www.scala-lang.org/node/125">Subclassing</a>子类化(Subclassing)</a>的技术。
+*参考* 《Effective Scala》中指出，如果子类和父类并没有什么大的区别的话，<a href="http://twitter.github.com/effectivescala/#Types%20and%20Generics-Type%20aliases">类型别名(Type alias)</a>比<code>extends</code>更好。《A Tour of Scala》中讲述了<a href="http://www.scala-lang.org/node/125">子类化(Subclassing)</a>的技术。
 
 ### Overloading methods
 
 ### 重载方法
 
-<pre>
+<pre class="brush: java; gutter: true">
 class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(brand) {
   def log(m: Int): Double = log(m, math.exp(1))
 }
@@ -469,9 +474,9 @@ You can define an <em>abstract class</em>, a class that defines some methods but
 
 ### 抽象方法
 
-你可以定义一个<em>抽象类<em>，抽象类可以定义一些方法，但是不需要实现它们。相反，继承抽象类的子类需要实现这些方法。抽象类是不能被实例化的。
+你可以定义一个<em>抽象类</em>，抽象类可以定义一些方法，但是不需要实现它们。相反，继承抽象类的子类需要实现这些方法。抽象类是不能被实例化的。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> abstract class Shape {
      |   def getArea():Int    // subclass should define this
      | }
@@ -495,10 +500,10 @@ c: Circle = Circle@65c0035b
 
 <code>traits</code> are collections of fields and behaviors that you can extend or mixin to your classes.
 
-## Traits
+## <a name="traits">Traits</a>
 <code>traints</code>表示一系列可以扩展或者混入到你的类里的成员和行为。
 
-<pre>
+<pre class="brush: java; gutter: true">
 trait Car {
   val brand: String
 }
@@ -508,7 +513,7 @@ trait Shiny {
 }
 </pre>
 
-<pre>
+<pre class="brush: java; gutter: true">
 class BMW extends Car {
   val brand = "BMW"
 }
@@ -518,7 +523,7 @@ One class can extend several traits using the <code>with</code> keyword:
 
 通过<code>with</code>关键字，一个类可以扩展多个traint：
 
-<pre>
+<pre class="brush: java; gutter: true">
 class BMW extends Car with Shiny {
   val brand = "BMW"
   val shineRefraction = 12
@@ -538,13 +543,12 @@ class BMW extends Car with Shiny {
 <li>If you need a constructor parameter, use an abstract class. Abstract class constructors can take paramaters; trait constructors can't. For example, you can't say <code>trait t(i: Int) {}</code>; the <code>i</code> parameter is illegal.
 </ul>
 
-<ul>
-  <li>优先使用traint。一个类可以扩展多个traint，但是只能扩展一个抽象类。
-  <li>如果你需要在构造类的时候传入参数的话，那就是用抽象类。抽象类的构造器可以传入参数，trait则不能。例如，你不能这样写<code>trait t(i:Int) {} </code>；参数<code>i</code>是非法的。
+- 优先使用traint。一个类可以扩展多个traint，但是只能扩展一个抽象类。
+- 如果你需要在构造类的时候传入参数的话，那就是用抽象类。抽象类的构造器可以传入参数，trait则不能。例如，你不能这样写<code>trait t(i:Int) {} </code>；参数<code>i</code>是非法的。
 
 You are not the first person to ask this question. See fuller answers at "stackoverflow:Scala traits vs abstract classes":http://stackoverflow.com/questions/1991042/scala-traits-vs-abstract-classes, "Difference between Abstract Class and Trait":http://stackoverflow.com/questions/2005681/difference-between-abstract-class-and-trait, and "Programming in Scala: To trait, or not to trait?":http://www.artima.com/pins1ed/traits.html#12.7
 
-你并不是第一个问这个问题的人。你可以在"stackoverflow:Scala traits vs abstract classes":http://stackoverflow.com/questions/1991042/scala-traits-vs-abstract-classes, "Difference between Abstract Class and Trait":http://stackoverflow.com/questions/2005681/difference-between-abstract-class-and-trait, and "Programming in Scala: To trait, or not to trait?":http://www.artima.com/pins1ed/traits.html#12.7查看更加完整的解释。
+你并不是第一个问这个问题的人。你可以在[《Scala traits vs abstract classes》](http://stackoverflow.com/questions/1991042/scala-traits-vs-abstract-classes), [《Difference between Abstract Class and Trait》](http://stackoverflow.com/questions/2005681/difference-between-abstract-class-and-trait), 和[《Programming in Scala: To trait, or not to trait?》](http://www.artima.com/pins1ed/traits.html#12.7)查看更加完整的解释。
 
 ## Types
 
@@ -554,7 +558,7 @@ Earlier, you saw that we defined a function that took an <code>Int</code> which 
 
 在前面的例子里，你见过我们定义了一个函数，它接收一个<code>Int</code>参数，而Int的类型是Number。函数也可以是泛型的，并且可以作用于任何类型。当你遇到这种情况时，你会看到类型参数是放在方括号里的。下面是一个支持泛型键-值的Cache示例。
 
-<pre>
+<pre class="brush: java; gutter: true">
 trait Cache[K, V] {
   def get(key: K): V
   def put(key: K, value: V)
@@ -566,6 +570,6 @@ Methods can also have type parameters introduced.
 
 方法也可以引入类型参数。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def remove[K](key: K)
 </pre>

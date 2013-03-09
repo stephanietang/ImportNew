@@ -1,3 +1,6 @@
+
+英文原文: [Scala School](http://twitter.github.com/scala_school/basics2.html)，翻译：[ImportNew](http://www.importnew.com) - [朱伟杰](http://www.importnew.com/author/zhuweijie)
+
 This lesson covers:
 * apply
 * objects
@@ -26,7 +29,7 @@ apply methods give you a nice syntactic sugar for when a class or object has one
 
 当一个类或者对象有一个主要的用途的时候，apply方法可以提供一种很好的语法糖。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class Foo {}
 defined class Foo
 
@@ -42,7 +45,7 @@ newFoo: Foo = Foo@5b83f762
 or
 或者
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class Bar {
      |   def apply() = 0
      | }
@@ -67,7 +70,7 @@ Objects are used to hold single instances of a class. Often used for factories.
 
 对象都是用来保持一个类的单个实例。经常在工厂里用到。
 
-<pre>
+<pre class="brush: java; gutter: true">
 object Timer {
   var count = 0
 
@@ -82,7 +85,7 @@ How to use
 
 怎么去使用
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Timer.currentCount()
 res0: Long = 1
 </pre>
@@ -93,7 +96,7 @@ Here is a trivial example that only serves to remove the need to use 'new' to cr
 
 类和对象可以重名。这样的对象被称为“伴随对象（Companion Object）”。我们一般在工厂里使用伴随对象。
 
-<pre>
+<pre class="brush: java; gutter: true">
 class Bar(foo: String)
 
 object Bar {
@@ -102,7 +105,7 @@ object Bar {
 </pre>
 
 
-h2(#fnobj). Functions are Objects
+## Functions are Objects
 
 In Scala, we talk about object-functional programming often.  What does that mean? What is a Function, really?
 
@@ -113,7 +116,7 @@ A Function is a set of traits. Specifically, a function that takes one argument 
 在Scala里，我们经常讨论对象-函数编程。它表示什么呢？函数究竟是什么？
 
 函数是一系列的trait。确切地说，有一个参数的函数是Function1 trait的一个实例。这个trait定义了我们之前学到的`apply()`的语法糖，它允许你像调用函数一样调用对象。
-<pre>
+<pre class="brush: java; gutter: true">
 scala> object addOne extends Function1[Int, Int] {
      |   def apply(m: Int): Int = m + 1
      | }
@@ -141,7 +144,7 @@ Classes can also extend Function and those instances can be called with ().
 
 类也可以继承函数，然后这些类的实例就可以通过()来调用。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class AddOne extends Function1[Int, Int] {
      |   def apply(m: Int): Int = m + 1
      | }
@@ -158,13 +161,13 @@ A nice short-hand for <code>extends Function1[Int, Int]</code> is <code>extends 
 
 `extends Function1[Int,Int]`的一种比较好的简写是`extends (Int => Int)`
 
-<pre>
+<pre class="brush: java; gutter: true">
 class AddOne extends (Int => Int) {
   def apply(m: Int): Int = m + 1
 }
 </pre>
 
-h2(#package). Packages
+## Packages
 
 You can organize your code inside of packages.
 
@@ -172,7 +175,7 @@ You can organize your code inside of packages.
 
 你可以通过包来组织你的代码。
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.example
 </pre>
 
@@ -184,7 +187,7 @@ Values and functions cannot be outside of a class or object.  Objects are a usef
 
 值和函数不能在类和对象外面。对象对于组织静态函数是很有用的。
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.example
 
 object colorHolder {
@@ -197,14 +200,14 @@ Now you can access the members directly
 
 现在你可以直接访问里面的成员
 
-<pre>
+<pre class="brush: java; gutter: true">
 println("the color is: " + com.twitter.example.colorHolder.BLUE)
 </pre>
 
 Notice what the scala repl says when you define this object:
 
 当你在scala repl里定义这个对象时，它会提示什么：
-<pre>
+<pre class="brush: java; gutter: true">
 scala> object colorHolder {
      |   val Blue = "Blue"
      |   val Red = "Red"
@@ -229,7 +232,7 @@ Scala中最有用的一个功能。
 
 对值进行匹配
 
-<pre>
+<pre class="brush: java; gutter: true">
 val times = 1
 
 times match {
@@ -243,7 +246,7 @@ Matching with guards
 
 受保护的匹配
 
-<pre>
+<pre class="brush: java; gutter: true">
 times match {
   case i if i == 1 => "one"
   case i if i == 2 => "two"
@@ -275,7 +278,7 @@ You can use <code>match</code> to handle values of different types differently.
 
 你可以使用`match`来对不同的类型的值进行不同的处理。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def bigger(o: Any): Any = {
   o match {
     case i: Int if i < 0 => i - 1
@@ -299,7 +302,7 @@ Let's classify them according to type.
 
 我们通过它们的类型来进行归类。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def calcType(calc: Calculator) = calc match {
   case calc.brand == "hp" && calc.model == "20B" => "financial"
   case calc.brand == "hp" && calc.model == "48G" => "scientific"
@@ -321,7 +324,7 @@ case classes are used to conveniently store and match on the contents of a class
 case class可以用来方便地存储和匹配类的内容。你不需要用`new`来构造它们。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> case class Calculator(brand: String, model: String)
 defined class Calculator
 
@@ -334,7 +337,7 @@ case classes automatically have equality and nice toString methods based on the 
 
 case class会自动根据传入的参数生成equlity和toString方法。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val hp20b = Calculator("hp", "20b")
 hp20b: Calculator = Calculator(hp,20b)
 
@@ -357,7 +360,7 @@ case classes are designed to be used with pattern matching.  Let's simplify our 
 
 case class的设计就是为了进行模式匹配。我们来通过它简化之前的calculator 归类程序。
 
-<pre>
+<pre class="brush: java; gutter: true">
 val hp20b = Calculator("hp", "20B")
 val hp30b = Calculator("hp", "30B")
 
@@ -373,7 +376,7 @@ Other alternatives for that last match
 
 最后一行的另外一种写法
 
-<pre>
+<pre class="brush: java; gutter: true">
   case Calculator(_, _) => "Calculator of unknown type"
 </pre>
 
@@ -381,7 +384,7 @@ Other alternatives for that last match
 
   或者我们不用把它当作Calculator来处理。
 
-<pre>
+<pre class="brush: java; gutter: true">
   case _ => "Calculator of unknown type"
 </pre>
 
@@ -389,7 +392,7 @@ Other alternatives for that last match
 
   也或者，我们可以用另外的名字来绑定这个匹配。
 
-<pre>
+<pre class="brush: java; gutter: true">
   case c@Calculator(_, _) => "Calculator: %s of unknown type".format(c)
 </pre>
 
@@ -402,7 +405,7 @@ Exceptions are available in Scala via a try-catch-finally syntax that uses patte
 在Scala里，异常的处理是通过一个使用模式匹配的try-catch-finally语法进行处理的。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 try {
   remoteCalculatorService.add(1, 2)
 } catch {
@@ -416,7 +419,7 @@ try {
 
 `try`也是面向表达式的
 
-<pre>
+<pre class="brush: java; gutter: true">
 val result: Int = try {
   remoteCalculatorService.add(1, 2)
 } catch {

@@ -11,7 +11,7 @@ Scala offers  a few powerful abstractions for working with sequences of values. 
 
 For example, suppose you were writing a search engine and a user asked for the 10th document about Scala in a database of 10,0000 HTML documents. In a functional style, you might declare the list of all documents, compute the score for each one, and then pick the 10th item. This might look like something like this:
 
-例如，假如你在编写一个搜索引擎，并且你的用户需要查找在一个包含10,0000个HTML文档的关于Scala的第10个文档。在函数式的语言里，你可能会声明一个包含所有文档的列表，然后分别计算它们的分数，最后获取第10份文档。可能和下面的代码看起来相似：
+例如，假如你在编写一个搜索引擎，并且你的用户需要在一个包含10,0000个HTML文档的数据库里查找关于Scala的第10个文档。在函数式的语言里，你可能会声明一个包含所有文档的列表，然后分别查看每一个文档看看是否是关于Scala，最后获取第10份文档。可能和下面的代码看起来相似：
 
 <pre class="brush: java; gutter: true">
 documents.filter(isAboutScala)(9)
@@ -67,7 +67,7 @@ This nesting of objects is also possible in Java. However, Scala's use of the ap
 
 这种嵌套对象的方式在Java里也是可行的。不过，Scala里使用`apply()`方法（这个我们后面会讨论）意味着嵌套类的cons的方法调用看起来是Stream对象上的方法调用。
 
- **语法糖和apply()方法**
+ **语法糖(Syntactic sugar)和apply()方法**
 
 Recall that a Scala object may define a method apply() like so:
 
@@ -98,7 +98,7 @@ val usingSugar = List(1, 2, 3)
 
 For me, the combination of apply()'s syntactic sugar and nested singleton objects begin to describe the 'scalable language' idea that the Scala literature talks about so frequently. What looks like a method call is really a call to a nested object's apply method, but the syntax reads identically. The end user doesn't need to know if you're talking to a nested singleton object in a library class; it is no different than a standard function call.
 
-对于我而言，apply()的语法糖和嵌套的单例内部对象的组合诠释了Scala文化一直在描述的'可扩展的语言（scalable language）'的观点。一个方法调用实际上是对一个内部对象的方法调用，不过语法上却没有区别。终端用户不需要了解你是否在操作类库中的一个类的嵌套内部对象；因为它和标准的函数调用没有区别。
+对于我而言，apply()的语法糖和嵌套的单例对象的组合很好的诠释了Scala语言的特点。一个方法调用实际上是对一个内部对象的方法调用，不过语法上却没有区别。终端用户不需要了解你是否在操作类库中的一个类的嵌套内部对象；因为它和标准的函数调用没有区别。
 
 But how does Stream's lazy evaluation work?
 

@@ -27,7 +27,7 @@ apply methods give you a nice syntactic sugar for when a class or object has one
 
 ## <a name="apply">apply方法</a>
 
-当一个类或者对象有一个主要的用途的时候，apply方法可以提供一种很好的语法糖。
+当一个类或者对象有一个主要的用途的时候，apply方法可以提供一种很好的语法糖(syntactic sugar)。
 
 <pre class="brush: java; gutter: true">
 scala> class Foo {}
@@ -315,7 +315,7 @@ Wow, that's painful. Thankfully Scala provides some nice tools specifically for 
 
 噢，这样写太麻烦了。幸运的是Scala提供了一些有用的工具来处理这种场景。
 
-h2(#caseclass). Case Classes
+## Case Classes
 
 case classes are used to conveniently store and match on the contents of a class. You can construct them without using new.
 

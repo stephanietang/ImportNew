@@ -1,54 +1,53 @@
----
-prev: basics2.textile
-next: pattern-matching-and-functional-composition.textile
-title: Collections
-layout: post
----
 
 This lesson covers:
 
 * Basic Data Structures
-** "Lists":#Lists
-** "Sets":#Sets
-** "Tuple":#Tuple
-** "Maps":#Maps
+  * "Lists"
+  * "Sets"
+  * "Tuple"
+  * "Maps"
+
 * Functional Combinators
-** "map":#map
-** "foreach":#foreach
-** "filter":#filter
-** "zip":#zip
-** "partition":#partition
-** "find":#find
-** "drop and dropWhile":#drop
-** "foldRight and foldLeft":#fold
-** "flatten":#flatten
-** "flatMap":#flatMap
-** "Generalized functional combinators":#generalized
-** "Map?":#vsMap
+
+  * "map"
+  * "foreach"
+  * "filter"
+  * "zip"
+  * "partition"
+  * "find"
+  * "drop and dropWhile"
+  * "foldRight and foldLeft"
+  * "flatten"
+  * "flatMap"
+  * "Generalized functional combinators"
+  * "Map?"
 
 
 这个章节的内容包含
 
 * 基本数据结构
-** <a href="#lists">List</a>
-** <a href="#sets">Set</a>
-** <a href="#tuple">Tuple</a>
-** <a href="#Maps">Maps</a>
-* 函数组合器
-** <a href="#map">map</a>
-** <a href="#foreach">foreach</a>
-** <a href="#filter">filter</a>
-** <a href="#zip">zip</a>
-** <a href="#partition">partition</a>
-** <a href="#find">find</a>
-** <a href="#drop">drop and dropWhile</a>
-** <a href="fold">foldRight and foldLeft</a>
-** <a href="#flatten">flatten</a>
-** <a href="#flatMap">flatMap</a>
-** <a href="#generalized">Generalized functional conbinators</a>
-** <a href="#Map?">vsMap</a>
 
-h1. Basic Data Structures
+  * <a href="#lists">List</a>
+  * <a href="#sets">Set</a>
+  * <a href="#tuple">Tuple</a>
+  * <a href="#Maps">Maps</a>
+
+* 函数组合器
+
+  * <a href="#map">map</a>
+  * <a href="#foreach">foreach</a>
+  * <a href="#filter">filter</a>
+  * <a href="#zip">zip</a>
+  * <a href="#partition">partition</a>
+  * <a href="#find">find</a>
+  * <a href="#drop">drop and dropWhile</a>
+  *  <a href="fold">foldRight and foldLeft</a>
+  * <a href="#flatten">flatten</a>
+  * <a href="#flatMap">flatMap</a>
+  * <a href="#generalized">Generalized functional conbinators</a>
+  * <a href="#vsMap">为什么用Map</a>
+
+# Basic Data Structures
 
 Scala provides some nice collections.
 
@@ -58,35 +57,35 @@ Scala provides some nice collections.
 Scala提供了一些很方便的集合类。
 *参考* <a href="http://twitter.github.com/effectivescala/#Collections">《Effective Scala》中关于怎么使用集合类的内容。
 
-h2(#Lists). Lists
+## Lists
 
 ## <a name="lists"> List</a>
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val numbers = List(1, 2, 3, 4)
 numbers: List[Int] = List(1, 2, 3, 4)
 </pre>
 
-h2(#Sets). Sets
+## Sets
 
 ## <a name="sets">Set</a>
 
 Sets have no duplicates
 集合中没有重复元素
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Set(1, 1, 2)
 res0: scala.collection.immutable.Set[Int] = Set(1, 2)
 </pre>
 
-h2(#Tuple). Tuple
+## Tuple
 
 ## <a name="tuple">元组(Tuple)</a>
 
 A tuple groups together simple logical collections of items without using a class.
 元组可以直接把一些具有简单逻辑关系的一组数据组合在一起，并且不需要额外的类。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val hostPort = ("localhost", 80)
 hostPort: (String, Int) = (localhost, 80)
 </pre>
@@ -95,7 +94,7 @@ Unlike case classes, they don't have named accessors, instead they have accessor
 
 和case class不同，元组的元素不能通过名称进行访问，不过它们可以通过基于它们位置的名称进行访问，这个位置是从1开始而非从0开始。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> hostPort._1
 res0: String = localhost
 
@@ -107,7 +106,7 @@ Tuples fit with pattern matching nicely.
 
 元组可以很好地和模式匹配配合使用。
 
-<pre>
+<pre class="brush: java; gutter: true">
 hostPort match {
   case ("localhost", port) => ...
   case (host, port) => ...
@@ -119,7 +118,7 @@ Tuple has some special sauce for simply making Tuples of 2 values: <code>-></cod
 创建一个包含2个值的元组有一个很简单的方式：`->`
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> 1 -> 2
 res0: (Int, Int) = (1,2)
 </pre>
@@ -128,7 +127,7 @@ res0: (Int, Int) = (1,2)
 
 *参考* 《Effective Scala》中关于<a href="http://twitter.github.com/effectivescala/#Functional programming-Destructuring bindings">解除绑定</a>（拆封一个元组）的观点。
 
-h2(#Maps). Maps
+## Maps
 
 It can hold basic datatypes.
 
@@ -136,7 +135,7 @@ It can hold basic datatypes.
 
 Map里可以存放基本的数据类型。
 
-<pre>
+<pre class="brush: java; gutter: true">
 Map(1 -> 2)
 Map("foo" -> "bar")
 </pre>
@@ -152,15 +151,15 @@ Maps can themselves contain Maps or even functions as values.
 
 Map里也可以包含Map，甚至也可以把函数当作值存在Map里。
 
-<pre>
+<pre class="brush: java; gutter: true">
 Map(1 -> Map("foo" -> "bar"))
 </pre>
 
-<pre>
+<pre class="brush: java; gutter: true">
 Map("timesTwo" -> { timesTwo(_) })
 </pre>
 
-h2(#Option). Option
+## Option
 
 ## <a name="option"> Option
 
@@ -192,7 +191,7 @@ Option本身是泛型的，它有两个子类：`Some[T]`和`None`
 我们来看一个Option的示例：
 `Map.get`使用`Option`来作为它的返回类型。Option的作用是告诉你这个方法可能不会返回你请求的值。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val numbers = Map(1 -> "one", 2 -> "two")
 numbers: scala.collection.immutable.Map[Int,String] = Map((1,one), (2,two))
 
@@ -246,19 +245,19 @@ val result = res1 match {
 *参考* 《Effective Scala》中关于 <a href="http://twitter.github.com/effectivescala/#Functional programming-Options">Options</a>的内容。
 
 
-h1(#combinators). Functional Combinators
-# <a name="combinators">Functional Combinators</a>
+# Functional Combinators
+# <a name="combinators">函数组合器</a>
 
 <code>List(1, 2, 3) map squared</code> applies the function <code>squared</code> to the elements of the the list, returning a new list, perhaps <code>List(1, 4, 9)</code>. We call operations like <code>map</code> <em>combinators</em>. (If you'd like a better definition, you might like <a href="http://stackoverflow.com/questions/7533837/explanation-of-combinators-for-the-working-man">Explanation of combinators</a> on Stackoverflow.) Their most common use is on the standard data structures.
 
-`List(1,2,3) map squared`会在列表的每个元素上分别应用`squared`函数，并且返回一个新的列表，可能是`List(1,4,9)`。我们把类似于`map`这样的操作称为<em>combinator<em>。（如果你需要一个更好的定义，你或许会喜欢Stackoverflow上的<a href="http://stackoverflow.com/questions/7533837/explanation-of-combinators-for-the-working-man">关于combinator的解释</a>。
+`List(1,2,3) map squared`会在列表的每个元素上分别应用`squared`函数，并且返回一个新的列表，可能是`List(1,4,9)`。我们把类似于`map`这样的操作称为<em>组合器<em>。（如果你需要一个更好的定义，你或许会喜欢Stackoverflow上的<a href="http://stackoverflow.com/questions/7533837/explanation-of-combinators-for-the-working-man">关于组合器的解释</a>。
 
-h2(#map). map
+## map
 
 Evaluates a function over each element in the list, returning a list with the same number of elements.
 在列表中的每个元素上计算一个函数，并且返回一个包含相同数目元素的列表。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.map((i: Int) => i * 2)
 res0: List[Int] = List(2, 4, 6, 8)
 </pre>
@@ -266,7 +265,7 @@ res0: List[Int] = List(2, 4, 6, 8)
 or pass in a partially evaluated function
 或者传入一个部分计算的函数
 
-<pre>
+<pre class="brush: java; gutter: true">
 
 scala> def timesTwo(i: Int): Int = i * 2
 timesTwo: (i: Int)Int
@@ -283,7 +282,7 @@ foreach is like map but returns nothing. foreach is intended for side-effects on
 
 foreach和map相似，只不过它没有返回值，foreach只要是为了对参数进行作用。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.foreach((i: Int) => i * 2)
 </pre>
 
@@ -294,12 +293,12 @@ You can try to store the return in a value but it'll be of type Unit (i.e. void)
 
 你可以尝试把返回值放在一个变量里，不过它的类型应该是Unit（或者是void）
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val doubled = numbers.foreach((i: Int) => i * 2)
 doubled: Unit = ()
 </pre>
 
-h2(#filter). filter
+## filter
 
 removes any elements where the function you pass in evaluates to false.  Functions that return a Boolean are often called predicate functions.
 
@@ -307,12 +306,12 @@ removes any elements where the function you pass in evaluates to false.  Functio
 
 移除任何使得传入的参数返回false的元素。返回Boolean类型的函数一般都称为断言函数。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.filter((i: Int) => i % 2 == 0)
 res0: List[Int] = List(2, 4)
 </pre>
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def isEven(i: Int): Boolean = i % 2 == 0
 isEven: (i: Int)Boolean
 
@@ -320,7 +319,7 @@ scala> numbers.filter(isEven _)
 res2: List[Int] = List(2, 4)
 </pre>
 
-h2(#zip). zip
+## zip
 
 ## <a name="zip">zip</a>
 
@@ -328,18 +327,18 @@ zip aggregates the contents of two lists into a single list of pairs.
 
 zip把两个列表的元素合成一个由元素对组成的列表里。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> List(1, 2, 3).zip(List("a", "b", "c"))
 res0: List[(Int, String)] = List((1,a), (2,b), (3,c))
 </pre>
 
-h2(#partition). partition
+## partition
 
 ## <a name="partition">partition</a>
 
 <code>partition</code> splits a list based on where it falls with respect to a predicate function.
 `partition`根据断言函数的返回值对列表进行拆分。
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val numbers = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 scala> numbers.partition(_ %2 == 0)
 res0: (List[Int], List[Int]) = (List(2, 4, 6, 8, 10),List(1, 3, 5, 7, 9))
@@ -352,7 +351,7 @@ find returns the first element of a collection that matches a predicate function
 ## <a name="find">find</a>
 返回集合里第一个匹配断言函数的元素
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.find((i: Int) => i > 5)
 res0: Option[Int] = Some(6)
 </pre>
@@ -365,7 +364,7 @@ h2(#drop). drop & dropWhile
 
 `drop`丢弃前i个元素
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.drop(5)
 res0: List[Int] = List(6, 7, 8, 9, 10)
 </pre>
@@ -375,16 +374,16 @@ res0: List[Int] = List(6, 7, 8, 9, 10)
 `dropWhile`移除前几个匹配断言函数的元素。例如，如果我们从numbers列表里`dropWhile`奇数的话，`1`会被移除（`3`则不会，因为它被`2`所“保护”）。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.dropWhile(_ % 2 != 0)
 res0: List[Int] = List(2, 3, 4, 5, 6, 7, 8, 9, 10)
 </pre>
 
-h2(#fold). foldLeft
+## foldLeft
 
 ## <a name="fold">foldLeft</a>
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.foldLeft(0)((m: Int, n: Int) => m + n)
 res0: Int = 55
 </pre>
@@ -397,7 +396,7 @@ acts as an accumulator.
 Seen visually:
 更加直观的来看：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.foldLeft(0) { (m: Int, n: Int) => println("m: " + m + " n: " + n); m + n }
 m: 0 n: 1
 m: 1 n: 2
@@ -412,14 +411,14 @@ m: 45 n: 10
 res0: Int = 55
 </pre>
 
-h3. foldRight
+### foldRight
 ### foldRight
 
 Is the same as foldLeft except it runs in the opposite direction.
 
 这个和foldLeft相似，只不过是方向相反。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> numbers.foldRight(0) { (m: Int, n: Int) => println("m: " + m + " n: " + n); m + n }
 m: 10 n: 0
 m: 9 n: 10
@@ -434,14 +433,14 @@ m: 1 n: 54
 res0: Int = 55
 </pre>
 
-h2(#flatten). flatten
+## flatten
 
 flatten collapses one level of nested structure.
 
 ## <a name="flatten">flatten</a>
 flatten可以把嵌套的结构展开。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> List(List(1, 2), List(3, 4)).flatten
 res0: List[Int] = List(1, 2, 3, 4)
 </pre>
@@ -454,7 +453,7 @@ flatMap is a frequently used combinator that combines mapping and flattening. fl
 
 flatMap是一个常用的combinator，它结合了map和flatten的功能。flatMap接收一个可以处理嵌套列表的函数，然后把返回结果连接起来。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val nestedNumbers = List(List(1, 2), List(3, 4))
 nestedNumbers: List[List[Int]] = List(List(1, 2), List(3, 4))
 
@@ -465,7 +464,7 @@ res0: List[Int] = List(2, 4, 6, 8)
 Think of it as short-hand for mapping and then flattening:
 可以把它当作map和flatten两者的缩写：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> nestedNumbers.map((x: List[Int]) => x.map(_ * 2)).flatten
 res1: List[Int] = List(2, 4, 6, 8)
 </pre>
@@ -479,7 +478,7 @@ that example calling map and then flatten is an example of the "combinator"-like
 
 
 
-h2(#generalized). Generalized functional combinators
+## Generalized functional combinators
 
 Now we've learned a grab-bag of functions for working with collections.
 
@@ -492,7 +491,7 @@ Interestingly, every functional combinator shown above can be written on top of 
 现在，我们学习了一大堆处理集合的函数。
 不过，我们更加感兴趣的是怎么写我们自己的functional combinator。
 有趣的是，上面展示的每个functional combinator都是可以通过fold来实现的。我们来看一些示例。
-<pre>
+<pre class="brush: java; gutter: true">
 def ourMap(numbers: List[Int], fn: Int => Int): List[Int] = {
   numbers.foldRight(List[Int]()) { (x: Int, xs: List[Int]) =>
     fn(x) :: xs
@@ -507,13 +506,14 @@ Why <tt>List[Int]()</tt>? Scala wasn't smart enough to realize that you wanted a
 
 为什么要<tt>List[Int]</tt>?因为Scala还不能聪明到知道你需要在一个空的Int列表上来进行累加。
 
-h2(#vsMap). Map?
+## Map?
 
 All of the functional combinators shown work on Maps, too.  Maps can be thought of as a list of pairs so the functions you write work on a pair of the keys and values in the Map.
+我们上面所展示的所有函数组合器都能都Map进行处理。Map可以当作是由键值对组成的列表，这样你写的函数就可以对Map里的key和value进行处理。
 
 ## <a name= "vsMap">Map?</a>
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val extensions = Map("steve" -> 100, "bob" -> 101, "joe" -> 201)
 extensions: scala.collection.immutable.Map[String,Int] = Map((steve,100), (bob,101), (joe,201))
 </pre>
@@ -521,7 +521,7 @@ extensions: scala.collection.immutable.Map[String,Int] = Map((steve,100), (bob,1
 Now filter out every entry whose phone extension is lower than 200.
 现在过滤出所有分机号码小于200的元素。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> extensions.filter((namePhone: (String, Int)) => namePhone._2 < 200)
 res0: scala.collection.immutable.Map[String,Int] = Map((steve,100), (bob,101))
 </pre>
@@ -533,7 +533,7 @@ Lucky us, we can actually use a pattern match to extract the key and value nicel
 因为你拿到的是一个元组，所以你不得不通过它们的位置来取得对应的key和value，太恶心了！
 幸运的是，我们实际上可以用一个模式匹配来优雅地获取key和value。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> extensions.filter({case (name, extension) => extension < 200})
 res0: scala.collection.immutable.Map[String,Int] = Map((steve,100), (bob,101))
 </pre>

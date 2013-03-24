@@ -1,5 +1,4 @@
 
-
 This lesson covers:
 
 * Function Composition
@@ -19,8 +18,8 @@ This lesson covers:
 * <a href="#composition">函数复合</a>
 	* compose
 	* andThen
-* Currying 与 Partial Application
-* PartialFunctions
+* <a href="#curryvspartial">Currying 与 Partial Application</a>
+* < a href="#PartialFunction">PartialFunctions</a>
 	* range and domain
 	* composition with orElse
 * case语句究竟是什么？
@@ -30,7 +29,7 @@ This lesson covers:
 
 Let's make two helpful functions:
 
-## <a name="composition">Function Composition</a>
+## <a name="composition">函数复合</a>
 我们首先定义两个有用的函数：
 
 <pre class="brush: java; gutter: true">
@@ -74,7 +73,7 @@ res1: String = well ahem umm
 
 ## Currying vs Partial Application
 
-## <a name="#curryvspartial">Currying与Partial Application</a>
+## <a name="curryvspartial">Currying与Partial Application</a>
 
 ### case statements
 
@@ -109,7 +108,7 @@ __Note__ <code>PartialFunction</code> is unrelated to a partially applied functi
 
 *See Also* Effective Scala has opinions about <a href="http://twitter.github.com/effectivescala/#Functional programming-Partial functions">PartialFunction</a>.
 
-## <a name="#PartialFunction">理解PartialFunction</a>
+## <a name="PartialFunction">理解PartialFunction</a>
 
 一个函数会在所有参数都是指定的类型下才能正常执行。换句话说，一个定义为(Int)=>String的函数，只能接受一个Int类型的参数，并且返回一个String类型。
 

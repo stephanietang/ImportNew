@@ -1,3 +1,8 @@
+英文原文: [Scala School](http://twitter.github.com/scala_school/pattern-matching-and-functional-composition.html)，翻译：[ImportNew](http://www.importnew.com) - [朱伟杰](http://www.importnew.com/author/zhuweijie)
+
+# Pattern matching & functional composition
+
+# 模式匹配和函数复合
 
 This lesson covers:
 
@@ -15,14 +20,15 @@ This lesson covers:
 * What is a case statement?
 
 这节的内容包含：
+
 * <a href="#composition">函数复合</a>
 	* compose
 	* andThen
 * <a href="#curryvspartial">Currying 与 Partial Application</a>
-* < a href="#PartialFunction">PartialFunctions</a>
+* <a href="#PartialFunction">PartialFunctions</a>
 	* range and domain
 	* composition with orElse
-* case语句究竟是什么？
+* <a href="#case">case语句究竟是什么？</a>
 
 
 ## Function Composition
@@ -119,6 +125,7 @@ __Note__ <code>PartialFunction</code> is unrelated to a partially applied functi
 __注意__`PartialFunction`和我们之前讨论的部分应用函数(partial applied function)没有关系。
 
 **参考** 《Effective Scala》中关于<a href="http://twitter.github.com/effectivescala/#Functional programming-Partial functions">PartialFunction</a>的观点。
+
 <pre class="brush: java; gutter: true">
 scala> val one: PartialFunction[Int, String] = { case 1 => "one" }
 one: PartialFunction[Int,String] = <function1>
@@ -131,6 +138,7 @@ res1: Boolean = false
 </pre>
 
 You can apply a partial function.
+
 你可以调用一个partial函数。
 
 <pre class="brush: java; gutter: true">
@@ -175,7 +183,7 @@ res28: String = something else
 
 Last week we saw something curious. We saw a case statement used where a function is normally used.
 
-### case之谜
+### <a name="case">case之谜</a>
 上周我们看了一些很奇怪的用法。我们见过case语句用在函数的位置上。
 
 <pre class="brush: java; gutter: true">

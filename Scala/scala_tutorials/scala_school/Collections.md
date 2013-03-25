@@ -287,7 +287,7 @@ foreach is like map but returns nothing. foreach is intended for side-effects on
 
 ## <a name ="foreach">foreach</a>
 
-foreach和map相似，只不过它没有返回值，foreach只要是为了对参数进行作用。
+foreach和map相似，只不过它没有返回值，foreach主要是为了对参数进行作用。
 
 <pre class="brush: java; gutter: true">
 scala> numbers.foreach((i: Int) => i * 2)
@@ -312,7 +312,7 @@ removes any elements where the function you pass in evaluates to false.  Functio
 
 ## <a name="filter">filter</a>
 
-移除任何使得传入的参数返回false的元素。返回Boolean类型的函数一般都称为断言函数。
+移除任何使得传入的函数返回false的元素。返回Boolean类型的函数一般都称为断言函数。
 
 <pre class="brush: java; gutter: true">
 scala> numbers.filter((i: Int) => i % 2 == 0)

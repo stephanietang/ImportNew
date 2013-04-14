@@ -1,4 +1,5 @@
 英文原文: [Scala School](http://twitter.github.io/scala_school/type-basics.html)，翻译：[ImportNew](http://www.importnew.com) - [朱伟杰](http://www.importnew.com/author/zhuweijie)
+
 This lesson covers:
 
 * "What are static types?":#background
@@ -10,13 +11,14 @@ This lesson covers:
 * "Quantification":#quantification
 
 这一节的内容包含：
-* <a href="#background#">什么是静态类型？</a>
-* <a href="#scala#">Scala中的类型</a>
+
+* <a href="#background">什么是静态类型？</a>
+* <a href="#type">Scala中的类型</a>
 * <a href="#parametricpoly">参数多态</a>
 * <a href="#inference">参数推导：Hindley-Milener 与 局部类型推导</a>
-* <a href="variance">Variance</a>
-* <a href="#bounds">Bounds</a>
-* <a href="Quntification">Quntification</a>
+* <a href="#variance">Variance</a>
+* <a href="#bounds">范围(Bounds)</a>
+* <a href="#quantification">量化(Quantification)</a>
 
 h2(#background). What are static types?  Why are they useful?
 
@@ -32,7 +34,7 @@ Types allow you to denote function domain & codomains. For example, from mathema
 类型可以让你表示函数的域和值域。例如，在数学里，我们经常看到下面的函数：
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 f: R -> N
 </pre>
 
@@ -68,11 +70,14 @@ Scala's powerful type system allows for very rich expression. Some of its chief 
 * *existential quantification* roughly, defining something _for some_ unnamed type
 * *views* we'll learn these next week; roughly, "castability" of values of one type to another
 
+## <a name="type">Scala中的类型</a>
+
 Scala强大的类型系统让我们可以使用更具有表现力的表达式。一些主要的特点如下：
-* 直接支持**参数多态**，泛型编程
-* 直接支持**（局部）类型推导**，这就是你为什么不需要写`val i: Int = 12: Int`
-* **existential quantification**，给没有名称的类型定义一些操作
-* **视图** 我们下个星期再讨论；给定的值从一个类型到其他类型的“可转换性”
+
+* 支持**参数多态**，泛型编程
+* 支持**（局部）类型推导**，这就是你为什么不需要写`val i: Int = 12: Int`
+* 支持**存在量化(existential quantification)**，给一些没有名称的类型定义一些操作
+* 支持**视图**。 我们下个星期再讨论；给定的值从一个类型到其他类型的“可转换性”
 
 h2(#parametricpoly). Parametric polymorphism
 
@@ -84,9 +89,9 @@ For example, without parametric polymorphism, a generic list data structure woul
 
 多态可以用来编写泛型代码（用于处理不同类型的值)，并且没必要给静态类型做出让步。
 
-例如，没有参数多态的话，一个泛型的列表数据就和下面的代码查不到（并且在Java没有泛型的时候，确实是这样的）：
+例如，没有参数多态的话，一个泛型的列表数据结构通常会是下面这样的写法（在Java还没有泛型的时候，确实是这样的）：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> 2 :: 1 :: "bar" :: "foo" :: Nil
 res5: List[Any] = List(2, 1, bar, foo)
 </pre>
@@ -95,7 +100,7 @@ Now we cannot recover any type information about the individual members.
 
 现在我们可以恢复每个元素的类型信息
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> res5.head
 res6: Any = 2
 </pre>
@@ -104,11 +109,11 @@ And so our application would devolve into a series of casts ("asInstanceOf[]") a
 
 Polymorphism is achieved through specifying _type variables_.
 
-并且这样的话，我们的应用里会转成包含一系列的类型转换("asInstanceOf[]")，并且代码会缺少类型安全（因为他们都是动态类型的）。
+这样一来，我们的应用里会包含一系列的类型转换("asInstanceOf[]")，代码会缺少类型安全（因为他们都是动态类型的）。
 
 多态是通过指定__类型变量__来达到的。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def drop1[A](l: List[A]) = l.tail
 drop1: [A](l: List[A])List[A]
 
@@ -122,9 +127,9 @@ Roughly, this means that there are some type concepts you'd like to express in S
 
 ### 多态是scala里的一等公民
 
-大致上来说，这意味着有一些你想在Scala里表达的类型概念会显得“特别泛型”，导致编译器无法理解，假如你有一些函数。
+大致上来说，这意味着有一些你想在Scala里表达的类型概念会显得“太过于泛型”了，导致编译器无法理解。假如你有这样一个函数：
 
-<pre>
+<pre class="brush: java; gutter: true">
 def toList[A](a: A) = List(a)
 </pre>
 
@@ -132,7 +137,7 @@ which you wished to use generically:
 
 你想要按照泛型的方式来使用它：
 
-<pre>
+<pre class="brush: java; gutter: true">
 def foo[A, B](f: A => List[A], b: B) = f(b)
 </pre>
 
@@ -140,7 +145,7 @@ This does not compile, because all type variables have to be fixed at the invoca
 
 但是这样会编译不过，因为所有的类型变量在运行期必须是确定的。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def foo[A](f: A => List[A], i: Int) = f(i)
 </pre>
 
@@ -168,7 +173,7 @@ In Scala, for example, you cannot do the following:
 
 在Scala里，例如，你不能这样写：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> { x => x }
 <console>:7: error: missing parameter type
        { x => x }
@@ -178,7 +183,7 @@ Whereas in OCaml, you can:
 
 但是在OCaml里，你可以:
 
-<pre>
+<pre class="brush: java; gutter: true">
 # fun x -> x;;
 - : 'a -> 'a = <fun>
 </pre>
@@ -187,9 +192,7 @@ In scala all type inference is _local_. Scala considers one expression at a time
 
 在Scala里，所有的类型推导都是__局部的__。Scala一次只考虑一个表达式。例如：
 
-
-
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def id[T](x: T) = x
 id: [T](x: T)T
 
@@ -213,7 +216,7 @@ Scala's type system has to account for class hierarchies together with polymorph
 
 ## <a name="variance">Varicace</a>
 
-Scala的类型系统需要把类的继承关系和多态结合起来。类的继承使得类之间存在父子的关系。当把OO和多态结合在一起时，一个核心的问题就出来了：如果<tt>T'</tt>是<tt>T</tt>的子类，那么<tt>Container[T']</tt>是不是<tt>Container[T]</tt>的子类呢？Variance标签允许你在类继承和多态类型之间表达下面的这些关系：
+Scala的类型系统需要把类的继承关系和多态结合起来。类的继承使得类之间存在父子的关系。当把面向对象和多态结合在一起时，一个核心的问题就出来了：如果<tt>T'</tt>是<tt>T</tt>的子类，那么<tt>Container[T']</tt>是不是<tt>Container[T]</tt>的子类呢？Variance注释允许你在类继承和多态类型之间表达下面的这些关系：
 
 <table>
 	<tbody><tr>
@@ -238,26 +241,34 @@ Scala的类型系统需要把类的继承关系和多态结合起来。类的继
 	</tr>
 </tbody></table>
 
+<table>
+	<tbody><tr>
+		<td>                </td>
+		<td><strong>含义</strong>                     </td>
+		<td> <strong>Scala中的标记</strong></td>
+	</tr>
+	<tr>
+		<td><strong>covariant(协变)</strong>     </td>
+		<td>C[T’]是C[T]的子类</td>
+		<td> [+T]</td>
+	</tr>
+	<tr>
+		<td><strong>contravariant(逆变)</strong> </td>
+		<td>C[T]是C[T’]子类</td>
+		<td> [-T]</td>
+	</tr>
+	<tr>
+		<td><strong>invariant(不变)</strong>     </td>
+		<td>C[T]和C[T’]不相关</td>
+		<td> [T]</td>
+	</tr>
+</tbody></table>
+
 The subtype relationship really means: for a given type T, if T' is a subtype, can you substitute it?
 
 子类关系的真正意思是：对于一个给定的类型T，如果T'是它的子类，那么T'可以代替T吗？
 
-<pre>
-scala> class Covariant[+A]
-defined class Covariant
-
-scala> val cv: Covariant[AnyRef] = new Covariant[String]
-cv: Covariant[AnyRef] = Covariant@4035acf6
-
-scala> val cv: Covariant[String] = new Covariant[AnyRef]
-<console>:6: error: type mismatch;
- found   : Covariant[AnyRef]
- required: Covariant[String]
-       val cv: Covariant[String] = new Covariant[AnyRef]
-                                   ^
-</pre>
-
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class Contravariant[-A]
 defined class Contravariant
 
@@ -274,16 +285,16 @@ scala> val fail: Contravariant[AnyRef] = new Contravariant[String]
 
 Contravariance seems strange. When is it used? Somewhat surprising!
 
-Contravariance看起来比较奇怪。但是用起来呢？确实让人惊讶！
-<pre>
+逆变(Contravariance)看起来比较奇怪。什么时候要用到它呢？确实让人感到惊讶！
+<pre class="brush: java; gutter: true">
 trait Function1 [-T1, +R] extends AnyRef
 </pre>
 
 If you think about this from the point of view of substitution, it makes a lot of sense. Let's first define a simple class hierarchy:
 
-如果你从替代的角度来看这个的话，它有很多的意义。我们首先来定义一个简单的类继承关系：
+如果你从替代的角度来看这个的话，非常容易理解这一点。我们首先来定义一个简单的类继承关系：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> class Animal { val sound = "rustle" }
 defined class Animal
 
@@ -296,19 +307,17 @@ defined class Chicken
 
 Suppose you need a function that takes a <code>Bird</code> param:
 
-假设你需要一个接收一个`Bird`类型参数的函数：
+假设你需要一个接收`Bird`类型参数的函数：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val getTweet: (Bird => String) = // TODO
 </pre>
 
 The standard animal library has a function that does what you want, but it takes an <code>Animal</code> parameter instead.  In most situations, if you say "I need a ___, I have a subclass of ___", you're OK. But function parameters are contravariant. If you need a function that takes a <code>Bird</code> and you have a function that takes an <code>Chicken</code>, that function would choke on a <code>Duck</code>. But a function that takes an <code>Animal</code> is OK:
 
-标准的animal类库有一个函数可以完成你想要的任务，但是它的参数是`Animal`。在大部分的场景下，如果你说“我需要一个 ___，我有一个___的子类”，这样是可以的。但是函数的参数都是可逆变的（contravariant），如果你需要一个接受一个`Bird`的函数，并且你有一个接收一个`Chicken`的函数，这个函数会卡在`Duck`上。但是一个接收`Animal`作为参数的函数就没有问题：
+标准的animal类库有一个函数可以完成你想要的任务，但是它的参数是`Animal`。在大部分的场景下，如果你说“我需要一个___，我有一个___的子类”，这样是可以的。但是函数的参数都是可逆变的（contravariant），如果你需要一个接受一个`Bird`的函数，并且你有一个接收一个`Chicken`的函数，这个函数会卡在`Duck`上。但是一个接收`Animal`作为参数的函数就没有问题：
 
-
-
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val getTweet: (Bird => String) = ((a: Animal) => a.sound )
 getTweet: Bird => String = <function1>
 </pre>
@@ -317,7 +326,7 @@ A function's return value type is covariant. If you need a function that returns
 
 函数的返回值是可逆变的。如果你需要一个返回`Bird`的函数，但是你只有一个返回`Chicken`的函数，这样也是可以的。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val hatch: (() => Bird) = (() => new Chicken )
 hatch: () => Bird = <function0>
 </pre>
@@ -326,11 +335,11 @@ h2(#bounds). Bounds
 
 Scala allows you to restrict polymorphic variables using _bounds_. These bounds express subtype relationships.
 
-## 范围
+## <a name="bounds">范围(Bounds)</a>
 
 Scala允许你通过 _bounds_ 来限制多态的范围。这些范围表示的是子类的关系。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def cacophony[T](things: Seq[T]) = things map (_.sound)
 <console>:7: error: value sound is not a member of type parameter T
        def cacophony[T](things: Seq[T]) = things map (_.sound)
@@ -345,9 +354,9 @@ res5: Seq[java.lang.String] = List(cluck, call)
 
 Lower type bounds are also supported; they come in handy with contravariance and clever covariance. <code>List[+T]</code> is covariant; a list of Birds is a list of Animals. <code>List</code> defines an operator <code>::(elem T)</code> that returns a new <code>List</code> with <code>elem</code> prepended. The new <code>List</code> has the same type as the original:
 
-更低的范围都是可以支持的；它们可以通过逆变(contravariance)和合适的协变（covariance）来实现。`List[+T]`是协变量；一个Bird的列表同时也是一个Animal的列表。`List`定义了一个操作符`::[elem T]`返回一个装载`elem`的列表。这个新的`List`和原来的列表有着相同的类型：
+还可以支持更低的类型范围；它们可以通过逆变(contravariance)和合适的协变（covariance）来实现。`List[+T]`是协变量；一个Bird的列表同时也是一个Animal的列表。`List`定义了一个操作符`::[elem T]`返回一个装载`elem`的列表。这个新的`List`和原来的列表有着相同的类型：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val flock = List(new Bird, new Bird)
 flock: List[Bird] = List(Bird@7e1ec70e, Bird@169ea8d2)
 
@@ -359,7 +368,7 @@ res53: List[Bird] = List(Chicken@56fbda05, Bird@7e1ec70e, Bird@169ea8d2)
 
 `List` _同时_ 也定义了`::[B >: T]`，它返回一个`List[B]`。注意`B >: T`，它表示`T`的父类。这个会在我们把一个`Animal`添加到一个`List[Bird]`的时候提醒我们进行纠正。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> new Animal :: flock
 res59: List[Animal] = List(Animal@11f8d3a8, Bird@7e1ec70e, Bird@169ea8d2)
 </pre>
@@ -372,11 +381,11 @@ h2(#quantification). Quantification
 
 Sometimes you do not care to be able to name a type variable, for example:
 
-## 量化（Quantification）
+## <a name="quantification">量化（Quantification）</a>
 
 有时候你不需要给一个类型变量以名称，例如
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def count[A](l: List[A]) = l.size
 count: [A](List[A])Int
 </pre>
@@ -385,7 +394,7 @@ Instead you can use "wildcards":
 
 你可以用“通配符”来替代：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def count(l: List[_]) = l.size
 count: (List[_])Int
 </pre>
@@ -393,15 +402,16 @@ count: (List[_])Int
 This is shorthand for:
 这个可以替代：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def count(l: List[T forSome { type T }]) = l.size
 count: (List[T forSome { type T }])Int
 </pre>
 
 Note that quantification can get tricky:
+
 注意量化（quantification）可能会显得比较诡异：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def drop1(l: List[_]) = l.tail
 drop1: (List[_])List[Any]
 </pre>
@@ -410,7 +420,7 @@ Suddenly we lost type information! To see what's going on, revert to the heavy-h
 
 突然之间我们丢失了类型信息！为了一探究竟，我们来看看最原始的语法：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def drop1(l: List[T forSome { type T }]) = l.tail
 drop1: (List[T forSome { type T }])List[T forSome { type T }]
 </pre>
@@ -424,7 +434,7 @@ You may also apply bounds to wildcard type variables:
 你也可以对通配符类型使用范围来进行限定：
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> def hashcodes(l: Seq[_ <: AnyRef]) = l map (_.hashCode)
 hashcodes: (Seq[_ <: AnyRef])Seq[Int]
 

@@ -1,15 +1,16 @@
 # Quartz快速入门
 
+[http://quartz-scheduler.org/overview/quick-start](http://quartz-scheduler.org/overview/quick-start)
+
 欢迎来到这个Quartz快速入门的教程。我们今天会介绍的有以下内容：
 
-- 下载Quartz
-- 安装Quartz
-- 配置Quartz适用于你自己的需要
-- 启动一个示例程序
+- <a href="#downloadAndInstall">下载和安装Quartz</a>
+- <a href="#configure">配置Quartz适用于你自己的需要</a>
+- <a href="#start">启动一个示例程序</a>
 
 在你更熟悉Quartz任务调度器了之后，你可以看看更多更高级的功能，譬如企业级应用的功能，让job和trigger运行在Terracotta客户端中，而不是随意选择的客户端。
 
-## 下载和安装
+## <a name="downloadAndInstall">下载和安装</a>
 
 首先，下载最近的最稳定的[版本](http://quartz-scheduler.org/downloads/)，不一定要注册。解压缩安装，这样你的应用程序可以使用Quartz。
 
@@ -19,9 +20,9 @@ Quartz包中有很多jar，在根目录中。最主要的一个库叫作quartz-a
 
 你下载完之后，解压缩包，将quartz-all-xxx.jar这个文件取出来，放到任何你喜欢的地方。
 
-因为我主要将Quartz用在应用服务器的环境中，所以我希望将Quartz jar放在我的程序中(也就是.ear或者.war中)。然而，如果你想要许多应用都能够使用Quartz，那么就放在你的应用服务器的classpath好了。如果你只想有一个独立的应用，那么就非能够在应用的classpath中，和其他的jar放在一起。
+因为我主要将Quartz用在应用服务器的环境中，所以我希望将Quartz jar放在我的程序中(也就是.ear或者.war中)。然而，如果你希望多个应用都能够使用Quartz，那么就放在你的应用服务器的classpath好了。如果你只有一个独立的应用，那么就放在应用的classpath中，和其他的jar放在一起。
 
-Quartz需要依赖很多第三方的库(以jar的形式)，这些jar都放在了`lib`目录下，要使用所有的功能的话，需要将所有的jar都放在classpath中。如果你是建立一个独立的应用，建议你将所有的jar都放在classpath中，如果你是在应用服务器的环境下，你可能已经有其中的某些jar了，你可能就要进行选择，将某些jar放到classpath中了。
+Quartz需要依赖很多第三方的库(以jar的形式)，这些jar都放在了`lib`目录下，要使用所有的功能的话，需要将所有的jar都放在classpath中。如果是一个独立的应用，建议你将所有的jar都放在classpath中。而如果在应用服务器的环境下，你可能已经有其中的某些jar了，这时你需要进行选择，只将某些jar放到classpath下。
 
 > 在应用服务器的环境下，你需要注意可能会有一些奇怪的结果，是由于你包含了同一个jar的不同版本。例如，Weblogic包含了J2EE的实现，但是不同于servlet.jar。所以，你最好将servlet.jar从classpath中移出来，以便知道真正用到了哪些类。
 
@@ -33,7 +34,7 @@ Quartz使用quartz.properties作为配置文件。最开始的时候可能不是
 
 如果你的应用是.war，那么你可能要将quartz.properties放在WEB-INF/classes文件架下。
 
-## 配置Quartz
+## <a name="configure">配置Quartz</a>
 
 配置是最重要的部分。Quartz是一个配置性很强的应用，最好的配置方法就是修改quartz.properties。
 
@@ -53,7 +54,7 @@ Quartz使用quartz.properties作为配置文件。最开始的时候可能不是
 - org.quartz.threadPool.threadCount - 在线程池中有三个线程。这就意味着最多有3个job可以同时运行。
 - org.quartz.jobStore.class - 所有的Quartz的数据保存在内存中（而不是数据库中）。尽管可能你有数据库，并且希望配合Quartz一起使用。但我仍旧建议你首先使用`RAMJobStore`，再去接触数据库。
 
-##　启动一个示例程序
+##　<a name="start">启动一个示例程序</a>
 现在是时候启动程序了。下面的代码包含了一个调度器，首先启动它，然后关闭它。
 
 QuartzTest.java：
@@ -86,8 +87,6 @@ QuartzTest.java：
     }
 
 一旦你通过StdSchedulerFactory.getDefaultScheduler()获得了一个调度器,你的程序会一直运行，直到调用scheduler.shutdown()方法。
-
-Note the static imports in the code example; these will come into play in the code example below.
 
 注意还有一些`import static ...`，下面的代码你会见到它们的作用。
 

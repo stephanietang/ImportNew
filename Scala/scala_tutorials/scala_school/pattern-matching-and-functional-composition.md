@@ -116,9 +116,9 @@ __Note__ <code>PartialFunction</code> is unrelated to a partially applied functi
 
 ## <a name="PartialFunction">理解PartialFunction</a>
 
-一个函数会在所有参数都是指定的类型下才能正常执行。换句话说，一个定义为(Int)=>String的函数，只能接受一个Int类型的参数，并且返回一个String类型。
+一个函数会在所有参数都是指定的类型下才能正常执行。换句话说，一个定义为(Int)=>String的函数，只能接收一个Int类型的参数，并且返回一个String类型。
 
-一个Partial函数只能处理参数所定义类型的某些值。例如，一个Partical函数(Int)=>String不一定能接受所有的Int作为参数。
+一个Partial函数只能处理参数所定义类型的某些值。例如，一个Partical函数(Int)=>String不一定能接收所有的Int作为参数。
 
 `isDefinedAt`是PartialFunction的一个方法，它可以用来判断这个PartialFunction是否能够接收一个指定的参数。
 

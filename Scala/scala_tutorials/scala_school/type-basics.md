@@ -1,5 +1,4 @@
-
-
+英文原文: [Scala School](http://twitter.github.io/scala_school/type-basics.html)，翻译：[ImportNew](http://www.importnew.com) - [朱伟杰](http://www.importnew.com/author/zhuweijie)
 This lesson covers:
 
 * "What are static types?":#background

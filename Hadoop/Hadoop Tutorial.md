@@ -142,3 +142,29 @@ MR应用可以用-files参数指定在当前工作目录下存在的多个文件
 
     hadoop jar hadoop-examples.jar wordcount -files cachefile.txt -libjars mylib.jar input output
     
+详细看下wordcount应用。
+14-26行实现了Mapper，通过map方法(18-25行)一次处理一行记录，记录格式为指定的TextInputFormat（行49）。然后将一条记录行根据空格分隔成一个个单词。分隔使用的是类StringTokenizer，然后以<word,1>形式发布kv对。
+
+在前面给定的输入中，第一个map将会输出:< Hello, 1> < World, 1> < Bye, 1> < World, 1>
+
+第二个map输出: < Hello, 1> < Hadoop, 1> < Goodbye, 1> < Hadoop, 1>
+
+我们会在本篇文章中深入学习该任务中map的大量输出的数目，并研究如何在更细粒度控制输出。
+
+WordCount 在46行指定了combiner。因此每个map的输出在根据key排序后会通过本地的combiner(实现和reducer一致)进行本地聚合。
+
+第一个map的最终输出:< Bye, 1> < Hello, 1> < World, 2>
+
+第二个map输出:< Goodbye, 1> < Hadoop, 2> < Hello, 1>
+
+Reducer实现(28-36行)通过reduce方法(29-35)仅对值进行叠加，计算每个单词的出现次数。
+
+所以wordcount的最终输出为: < Bye, 1> < Goodbye, 1> < Hadoop, 2> < Hello, 2> < World, 2>
+
+run方法通过JobConf对象指定了该任务的各种参数，例如输入/输出路径，kv类型，输入输出格式等等。程序通过调用 JobClient.runJob (55行)提交并开始监测任务的执行进度。
+
+后面我们将对JobConf、JobClient、Tool做进一步学习。 
+
+### MapReduce - 用户接口 ###
+下面将着重谈下MapReduce框架中用户经常使用的一些接口或类的详细内容。了解这些会极大帮助你实现、配置和优化MR任务。当然javadoc中对每个class或接口都进行了更全面的陈述，这里只是一个指导。
+

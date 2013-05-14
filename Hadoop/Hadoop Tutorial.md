@@ -1,6 +1,6 @@
-Hadoop从这里开始!和我一起学习下使用Hadoop的基本知识，下文将以[Hadoop Tutorial](http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial.html)为主体带大家走一遍如何使用Hadoop!
+Hadoop从这里开始!和我一起学习下使用Hadoop的基本知识，下文将以[Hadoop Tutorial](http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial.html)为主体带大家走一遍如何使用Hadoop分析数据!
 
-## Hadoop Tutorial ##
+## Hadoop Tutorial（一） ##
 这个专题将描述用户在使用Hadoop MapReduce框架过程中面对的最重要的东西。Mapreduce由client APIs和运行环境组成。其中client APIs用来编写MR程序，运行时是mapreduce运行各种MR应用或程序的环境。API有2个版本，也就是我们通常说的老api和新api。运行时包含MRv1和MRv2.该Tutorial将会描述新老api和MRv1。
 
 *其中:老api在org.apache.hadoop.mapred包中,新api在 org.apache.hadoop.mapreduce中。*
@@ -165,6 +165,8 @@ run方法通过JobConf对象指定了该任务的各种参数，例如输入/输
 
 后面我们将对JobConf、JobClient、Tool做进一步学习。 
 
-### MapReduce - 用户接口 ###
-下面将着重谈下MapReduce框架中用户经常使用的一些接口或类的详细内容。了解这些会极大帮助你实现、配置和优化MR任务。当然javadoc中对每个class或接口都进行了更全面的陈述，这里只是一个指导。
+
+
+
+
 

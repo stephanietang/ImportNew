@@ -60,6 +60,7 @@ Note that all type information is removed at compile time. It is no longer neede
 
 由于类型系统的表达能力不断增加，使得我们能够生成出更加可靠的代码，因为它使得我们能够控制程序上的不可变，即是是程序还没有运行的情况下（在类型上限制bug的出现）。学术界一直在努力突破类型系统的表达能力的极限，包含值相关的类型。
 
+注意，所有的类型信息都会在编译期擦除。后面不再需要。这个被称为类型擦除。
 
 h2(#scala). Types in Scala
 
@@ -76,7 +77,7 @@ Scala强大的类型系统让我们可以使用更具有表现力的表达式。
 
 * 支持**参数多态**，泛型编程
 * 支持**（局部）类型推导**，这就是你为什么不需要写`val i: Int = 12: Int`
-* 支持**存在量化(existential quantification)**，给一些没有名称的类型定义一些操作
+* 支持**存在向量(existential quantification)**，给一些没有名称的类型定义一些操作
 * 支持**视图**。 我们下个星期再讨论；给定的值从一个类型到其他类型的“可转换性”
 
 h2(#parametricpoly). Parametric polymorphism
@@ -87,7 +88,7 @@ For example, without parametric polymorphism, a generic list data structure woul
 
 ## <a name="parametricpoly">参数多态</a>
 
-多态可以用来编写泛型代码（用于处理不同类型的值)，并且没必要给静态类型做出让步。
+多态可以用来编写泛型代码（用于处理不同类型的值)，并且不会减少静态类型的表达能力。
 
 例如，没有参数多态的话，一个泛型的列表数据结构通常会是下面这样的写法（在Java还没有泛型的时候，确实是这样的）：
 
@@ -98,7 +99,7 @@ res5: List[Any] = List(2, 1, bar, foo)
 
 Now we cannot recover any type information about the individual members.
 
-现在我们可以恢复每个元素的类型信息
+这样的话，我们就不能够恢复每个元素的类型信息。
 
 <pre class="brush: java; gutter: true">
 scala> res5.head
@@ -127,7 +128,7 @@ Roughly, this means that there are some type concepts you'd like to express in S
 
 ### 多态是scala里的一等公民
 
-大致上来说，这意味着有一些你想在Scala里表达的类型概念会显得“太过于泛型”了，导致编译器无法理解。假如你有这样一个函数：
+简单来说，这意味着有一些你想在Scala里表达的类型概念会显得“太过于泛型”，从而导致编译器无法理解。假如你有这样一个函数：
 
 <pre class="brush: java; gutter: true">
 def toList[A](a: A) = List(a)

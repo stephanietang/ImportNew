@@ -59,7 +59,7 @@ h2. Getting Started
 * 创建一个stb shell脚本来调用jar包，例如：
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 java -Xmx512M -jar sbt-launch.jar "$@"
 </pre>
 
@@ -69,7 +69,7 @@ java -Xmx512M -jar sbt-launch.jar "$@"
 * 保证命令时可执行的并且是在你的path里
 * 运行sbt来创建工程
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects]$ sbt
 Project does not exist, create new project? (y/N/s) y
 Name: sample
@@ -134,7 +134,7 @@ src/main/scala/com/twitter/sample/SimpleParser.scala
 我们会创建一个简单的json解析器来解析简单的tweet。添加下面的代码到
 src/main/scala/com/twitter/sample/SimpleParser.scala
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.sample
 
 case class SimpleParsed(id: Long, text: String)
@@ -169,14 +169,14 @@ SBT can be used both as a command line script and as a build console.  We'll be 
 SBT可以被用做命令行脚本也可以被用做是构建控制台。我们主要把它用作构建控制台，不过大部分的命令都可以单独作为参数传给SBT，例如：
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 sbt test
 </pre>
 Note that if a command takes arguments, you need to quote the entire
 argument path, e.g.
 
 注意，如果一个命令接受参数，你需要给参数加上引号
-<pre>
+<pre class="brush: java; gutter: true">
 sbt 'test-only com.twitter.sample.SampleSpec'
 </pre>
 
@@ -189,7 +189,7 @@ Anyway. To start working with our code, launch sbt
 
 暂时不管它。现在启动sbt来构建我们的代码：
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/sbt-sample]$ sbt
 [info] Building project sample 1.0-SNAPSHOT against Scala 2.8.1
 [info]    using sbt.DefaultProject with sbt 0.7.4 and Scala 2.7.7
@@ -202,7 +202,7 @@ the console, providing us a quick way to bench test our parser.
 
 SBT允许你启动会在你启动Scala REPL的时候加载所有的依赖。它会在启动控制台前先编译工程代码，这样更加便于我们测试我们的解析器了。
 
-<pre>
+<pre class="brush: java; gutter: true">
 > console
 [info] 
 [info] == compile ==
@@ -239,7 +239,7 @@ Our code has compiled, and we're provide the typical Scala prompt.  We'll create
 
 代码编译完成，并且提供了经典的Scala命令行提示符。我们会创建一个新的解析器，一个示例的tweet，并且保证它能够正常“工作”。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> import com.twitter.sample._            
 import com.twitter.sample._
 
@@ -265,7 +265,7 @@ SBT considers Scala files in the project/build directory to be project definitio
 
 这个简单的解析器对于这点输入内容是可以正常工作的，但是我们还需要加入测试代码并且对它进行一些改造。首先要做的就是把specs测试库以及一个真正的JSON解析器加入到我们的工程里来。为了达到这个目标，我们需要在默认的工程结构上进行改造，然后创建项目。把下面的内容添加到project/build/SampleProject.scala里：
 
-<pre>
+<pre class="brush: java; gutter: true">
 import sbt._
 
 class SampleProject(info: ProjectInfo) extends DefaultProject(info) {
@@ -282,7 +282,7 @@ You declare dependencies by specifying a val that is a dependency.  SBT uses ref
 
 这里你可以通过一个常量来指定具体的依赖。SBT使用在构建期反射来扫描你工程里所有的依赖常量，并且生成一个依赖树。这个语法可能比较新，不过它和下面的maven依赖是等同的：
 
-<pre>
+<pre class="brush: java; gutter: true">
 <dependency>
   <groupId>org.codehaus.jackson</groupId>
   <artifactId>jackson-core-asl</artifactId>
@@ -300,7 +300,7 @@ Now we can pull down dependencies for our project.  From the command line (not t
 
 现在我们可以把依赖的库下载下来了。从命令行（而不是sbt控制台）里运行sbt update
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/sbt-sample]$ sbt update
 [info] Building project sample 1.0-SNAPSHOT against Scala 2.8.1
 [info]    using SampleProject with sbt 0.7.4 and Scala 2.7.7
@@ -332,7 +332,7 @@ src/test/scala/com/twitter/sample/SimpleParserSpec.scala
 
 现在我们添加了测试二方库，把下面的代码添加到src/test/scala/com/twitter/sample/SimpleParserSpec.scala里
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.sample
 
 import org.specs._
@@ -358,7 +358,7 @@ In the sbt console, run test
 
 在sbt控制台里，运行test命令
 
-<pre>
+<pre class="brush: java; gutter: true">
 > test
 [info] 
 [info] == compile ==
@@ -415,7 +415,7 @@ Our test works!  Now we can add more.  One of the nice things SBT provides is a 
 
 我们的测试用例执行了！现在我们可以添加更多的测试用例。SBT提供的一个很好的功能就是自动运行被触发的动作。它会预先启动一个循环，不断检测代码改动，一旦有改动就执行相应的动作。我们来运行~test命令，看看有什么效果。
 
-<pre>
+<pre class="brush: java; gutter: true">
 [info] == test ==
 [success] Successful.
 [info] 
@@ -427,7 +427,7 @@ Now let's add the following test cases
 
 现在，我们添加下面的测试用例：
 
-<pre>
+<pre class="brush: java; gutter: true">
     "reject a non-JSON tweet" in {
       val tweet = """"id":1,"text":"foo""""
       parser.parse(tweet) match {
@@ -460,7 +460,7 @@ After we save our file, SBT detects our changes, runs tests, and informs us our 
 
 一旦我们保存好文件，SBT会检测到改动，它会运行测试代码，并且告诉我们parser的实现有问题。
 
-<pre>
+<pre class="brush: java; gutter: true">
 [info] == com.twitter.sample.SimpleParserSpec ==
 [info] SimpleParserSpec
 [info] SimpleParser should
@@ -476,7 +476,7 @@ So let's rework our JSON parser to be real
 
 那么我们就来重构JSON parser的代码，让它更接近真实的parser。
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.sample
 
 import org.codehaus.jackson._
@@ -526,7 +526,7 @@ This is a simple Jackson parser.  When we save, SBT recompiles our code and reru
 
 这是一个简单的Json解析器。当我们保存代码时，SBT会编译我们的代码并且运行测试代码。越来越方便了！
 
-<pre>
+<pre class="brush: java; gutter: true">
 info] SimpleParser should
 [info]   + work with basic tweet
 [info]   + reject a non-JSON tweet
@@ -541,7 +541,7 @@ guards to our token reading loop.
 
 噢。我们需要考虑嵌套的对象。我们来给读入token的循环加上恶心的处理代码。
 
-<pre>
+<pre class="brush: java; gutter: true">
   def parse(str: String) = {
     val parser = parserFactory.createJsonParser(str)
     var nested = 0
@@ -596,7 +596,7 @@ The first step is include StandardProject as an SBT plugin.  Plugins are a way t
 
 第一步是需要把StandardProject作为一个SBT插件添加进行来。插件是一种引入依赖的方式，只不过它是针对于你的构建而不是项目。这些依赖都定义在project/plugins/Plugins.scala里。把下面的内容添加到Plugins.scala文件。
 
-<pre>
+<pre class="brush: java; gutter: true">
 import sbt._
 
 class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
@@ -613,7 +613,7 @@ We'll also update our project definition to extend StandardProject, include an S
 
 同时，我们也需要更新我们的工程定义，让他扩展StandProject类，还需要扩展一个SubversionPublisher trait，同时也需要定义我们打算发布的仓库。把SampleProject.scala修改成如下所示：
 
-<pre>
+<pre class="brush: java; gutter: true">
 import sbt._
 import com.twitter.sbt._
 
@@ -629,7 +629,7 @@ Now if we run the publish action we'll see the following
 
 现在我们来执行publish的动作，会看到下面的结果
 
-<pre>
+<pre class="brush: java; gutter: true">
 [info] == deliver ==
 IvySvn Build-Version: null
 IvySvn Build-DateTime: null
@@ -672,7 +672,7 @@ Tasks are Scala functions.  The simplest way to add a task is to include a val i
 任务都是Scala函数。添加任务最简单的方式是包含一个通过task方法定义的常量，例如：
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 lazy val print = task {log.info("a test action"); None}
 </pre>
 
@@ -680,7 +680,7 @@ If you want dependencies and a description you can add them like this
 
 如果你要添加依赖，同时添加一个描述，你可以按照下面的方式来添加：
 
-<pre>
+<pre class="brush: java; gutter: true">
 lazy val print = task {log.info("a test action"); None}.dependsOn(compile) describedAs("prints a line after compile")
 </pre>
 
@@ -688,7 +688,7 @@ If we reload our project and run the print action we'll see the following
 
 如果我们重新加载工程，然后运行print动作，就会看到下面的内容：
 
-<pre>
+<pre class="brush: java; gutter: true">
 > print
 [info] 
 [info] == print ==
@@ -704,7 +704,7 @@ So it works.  If you're defining a task in a single project this works just fine
 
 这样确实可以的。如果你在一个单一的工程里创建这样的任务是没问题的。但是如果你在插件里这样定义的话，是非常不灵活的。我可能这样做
 
-<pre>
+<pre class="brush: java; gutter: true">
 lazy val print = printAction
 def printAction = printTask.dependsOn(compile) describedAs("prints a line after compile")
 def printTask = task {log.info("a test action"); None}
@@ -714,7 +714,7 @@ This allows consumers to override the task itself, the dependencies and/or descr
 
 这样会运行用户自己重写任务，依赖以及/或者任务的描述，或者是动作。SBT大部分的内置动作都是这种模式的。作为范例，我们可以修改内置的package任务，让他在做下面的任务时打印出时间戳。
 
-<pre>
+<pre class="brush: java; gutter: true">
 lazy val printTimestamp = task { log.info("current time is " + System.currentTimeMillis); None}
 override def packageAction = super.packageAction.dependsOn(printTimestamp)
 </pre>

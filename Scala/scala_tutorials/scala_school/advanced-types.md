@@ -53,7 +53,7 @@ view bounds, like type bounds demand such a function exists for the given type. 
 视图边界，和类型边界相识，也需要一个对于指定类型存在的函数。你可以用一个`%`来表示一个类型边界，例如：
 
 <pre class="brush: java; gutter: true">
-scala> class Container[A <% Int] { def addIt(x: A) = 123 + x }
+scala> class Container[A &lt;% Int] { def addIt(x: A) = 123 + x }
 defined class Container
 </pre>
 
@@ -114,7 +114,7 @@ Similarly, given our previous implicit, we can relax the constraint to viewabili
 同样的，对于前面的implicit，我们可以把限制放松到可以进行对应的视图转换即可：
 
 <pre class="brush: java; gutter: true">
-scala> class Container[A](value: A) { def addIt(implicit evidence: A <%< Int) = 123 + value }
+scala> class Container[A](value: A) { def addIt(implicit evidence: A &lt;%&lt; Int) = 123 + value }
 defined class Container
 
 scala> (new Container("123")).addIt

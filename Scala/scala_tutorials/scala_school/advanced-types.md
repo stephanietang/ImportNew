@@ -48,7 +48,7 @@ scala> math.max("123", 111)
 res1: Int = 123
 </pre>
 
-view bounds, like type bounds demand such a function exists for the given type.  You specify a type bound with <code><%</code> e.g.,
+view bounds, like type bounds demand such a function exists for the given type.  You specify a type bound with <code>&lt;</code> e.g.,
 
 视图边界，和类型边界相识，也需要一个对于指定类型存在的函数。你可以用一个`%`来表示一个类型边界，例如：
 
@@ -77,11 +77,11 @@ scala> (new Container[Float]).addIt(123.2F)
 h2(#otherbounds). Other type bounds
 
 
-Methods can enforce more complex type bounds via implicit parameters. For example, <code>List</code> supports <code>sum</code> on numeric contents but not on others. Alas, Scala's numeric types don't all share a superclass, so we can't just say <code>T <: Number</code>. Instead, to make this work, Scala's math library <a href="http://www.azavea.com/blogs/labs/2011/06/scalas-numeric-type-class-pt-1/">defines an implicit <code>Numeric[T]</code> for the appropriate types T</a>.  Then in <code>List</code>'s definition uses it:
+Methods can enforce more complex type bounds via implicit parameters. For example, <code>List</code> supports <code>sum</code> on numeric contents but not on others. Alas, Scala's numeric types don't all share a superclass, so we can't just say <code>T &lt;: Number</code>. Instead, to make this work, Scala's math library <a href="http://www.azavea.com/blogs/labs/2011/06/scalas-numeric-type-class-pt-1/">defines an implicit <code>Numeric[T]</code> for the appropriate types T</a>.  Then in <code>List</code>'s definition uses it:
 
 ## <a name="otherbounds">其他类型边界</a>
 
- 方法可以通过implicit参数来使用更加复杂的类型边界。例如，`List`对于数字内容支持sum函数，但是对于其他的则不行。悲剧的是，Scala的数字类型并不都共享同一个父类，因此我们不能使用`T <: Number`来实现。为了达到这样的效果，Scala的math库，为合适的类型定义了一个implicit`Numeric[T]`。然后再在List的定义中使用它：
+ 方法可以通过implicit参数来使用更加复杂的类型边界。例如，`List`对于数字内容支持sum函数，但是对于其他的则不行。悲剧的是，Scala的数字类型并不都共享同一个父类，因此我们不能使用`T &lt;: Number`来实现。为了达到这样的效果，Scala的math库，为合适的类型定义了一个implicit`Numeric[T]`。然后再在List的定义中使用它：
 <pre class="brush: java; gutter: true">
 sum[B >: A](implicit num: Numeric[B]): B
 </pre>
@@ -95,8 +95,8 @@ Methods may ask for some kinds of specific "evidence" for a type without setting
 方法也可能会需要一些特定的“证据”来表明哪些类型可以进行设置，从而避免把奇怪的对象给设置成`Numeric`。并且，在这里你还可以使用之前介绍的类型关系操作符：
 
 |A =:= B|A must be equal to B|
-|A <:< B|A must be a subtype of B|
-|A <%< B|A must be viewable as B|
+|A &lt;:< B|A must be a subtype of B|
+|A &lt;< B|A must be viewable as B|
 
 <pre class="brush: java; gutter: true">
 scala> class Container[A](value: A) { def addIt(implicit evidence: A =:= Int) = 123 + value }
@@ -162,7 +162,7 @@ As a sidenote, there are views in the standard library that translates *Ordered*
 
 <pre class="brush: java; gutter: true">
 trait LowPriorityOrderingImplicits {
-  implicit def ordered[A <: Ordered[A]]: Ordering[A] = new Ordering[A] {
+  implicit def ordered[A &lt;: Ordered[A]]: Ordering[A] = new Ordering[A] {
     def compare(x: A, y: A) = x.compare(y)
   }
 }
@@ -288,7 +288,7 @@ To reconcile this, we instead use F-bounded polymorphism.
 我们可以使用F-bounded多态来修复它。
 
 <pre class="brush: java; gutter: true">
-trait Container[A <: Container[A]] extends Ordered[A]
+trait Container[A &lt;: Container[A]] extends Ordered[A]
 </pre>
 
 Strange type!  But note now how Ordered is parameterized on *A*, which itself is *Container[A]*
@@ -326,7 +326,7 @@ scala> class YourContainer extends Container[YourContainer] { def compare(that: 
 defined class YourContainer
 
 scala> List(new MyContainer, new MyContainer, new MyContainer, new YourContainer)                   
-res2: List[Container[_ >: YourContainer with MyContainer <: Container[_ >: YourContainer with MyContainer <: ScalaObject]]] 
+res2: List[Container[_ >: YourContainer with MyContainer &lt;: Container[_ >: YourContainer with MyContainer &lt;: ScalaObject]]] 
   = List(MyContainer@3be5d207, MyContainer@6d3fe849, MyContainer@7eab48a7, YourContainer@1f2f0ce9)
 </pre>
 
@@ -337,7 +337,7 @@ Note how the resulting type is now lower-bound by *YourContainer with MyContaine
 <pre class="brush: java; gutter: true">
 (new MyContainer, new MyContainer, new MyContainer, new YourContainer).min
 <console>:9: error: could not find implicit value for parameter cmp:
-  Ordering[Container[_ >: YourContainer with MyContainer <: Container[_ >: YourContainer with MyContainer <: ScalaObject]]]
+  Ordering[Container[_ >: YourContainer with MyContainer &lt;: Container[_ >: YourContainer with MyContainer &lt;: ScalaObject]]]
 </pre>
 
 No *Ordered[]* exists for the unified type. Too bad.

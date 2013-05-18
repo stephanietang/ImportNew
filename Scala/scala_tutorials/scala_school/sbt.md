@@ -15,7 +15,7 @@ This lesson covers SBT! Specific topics include:
 * 创建一个sbt工程
 * 基本命令
 * sbt控制台
-* 可连续执行命令
+* 连续执行命令
 * 自定义工程
 * 自定义命令
 * sbt代码简介（如果时间允许的话）
@@ -27,7 +27,7 @@ SBT is a modern build tool. While it is written in Scala and provides many Scala
 
 ## 关于SBT
 
-SBT是一个现代的构建工具。它是用Scala编写的，并且提供了很多针对Scala的便利，它也是一个通用的构建工具。
+SBT是一个现代构建工具。它是用Scala编写的，并且提供了很多针对Scala的便利，它也是一个通用的构建工具。
 
 h2. Why SBT?
 
@@ -42,7 +42,7 @@ h2. Why SBT?
 
 * 有着健全的依赖管理
 	* Ivy用来管理依赖
-	* 一个只会要求更新的模型
+	* 一个只会按照要求更新的模型
 * 所有任务的创建都支持Scala
 * 可连续执行命令
 * 可以在工程的上下文里启动REPL
@@ -66,7 +66,7 @@ java -Xmx512M -jar sbt-launch.jar "$@"
 * make sure it's executable and in your path
 * run sbt to create your project
 
-* 保证命令时可执行的并且是在你的path里
+* 保证命令是可执行的并且是在你的path里
 * 运行sbt来创建工程
 
 <pre class="brush: java; gutter: true">
@@ -113,7 +113,7 @@ code's language (e.g. src/main/scala, src/main/java)
 * target - the destination for generated stuff (e.g. generated thrift
   code, class files, jars)
 
-## 项目结构
+## 工程结构
 
 * project - 工程定义文件
   * project/build/<yourproject>.scala - 主要的工程定义文件
@@ -166,7 +166,7 @@ SBT can be used both as a command line script and as a build console.  We'll be 
 
 ## 在控制台里进行测试
 
-SBT可以被用做命令行脚本也可以被用做是构建控制台。我们主要把它用作构建控制台，不过大部分的命令都可以单独作为参数传给SBT，例如：
+SBT可以被用作命令行脚本也可以被用作是构建控制台。我们主要把它用作构建控制台，不过大部分的命令都可以单独作为参数传给SBT，例如：
 
 
 <pre class="brush: java; gutter: true">
@@ -176,6 +176,7 @@ Note that if a command takes arguments, you need to quote the entire
 argument path, e.g.
 
 注意，如果一个命令接受参数，你需要给参数加上引号
+
 <pre class="brush: java; gutter: true">
 sbt 'test-only com.twitter.sample.SampleSpec'
 </pre>
@@ -280,7 +281,7 @@ You declare dependencies by specifying a val that is a dependency.  SBT uses ref
 
 一个工程的定义就是一个SBT类。在这里我们继承了SBT的DefaultProject类。
 
-这里你可以通过一个常量来指定具体的依赖。SBT使用在构建期反射来扫描你工程里所有的依赖常量，并且生成一个依赖树。这个语法可能比较新，不过它和下面的maven依赖是等同的：
+这里你可以通过一个常量来指定具体的依赖。SBT使用在构建期通过反射来扫描你工程里所有的依赖常量，并且生成一个依赖树。这个语法可能比较新，不过它和下面的maven依赖是等同的：
 
 <pre class="brush: java; gutter: true">
 <dependency>

@@ -32,7 +32,7 @@ Sometimes you don't need to specify that one type is equal/sub/super another, ju
 
 有时候你并不需要指定一个类型是另外一个类型，或者是它的子类或者父类，对于这点你可能会和类型转换搞混淆。一个视图边界定义了一个可以“看作”另一个类型的类型。这个对于需要“读取”一个对象，但是不需要修改它的场景是非常实用的。
 
-*Implicit*函数允许自动进行类型转换。更加确切地说，它会在有利于类型推导的时候允许按需的函数应用，例如：
+*Implicit*函数允许自动进行类型转换。更加确切地说，它会在有助于类型推导的时候允许按需的函数应用，例如：
 
 <pre class="brush: java; gutter: true">
 scala> implicit def strToInt(x: String) = x.toInt
@@ -59,7 +59,7 @@ defined class Container
 
 This says that *A* has to be "viewable" as *Int*.  Let's try it.
 
-这个表示类型*A*可以被“看作”是类型"Int"。让我们来试试。
+这个表示类型*A*可以被“看作”是类型“Int”。让我们来试试。
 
 <pre class="brush: java; gutter: true">
 scala> (new Container[String]).addIt("123")
@@ -92,7 +92,7 @@ Methods may ask for some kinds of specific "evidence" for a type without setting
 
 如果你调用`List(1,2).sum()`，你需要传入一个num参数，它会被隐式地进行设置。但是如果你通过`List("whoop").sum()`的方式来调用的话，会无法完成参数的设置。
 
-方法也可能需要一些特定的“证据”来表明哪些类型可以进行设置，从而奇怪的对象给设置成`Numeric`。并且，你还可以使用之前介绍的类型关系操作符：
+方法也可能会需要一些特定的“证据”来表明哪些类型可以进行设置，从而避免把奇怪的对象给设置成`Numeric`。并且，在这里你还可以使用之前介绍的类型关系操作符：
 
 |A =:= B|A must be equal to B|
 |A <:< B|A must be a subtype of B|
@@ -111,7 +111,8 @@ scala> (new Container("123")).addIt
 
 Similarly, given our previous implicit, we can relax the constraint to viewability:
 
-同样的，对于前面的implicit，我们可以把限制放松到viewability：
+同样的，对于前面的implicit，我们可以把限制放松到可以进行对应的视图转换即可：
+
 <pre class="brush: java; gutter: true">
 scala> class Container[A](value: A) { def addIt(implicit evidence: A <%< Int) = 123 + value }
 defined class Container
@@ -157,7 +158,7 @@ res3: Int = 4
 
 As a sidenote, there are views in the standard library that translates *Ordered* into *Ordering* (and vice versa).
 
-旁注，在标准库中有可以把Ordered转换为Ordering（以及反向转换）的视图
+旁注，在标准库中有可以把Ordered转换为Ordering（以及反向转换）视图的方法
 
 <pre class="brush: java; gutter: true">
 trait LowPriorityOrderingImplicits {
@@ -195,7 +196,7 @@ res37: Ordering[Int] = scala.math.Ordering$Int$@3a9291cf
 
 Combined, these often result in less code, especially when threading through views.
 
-组合起来，这些可以使得代码变得更加简洁，特别是在处理视图的时候。
+把这些给组合起来，可以使得代码变得更加简洁，特别是在处理视图的时候。
 
 h2(#higher). Higher-kinded types & ad-hoc polymorphism
 
@@ -225,7 +226,9 @@ res25: List[Int] = List(123)
 Note that *Container* is polymorphic in a parameterized type ("container type").
 
 If we combine using containers with implicits, we get "ad-hoc" polymorphism: the ability to write generic functions over containers.
-如果我们结合implicit和container接口，我们就能够得到“临时”的多态：这是一种可以在container上编写泛型函数的功能。
+
+如果我们结合implicit和container接口，我们就能够得到“即时”多态（"ad-hoc" polymorphism）：这是一种可以在container上编写泛型函数的功能。
+
 <pre class="brush: java; gutter: true">
 scala> trait Container[M[_]] { def put[A](x: A): M[A]; def get[A](m: M[A]): A }
 
@@ -267,6 +270,7 @@ def compare(that: Container): Int
 </pre>
 
 And so we cannot access the concrete subtype, eg.:
+
 这样的话，我们就不能访问具体的子类型了，例如:
 
 
@@ -288,9 +292,11 @@ trait Container[A <: Container[A]] extends Ordered[A]
 </pre>
 
 Strange type!  But note now how Ordered is parameterized on *A*, which itself is *Container[A]*
+
 很奇怪的类型！但是请注意Ordered在*A*上是如何指定类型的，A本身也是一个*Container[A]*。
 
 So, now 
+
 现在
 
 <pre class="brush: java; gutter: true">
@@ -300,6 +306,7 @@ class MyContainer extends Container[MyContainer] {
 </pre>
 
 They are now ordered:
+
 现在它们都是有序的：
 
 <pre class="brush: java; gutter: true">
@@ -343,7 +350,7 @@ Scala has support for *structural types* -- type requirements are expressed by i
 
 ## <a name="structural">结构化的类型</a>
 
-Scala 支持*结构化的类型* -- 对于这个类型的需求一般用接口 _structure_来表示而非具体的某个类型。
+Scala 支持*结构化的类型* -- 对于这个类型的需求一般用接口结构（iterface structure）来表示,而非使用具体的某个类型。
 
 <pre class="brush: java; gutter: true">
 scala> def foo(x: { def get: Int }) = 123 + x.get
@@ -445,6 +452,7 @@ trait Filter[-ReqIn, +RepOut, +ReqOut, -RepIn]
 A service may authenticate requests with a filter.
 
 一个服务可以通过一个filter来验证请求。
+
 <pre class="brush: java; gutter: true">
 trait RequestWithCredentials extends Request {
   def credentials: Credentials

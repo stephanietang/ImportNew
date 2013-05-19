@@ -21,7 +21,7 @@ MapReduce框架由一个Jobracker（通常简称JT）和数个TaskTracker（TT�
 Hadoop由JavaTM实现,用户可以使用java、基于JVM的其他语言或者以下的方式开发MR应用：
 
 - Hadoop Streaming- 允许用户以任何一种可执行程序（如shell脚本）实现为mapper和(或)reducer来创建和运行MR任务。
-- Hadoop Pigs - 一种兼容[SWIG](http://www.swig.org/)(不基于JNITM)的C++实现MapReduce应用。
+- Hadoop Pigs - 一种兼容[SWIG](http://www.swig.org/)(不基于JNITM)的C++ API，用来实现MapReduce应用。
 
 ### 输入和输出 ###
 

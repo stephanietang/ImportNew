@@ -1,12 +1,12 @@
 Hadoop从这里开始!和我一起学习下使用Hadoop的基本知识，下文将以[Hadoop Tutorial](http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial.html)为主体带大家走一遍如何使用Hadoop分析数据!
 
-## Hadoop Tutorial（一） ##
-这个专题将描述用户在使用Hadoop MapReduce框架过程中面对的最重要的东西。Mapreduce由client APIs和运行环境组成。其中client APIs用来编写MR程序，运行时是mapreduce运行各种MR应用或程序的环境。API有2个版本，也就是我们通常说的老api和新api。运行时包含MRv1和MRv2.该Tutorial将会描述新老api和MRv1。
+## Hadoop教程（一） ##
+这个专题将描述用户在使用Hadoop MapReduce(下文缩写成MR)框架过程中面对的最重要的东西。Mapreduce由client APIs和运行时(runtime)环境组成。其中client APIs用来编写MR程序，运行时环境提供MR运行的环境。API有2个版本，也就是我们通常说的老api和新api。运行时有两个版本：MRv1和MRv2。该教程将会基于老api和MRv1。
 
 *其中:老api在org.apache.hadoop.mapred包中,新api在 org.apache.hadoop.mapreduce中。*
 
 ### 前提 ###
-首先请确认已经正确安装、配置了CDH，并且正常运行。
+首先请确认已经正确安装、配置了[CDH](http://www.cloudera.com/content/cloudera/en/products/cdh.html)，并且正常运行。
 ### MR概览 ###
 Hadoop MapReduce 是一个开源的计算框架，运行在其上的应用通常可在拥有几千个节点的集群上并行处理海量数据（可以使P级的数据集）。
 
@@ -14,14 +14,14 @@ MR作业通常将数据集切分为独立的chunk，这些chunk以并行的方�
 
 通常部署时计算节点也是存储节点，MR框架和HDFS运行在同一个集群上。这样的配置允许框架在集群的节点上有效的调度任务，当然待分析的数据已经在集群上存在，这也导致了集群内部会产生高聚合带宽现象（通常我们在集群规划部署时就需要注意这样一个特点）。
 
-MapReduce框架由一个Jobracker（通常简称JT）和数个TaskTracker（TT）组成（，在cdh4中如果使用了Jobtracker HA特性，则会有2个Jobtracer，其中只有一个为active，另一个作为standby处于inactive状态）。JobTracker负责在所有tasktracker上调度任务，监控任务病重新执行失败的任务。所有的tasktracker执行jobtracker分配过来的任务。
+MapReduce框架由一个Jobracker（通常简称JT）和数个TaskTracker（TT）组成（在cdh4中如果使用了Jobtracker HA特性，则会有2个Jobtracer，其中只有一个为active，另一个作为standby处于inactive状态）。JobTracker负责在所有tasktracker上调度任务，监控任务并重新执行失败的任务。所有的tasktracker执行jobtracker分配过来的任务。
 
 应用至少需要制定输入、输出路径，并提供实现了适当接口和(或)抽象类的map和reduce函数。这些路径和函数以及其他的任务参数组成了任务配置对象（job configuration）。Hadoop 任务客户端提交任务（jar包或者可执行程序等）和配置对象到JT。JT将任务实现和配置对象分发到数个TT（由JT分配），调度、监控任务，并向客户端返回状态和检测信息。
 
 Hadoop由JavaTM实现,用户可以使用java、基于JVM的其他语言或者以下的方式开发MR应用：
 
-- Hadoop Streaming- 一套工具允许用户以任何一种可执行程序（如shell脚本）实现为mapper和(或)reducer来创建和运行MR任务。
-- Hadoop Pigs - 一种 [SWIG](http://www.swig.org/)(不基于JNITM),兼容c++实现MapReduce应用。
+- Hadoop Streaming- 允许用户以任何一种可执行程序（如shell脚本）实现为mapper和(或)reducer来创建和运行MR任务。
+- Hadoop Pigs - 一种兼容[SWIG](http://www.swig.org/)(不基于JNITM)的C++ API，用来实现MapReduce应用。
 
 ### 输入和输出 ###
 
@@ -31,13 +31,13 @@ key和vaue的类型必须在框架内可序列化(serializable)，所以key valu
 
 典型的MR任务输入和输出类型转换图为：
 
-(input) k1-v1 -> map -> k2-v2 -> combine -> k2-v2 -> reduce -> k3-v3 (output)
+    (input) k1-v1 -> map -> k2-v2 -> combine -> k2-v2 -> reduce -> k3-v3 (output)
 
 ### 经典的WordCount1.0 ###
 
-玩Hadoop不得不提WordCount，CDH原文里也以这为例，当然这里也以它为例:)
+玩Hadoop不得不提WordCount，CDH原文里也以这为例，当然这里也以它为例:）
 
-简单说下WordCount,它是计算输入数据中每个word的出现次数.因为足够简单所以经典，和Hello World有的一拼!
+简单说下WordCount,它是计算输入数据中每个word的出现次数。因为足够简单所以经典，和Hello World有的一拼!
 
 上源码：
 
@@ -45,63 +45,63 @@ key和vaue的类型必须在框架内可序列化(serializable)，所以key valu
 
     import java.io.IOException;
     import java.util.*;
-    
+
     import org.apache.hadoop.fs.Path;
     import org.apache.hadoop.conf.*;
     import org.apache.hadoop.io.*;
     import org.apache.hadoop.mapred.*;
     import org.apache.hadoop.util.*;
-    
+
     public class WordCount {
-    
+
       public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
-    private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
-    
-    public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-      String line = value.toString();
-      StringTokenizer tokenizer = new StringTokenizer(line);
-      while (tokenizer.hasMoreTokens()) {
-    word.set(tokenizer.nextToken());
-    output.collect(word, one);
+        private final static IntWritable one = new IntWritable(1);
+        private Text word = new Text();
+
+        public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+          String line = value.toString();
+          StringTokenizer tokenizer = new StringTokenizer(line);
+          while (tokenizer.hasMoreTokens()) {
+            word.set(tokenizer.nextToken());
+            output.collect(word, one);
+          }
+        }
       }
-    }
-      }
-    
+
       public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
-    public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-      int sum = 0;
-      while (values.hasNext()) {
-    sum += values.next().get();
+        public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+          int sum = 0;
+          while (values.hasNext()) {
+            sum += values.next().get();
+          } 
+          output.collect(key, new IntWritable(sum));
+        }
       }
-      output.collect(key, new IntWritable(sum));
-    }
-      }
-    
+
       public static void main(String[] args) throws Exception {
-    JobConf conf = new JobConf(WordCount.class);
-    conf.setJobName("wordcount");
-    
-    conf.setOutputKeyClass(Text.class);
-    conf.setOutputValueClass(IntWritable.class);
-    
-    conf.setMapperClass(Map.class);
-    conf.setCombinerClass(Reduce.class);
-    conf.setReducerClass(Reduce.class);
-    
-    conf.setInputFormat(TextInputFormat.class);
-    conf.setOutputFormat(TextOutputFormat.class);
-    
-    FileInputFormat.setInputPaths(conf, new Path(args[0]));
-    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-    
-    JobClient.runJob(conf);
+        JobConf conf = new JobConf(WordCount.class);
+        conf.setJobName("wordcount");
+
+        conf.setOutputKeyClass(Text.class);
+        conf.setOutputValueClass(IntWritable.class);
+
+        conf.setMapperClass(Map.class);
+        conf.setCombinerClass(Reduce.class);
+        conf.setReducerClass(Reduce.class);
+
+        conf.setInputFormat(TextInputFormat.class);
+        conf.setOutputFormat(TextOutputFormat.class);
+
+        FileInputFormat.setInputPaths(conf, new Path(args[0]));
+        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+
+        JobClient.runJob(conf);
       }
     }
 
 首先编译WordCount.java
 
-$ mkdir wordcount_classes $ javac -cp classpath -d wordcount_classes WordCount.java
+    $ mkdir wordcount_classes $ javac -cp classpath -d wordcount_classes WordCount.java
 
 其中classpath为：
 
@@ -110,9 +110,10 @@ $ mkdir wordcount_classes $ javac -cp classpath -d wordcount_classes WordCount.j
 
 打成jar包:
 
-$ jar -cvf wordcount.jar -C wordcount_classes/ .
+    $ jar -cvf wordcount.jar -C wordcount_classes/ .
 
 假定：
+
 - /user/cloudera/wordcount/input 输入HDFS路径
 - /user/cloudera/wordcount/output 输出HDFS路径
 
@@ -142,7 +143,8 @@ MR应用可以用-files参数指定在当前工作目录下存在的多个文件
 
     hadoop jar hadoop-examples.jar wordcount -files cachefile.txt -libjars mylib.jar input output
     
-详细看下wordcount应用。
+详细看下wordcount应用
+
 14-26行实现了Mapper，通过map方法(18-25行)一次处理一行记录，记录格式为指定的TextInputFormat（行49）。然后将一条记录行根据空格分隔成一个个单词。分隔使用的是类StringTokenizer，然后以<word,1>形式发布kv对。
 
 在前面给定的输入中，第一个map将会输出:< Hello, 1> < World, 1> < Bye, 1> < World, 1>

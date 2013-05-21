@@ -11,7 +11,7 @@ This lesson covers SBT! Specific topics include:
 * custom commands
 * quick tour of sbt source (if time)
 
-这个章节会讲解SBT!包含的主题有：
+这个章节会讲解SBT(Simple Build Tool)!包含的主题有：
 * 创建一个sbt工程
 * 基本命令
 * sbt控制台
@@ -27,7 +27,7 @@ SBT is a modern build tool. While it is written in Scala and provides many Scala
 
 ## 关于SBT
 
-SBT是一个现代构建工具。它是用Scala编写的，并且提供了很多针对Scala的便利，它也是一个通用的构建工具。
+SBT是一个现代构建工具。它是用Scala编写的，并且针对Scala也提供了很多方便快捷的功能。它也是一个通用的构建工具。
 
 h2. Why SBT?
 
@@ -40,9 +40,9 @@ h2. Why SBT?
 
 ## 为什么使用SBT?
 
-* 有着健全的依赖管理
+* 强大的依赖管理功能
 	* Ivy用来管理依赖
-	* 一个只会按照要求更新的模型
+	* 一个只会根据需求更新的模型
 * 所有任务的创建都支持Scala
 * 可连续执行命令
 * 可以在工程的上下文里启动REPL
@@ -55,7 +55,7 @@ h2. Getting Started
 
 ## 开始
 
-* 下载jar包：http://code.google.com/p/simple-build-tool/downloads/list
+* 下载jar包：[http://code.google.com/p/simple-build-tool/downloads/list](http://code.google.com/p/simple-build-tool/downloads/list)
 * 创建一个stb shell脚本来调用jar包，例如：
 
 
@@ -66,7 +66,7 @@ java -Xmx512M -jar sbt-launch.jar "$@"
 * make sure it's executable and in your path
 * run sbt to create your project
 
-* 保证命令是可执行的并且是在你的path里
+* 保证以上命令能够正确执行，它已经放在了path下
 * 运行sbt来创建工程
 
 <pre class="brush: java; gutter: true">
@@ -118,7 +118,7 @@ code's language (e.g. src/main/scala, src/main/java)
 * project - 工程定义文件
   * project/build/<yourproject>.scala - 主要的工程定义文件
   * project/build.properties - 工程，sbt以及scala版本定义
-* src/main - 你的应用代码在这里，不同的子目录名称表示不同的编程语言（例如，src/main/scala,src/main/java)
+* src/main - 你的应用代码放在这里，不同的子目录名称表示不同的编程语言（例如，src/main/scala,src/main/java)
 * src/main/resources - 你想添加到jar包里的静态文件（例如日志配置文件）
 * lib_managed - 你的工程所依赖的jar文件。会在sbt更新的时候添加到该目录
 * target - 最终生成的文件存放的目录（例如，生成的thrift代码，class文件，jar文件）
@@ -713,7 +713,7 @@ def printTask = task {log.info("a test action"); None}
 
 This allows consumers to override the task itself, the dependencies and/or description of the task, or the action.  Most built in SBT actions follow this pattern.  As an example, we can modify the builtin package task to print the current timestamp by doing the following
 
-这样会运行用户自己重写任务，依赖以及/或者任务的描述，或者是动作。SBT大部分的内置动作都是这种模式的。作为范例，我们可以修改内置的package任务，让他在做下面的任务时打印出时间戳。
+这样使得用户可以自己重写任务，依赖，任务的描述，或是任务的行为。SBT大部分的内置行为都是这种模式的。作为范例，我们可以修改内置的package任务，让他在做下面的任务时打印出时间戳。
 
 <pre class="brush: java; gutter: true">
 lazy val printTimestamp = task { log.info("current time is " + System.currentTimeMillis); None}

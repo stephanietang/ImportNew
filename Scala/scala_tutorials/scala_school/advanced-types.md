@@ -16,8 +16,8 @@ This lesson covers:
 * <a href="#otherbounds">其他类型边界</a>
 * <a href="#higher">高度类型化的类型&临时多态</a>
 * <a href="#fbounded">F-bounded多态/可递归类型</a>
-* <a href="#structral">结构化的类型</a>
-* <a href="#abstract">抽象类型的成员</a>
+* <a href="#structural">结构化的类型</a>
+* <a href="#abstractmem">抽象类型的成员</a>
 * <a href="#manifest">类型擦除和Manifest</a>
 * <a href="#finagle">实例学习：Finagle</a>
 
@@ -30,9 +30,9 @@ Sometimes you don't need to specify that one type is equal/sub/super another, ju
 
 ## <a name="viewbounds">视图边界("类型类")</a>
 
-有时候你并不需要指定一个类型是另外一个类型，或者是它的子类或者父类，对于这点你可能会和类型转换搞混淆。一个视图边界定义了一个可以“看作”另一个类型的类型。这个对于需要“读取”一个对象，但是不需要修改它的场景是非常实用的。
+有时候你并不需要指定一个类型等价于另外一个类型，或者是它的子类或者父类，如果那样做的话，你可能会和类型转换搞混淆。视图边界定义了可以“看作”是另一个类型的一种类型。这个对于需要“读取”一个对象，但是不需要修改它的场景是非常实用的。
 
-*Implicit*函数允许自动进行类型转换。更加确切地说，它会在有助于类型推导的时候允许按需的函数应用，例如：
+*Implicit*函数允许自动进行类型转换。更加确切地说，这些函数允许按需的函数应用，这将有助于类型推导，例如：
 
 <pre class="brush: java; gutter: true">
 scala> implicit def strToInt(x: String) = x.toInt
@@ -50,7 +50,7 @@ res1: Int = 123
 
 view bounds, like type bounds demand such a function exists for the given type.  You specify a type bound with <code>&lt;</code> e.g.,
 
-视图边界，和类型边界相识，也需要一个对于指定类型存在的函数。你可以用一个`%`来表示一个类型边界，例如：
+视图边界，和类型边界相似，也需要一个对于指定类型存在的函数。你可以用一个`%`来表示一个类型边界，例如：
 
 <pre class="brush: java; gutter: true">
 scala> class Container[A &lt;% Int] { def addIt(x: A) = 123 + x }
@@ -81,7 +81,8 @@ Methods can enforce more complex type bounds via implicit parameters. For exampl
 
 ## <a name="otherbounds">其他类型边界</a>
 
- 方法可以通过implicit参数来使用更加复杂的类型边界。例如，`List`对于数字内容支持sum函数，但是对于其他的则不行。悲剧的是，Scala的数字类型并不都共享同一个父类，因此我们不能使用`T &lt;: Number`来实现。为了达到这样的效果，Scala的math库，为合适的类型定义了一个implicit`Numeric[T]`。然后再在List的定义中使用它：
+函数可以通过implicit参数来使用更加复杂的类型边界。例如，`List`对于数字内容支持sum函数，但是对于其他的则不行。悲剧的是，Scala的数字类型并不都共享同一个父类，因此我们不能使用`T <: Number`来实现。为了达到这样的效果，Scala的math库，为合适的类型[定义了一个implicit`Numeric[T]`](http://www.azavea.com/blogs/labs/2011/06/scalas-numeric-type-class-pt-1/)。然后再在List的定义中使用它：
+
 <pre class="brush: java; gutter: true">
 sum[B >: A](implicit num: Numeric[B]): B
 </pre>
@@ -98,6 +99,21 @@ Methods may ask for some kinds of specific "evidence" for a type without setting
 |A &lt;:< B|A must be a subtype of B|
 |A &lt;< B|A must be viewable as B|
 
+<table>
+  <tr>
+    <td>A =:= B</td>
+    <td>A必须等于B</td>
+  </tr>
+  <tr>
+    <td>A <:< B</td>
+    <td>A必须是B的子类</td>
+  </tr>
+  <tr>
+    <td>A &lt;%&lt; B</td>
+    <td>A必须看作是B</td>
+  </tr>
+</table>
+
 <pre class="brush: java; gutter: true">
 scala> class Container[A](value: A) { def addIt(implicit evidence: A =:= Int) = 123 + value }
 defined class Container
@@ -111,7 +127,7 @@ scala> (new Container("123")).addIt
 
 Similarly, given our previous implicit, we can relax the constraint to viewability:
 
-同样的，对于前面的implicit，我们可以把限制放松到可以进行对应的视图转换即可：
+同样的，对于前面的implicit，我们可以把限制放宽，可以进行对应的视图转换即可：
 
 <pre class="brush: java; gutter: true">
 scala> class Container[A](value: A) { def addIt(implicit evidence: A &lt;%&lt; Int) = 123 + value }
@@ -123,13 +139,12 @@ res15: Int = 246
 
 h3. Generic programming with views
 
-
-
 In the Scala standard library, views are primarily used to implement generic functions over collections.  For example, the "min" function (on *Seq[]*), uses this technique:
 
 ### 通过视图来进行泛型编程
 
 在Scala的标准类库里，视图主要用来实现集合类的泛型函数。例如，“min"函数（在Seq[]里），使用到了这个技术：
+
 <pre class="brush: java; gutter: true">
 def min[B >: A](implicit cmp: Ordering[B]): A = {
   if (isEmpty)
@@ -145,7 +160,8 @@ The main advantages of this are:
 * You can define your own orderings without any additional library support:
 
 使用这个的主要优点在于：
-* 集合中的元素不需要去实现Ordered，但是依然可以使用Ordered进行静态类型检测
+
+* 集合中的元素不需要去实现*Ordered*，但是依然可以使用*Ordered*进行静态类型检测
 * 你可以直接定义你自己的排序，而不需要额外的类库支持
 
 <pre class="brush: java; gutter: true">
@@ -158,7 +174,7 @@ res3: Int = 4
 
 As a sidenote, there are views in the standard library that translates *Ordered* into *Ordering* (and vice versa).
 
-旁注，在标准库中有可以把Ordered转换为Ordering（以及反向转换）视图的方法
+注意：在标准库中，有可以把*Ordered*转换为*Ordering*视图的方法。（反向转换也可以）
 
 <pre class="brush: java; gutter: true">
 trait LowPriorityOrderingImplicits {
@@ -170,12 +186,11 @@ trait LowPriorityOrderingImplicits {
 
 h4. Context bounds & implicitly[]
 
-
 Scala 2.8 introduced a shorthand for threading through & accessing implicit arguments.
 
-## 上下文边界&implicitly[]
+## 上下文边界和implicitly[]
 
-Scala 2.8 引入了一个使用和访问implicit参数的快速方法。
+Scala 2.8 引入了一个使用和访问implicit参数的快捷方法。
 
 <pre class="brush: java; gutter: true">
 scala> def foo[A](implicit x: Ordered[A]) {}
@@ -203,12 +218,12 @@ h2(#higher). Higher-kinded types & ad-hoc polymorphism
 Scala can abstract over "higher kinded" types. For example, suppose that you needed to use several types of containers for several types of data. You might define a <code>Container</code> interface that might be implemented by means of several container types: an <code>Option</code>, a <code>List</code>, etc. You want to define an interface for using values in these containers without nailing down the values' type.
 
 ## <a name="higher">高度类型化的类型&临时多态</a>
-Scala可以抽象出“高度类型化”的类型。例如，假设你需要多个类型的container来处理多个类型的数据。你可能会定义一个`Container`接口，然后它会被多个container类型实现：一个`Option`，一个`List`,等等。你想要定义一个Container接口，并且你需要使用使用其中的值，但是你不想要确定值的实际类型。
+
+Scala可以抽象出“高度类型化”的类型。例如，假设你需要多个类型的container来处理多个类型的数据。你可能会定义一个`Container`接口，然后它会被多个container类型实现：一个`Option`，一个`List`,等等。你想要定义一个Container接口，并且你需要使用其中的值，但是你不想要确定值的实际类型。
 
 This is analagous to function currying. For example, whereas "unary types" have constructors like <code>List[A]</code>, meaning we have to satisfy one "level" of type variables in order to produce a concrete types (just like an uncurried function needs to be supplied by only one argument list to be invoked), a higher-kinded type needs more.
 
 这个和currying函数的场景非常相似。例如，鉴于“一元的类型”有着类似`List[A]`的构造器，这就意味着我们需要满足一“级”类型变量的条件，这样才能够产生具体的类型（就像一个非currying的函数只能有一个参数列表，它才能够被调用），一个高度类型化的类型需要更多的信息。
-
 
 <pre class="brush: java; gutter: true">
 scala> trait Container[M[_]] { def put[A](x: A): M[A]; def get[A](m: M[A]): A }
@@ -284,7 +299,8 @@ fails to compile, since we are specifying Ordered for *Container*, not the parti
 
 To reconcile this, we instead use F-bounded polymorphism.
 
-这段代码会编译失败，因为我们给*Container*指定的是Order，而不是具体的子类型。
+这段代码会编译失败，因为我们给*Container*指定的是Ordered，而不是具体的子类型。
+
 我们可以使用F-bounded多态来修复它。
 
 <pre class="brush: java; gutter: true">
@@ -332,7 +348,7 @@ res2: List[Container[_ >: YourContainer with MyContainer &lt;: Container[_ >: Yo
 
 Note how the resulting type is now lower-bound by *YourContainer with MyContainer*. This is the work of the type inferencer. Interestingly- this type doesn't even need to make sense, it only provides a logical greatest lower bound for the unified type of the list. What happens if we try to use *Ordered* now?
 
-注意最终的类型是如何被*YourContainer 和 MyContainer*进行限制的。这是类型推导器的工作。有趣的是——这个类型并不需要有实际的意义，它只是为List的所有类型提供了一个逻辑上的最小边界。那么，如果我们使用*Ordered*会怎么样呢？
+注意最终的类型是如何被*YourContainer 和 MyContainer*进行限制的。这是类型推导器的工作。有趣的是--这个类型并不需要有实际的意义，它只是为List的所有类型提供了一个逻辑上的最小边界。那么，如果我们使用*Ordered*会怎么样呢？
 
 <pre class="brush: java; gutter: true">
 (new MyContainer, new MyContainer, new MyContainer, new YourContainer).min
@@ -388,6 +404,7 @@ This is often a useful trick when doing dependency injection, etc.
 You can refer to an abstract type variable using the hash-operator:
 
 在处理依赖注入等场景时，这是一个很有用的手段。
+
 你可以通过hash操作来引用一个抽象的类型变量：
 
 <pre class="brush: java; gutter: true">
@@ -418,9 +435,9 @@ h2(#finagle). Case study: Finagle
 
 See: https://github.com/twitter/finagle
 
-## <a name="finagle">示例学习：Finagle</a>
+## <a name="finagle">范例学习：Finagle</a>
 
-参考：https://github.com/twitter/finagle
+参考：[https://github.com/twitter/finagle](https://github.com/twitter/finagle)
 
 <pre class="brush: java; gutter: true">
 trait Service[-Req, +Rep] extends (Req => Future[Rep])
@@ -491,4 +508,5 @@ val upFilter =
 </pre>
 
 Type safely!
-安全地使用类型！
+
+安全地使用类型吧！

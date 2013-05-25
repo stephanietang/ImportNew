@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Hadoop Tutorial(mapper-reducer)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: 29d1c5bc36da364ad5aa86946d420b7bbc54a253 */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<p>书接上回，继续为大家讲解<a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial/ht_topic_6.html">MapReduce用户编程接口</a></p>
+<h2>Hadoop教程(二)</h2>
+<h3>MapReduce - 用户编程接口</h3>
+<p>下面将着重谈下MapReduce框架中用户经常使用的一些接口或类的详细内容。了解这些会极大帮助你实现、配置和优化MR任务。当然javadoc中对每个class或接口都进行了更全面的陈述，这里只是一个指引教程。</p>
+<p>首先来看下Mapper和Reducer接口，通常MR应用都要实现这两个接口来提供map和reduce方法，这些是MRJob的核心部分。</p>
+<h4>Mapper</h4>
+<p>Mapper 将输入的kv对映射成中间数据kv对集合。Maps 将输入记录转变为中间记录，其中被转化后的记录不必和输入记录类型相同。一个给定的输入对可以映射为0或者多个输出对。</p>
+<p>在MRJob执行过程中，MapReduce框架根据提前指定的InputFormat(输入格式对象)产生InputSplit（输入分片），而每个InputSplit将会由一个map任务处理。</p>
+<p>总起来讲，Mapper实现类通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConfigurable.html">JobConfigurable.configure(JobConf)</a>方法传入JobConf对象来初始化，然后在每个map任务中调用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/Mapper.html">map(WritableComparable,Writable,OutputCollector,Reporter)</a>方法处理InputSplit的每个kv对。MR应用可以覆盖<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/io/Closeable.html">Closeable.close</a>方法去处理一些必须的清理工作。</p>
+<p>输出对不一定和输入对类型相同。一个给定的输入对可能映射成0或者很多的输出对。输出对是框架通过调用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/OutputCollector.html">OutputCollector.colect(WritableComparable,Writable)</a>得到。</p>
+<p>MR应用可以使用Reporter汇报进度，设置应用层级的状态信息，更新计数器或者只是显示应用处于运行状态等。</p>
+<p>所有和给定的输出key关联的中间数据都会随后被框架分组处理，并传给Reducer处理以产生最终的输出。用户可以通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">JobConf.setOutputKeyComparatorClass(Class)</a>指定一个Comparator控制分组处理过程。</p>
+<p>Mapper输出都被排序后根据Reducer数量进行分区，分区数量等于reduce任务数量。用户可以通过实现自定义的Partitioner来控制哪些keys(记录)到哪个Reducer中去。</p>
+<p>此外，用户还可以指定一个Combiner，调用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">JobConf.setCombinerClass(Class)</a>来实现。这个可以来对map输出做本地的聚合，有助于减少从mapper到reducer的数据量。</p>
+<p>经过排序的中间输出数据通常以一种简单的格式(key-len,key,value-len,value)存储。应用可以决定是否或者怎样被压缩以及压缩格式，可以通过JobConf来指定.</p>
+<h5>Map数</h5>
+<p>通常map数由输入数据总大小决定，也就是所有输入文件的blocks数目决定。</p>
+<p>每个节点并行的运行的map数正常在10到100个。由于Map任务初始化本身需要一段时间所以map运行时间至少在1分钟为好。</p>
+<p>如此，如果有10T的数据文件，每个block大小128M，最大使用为82000map数，除非使用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setNumMapTasks(int)</a>（这个方法仅仅对MR框架提供一个建议值）将map数值设置到更高。</p>
+<h4>Reducer</h4>
+<p>Reducer 根据key将中间数据集合处理合并为更小的数据结果集。
+用户可以通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">JobConf.setNumReduceTasks(int)</a>设置作业的reducer数目。</p>
+<p>整体而言，Reducer实现类通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConfigurable.html">JobConfigurable.configure(JobConf)</a>方法将JobConf对象传入,并为Job设置和初始化Reducer。MR框架调用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/Reducer.html"> reduce(WritableComparable, Iterator, OutputCollector, Reporter) </a>来处理以key被分组的输入数据。应用可以覆盖<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/io/Closeable.html">Closeable.close()</a>处理必要的清理操作。</p>
+<p>Reducer由三个主要阶段组成:shuffle，sort，reduce。</p>
+<h5>shuffle</h5>
+<p>输入到Reducer的输入数据是Mapper已经排过序的数据.在shuffle阶段，框架根据partition算法获取相关的mapper地址，并通过Http协议将数据由reducer拉取到reducer机器上处理。</p>
+<h5>sort</h5>
+<p>框架在这个阶段会根据key对reducer的输入进行分组(因为不同的mapper输出的数据中可能含有相同的key)。
+shuffle和sort是同时进行的，同时reducer仍然在拉取map的输出。</p>
+<h5>Secondary Sort</h5>
+<p>如果对中间数据key进行分组的规则和在处理化简阶段前对key分组规则不一致时，可以通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html"> JobConf.setOutputValueGroupingComparator(Class)</a>设置一个Comparator。因为中间数据的分组策略是通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html"> JobConf.setOutputKeyComparatorClass(Class) </a>设置的，可以控制中间数据根据哪些key进行分组。而JobConf.setOutputValueGroupingComparator(Class)则可用于在数据连接情况下对值进行二次排序。</p>
+<h5>Reduce(化简)</h5>
+<p>这个阶段框架循环调用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/Reducer.html"> reduce(WritableComparable, Iterator, OutputCollector, Reporter) </a>方法处理被分组的每个kv对。
+reduce 任务一般通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/OutputCollector.html"> OutputCollector.collect(WritableComparable, Writable)</a>将输出数据写入文件系统<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/fs/FileSystem.html">FileSystem</a>。
+应用可以使用Reporter汇报作业执行进度、设置应用层级的状态信息并更新计数器(Counter),或者只是提示作业在运行。
+注意，Reducer的输出不会进行排序。</p>
+<h5>Reducer数目</h5>
+<p>合适的reducer数目可以这样估算：
+(节点数目<em>mapred.tasktracker.reduce.tasks.maximum</em>)乘以0.95 或 乘以1.75。
+因子为0.95时，当所有map任务完成时所有reducer可以立即启动，并开始从map机器上拉取数据。因子为1.75时,最快的一些节点将完成第一轮reduce处理，此时框架开始启动第二轮reduce任务，这样可以达到比较好的作业负载均衡。</p>
+<p>提高reduce数目会增加框架的运行负担，但有利于提升作业的负载均衡并降低失败的成本。</p>
+<p>上述的因子使用最好在作业执行时框架仍然有reduce槽为前提，毕竟框架还需要对作业进行可能的推测执行和失败任务的处理。</p>
+<h5>不使用Reducer</h5>
+<p>如果不需要进行化简处理，可以将reduce数目设为0。</p>
+<p>这种情况下，map的输出会直接写入到文件系统。输出路径通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/FileOutputFormat.html">setOutputPath(Path)</a>指定。框架在写入数据到文件系统之前不再对map结果进行排序。</p>
+<h4>Partitioner</h4>
+<p><a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/Partitioner.html">Partitioner</a>对数据按照key进行分区，从而控制map的输出传输到哪个reducer上。默认的Partitioner算法是hash（哈希。分区数目由作业的reducer数目决定。
+<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/lib/HashPartitioner.html">HashPartitioner</a> 是默认的Partitioner。</p>
+<h4>Reporter</h4>
+<p><a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/Reporter.html">Reporter</a>为MR应用提供了进度报告、应用状态信息设置，和计数器(Counter)更新等功能.</p>
+<p>Mapper和Reducer实现可以使用Reporter汇报进度或者提示作业在正常运行。在一些场景下，应用在处理一些特殊的kv对时耗费了过多时间，这个可能会因为框架假定任务超时而强制停止了这些作业。为避免该情况，可以设置mapred.task.timeout 为一个比较高的值或者将其设置为0以避免超时发生。</p>
+<p>应用也可以使用Reporter来更新计数(Counter)。</p>
+<h4>OutputCollector</h4>
+<p><a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/OutputCollector.html">OutputCollector</a>是MR框架提供的通用工具来收集Mapper或者Reducer输出数据(中间数据或者最终结果数据)。</p>
+<p>Hadoop MapReduce提供了一些经常使用的mapper、reducer和partioner的实现来。这些工具可以点击<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/lib/package-summary.html">这里</a>进行学习。</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

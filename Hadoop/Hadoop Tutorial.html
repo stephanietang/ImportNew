@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Hadoop Tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: 29d1c5bc36da364ad5aa86946d420b7bbc54a253 */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<p>Hadoop从这里开始!和我一起学习下使用Hadoop的基本知识，下文将以<a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial.html">Hadoop Tutorial</a>为主体带大家走一遍如何使用Hadoop分析数据!</p>
+<h2>Hadoop教程（一）</h2>
+<p>这个专题将描述用户在使用Hadoop MapReduce(下文缩写成MR)框架过程中面对的最重要的东西。Mapreduce由client APIs和运行时(runtime)环境组成。其中client APIs用来编写MR程序，运行时环境提供MR运行的环境。API有2个版本，也就是我们通常说的老api和新api。运行时有两个版本：MRv1和MRv2。该教程将会基于老api和MRv1。</p>
+<p><em>其中:老api在org.apache.hadoop.mapred包中,新api在 org.apache.hadoop.mapreduce中。</em></p>
+<h3>前提</h3>
+<p>首先请确认已经正确安装、配置了<a href="http://www.cloudera.com/content/cloudera/en/products/cdh.html">CDH</a>，并且正常运行。</p>
+<h3>MR概览</h3>
+<p>Hadoop MapReduce 是一个开源的计算框架，运行在其上的应用通常可在拥有几千个节点的集群上并行处理海量数据（可以使P级的数据集）。</p>
+<p>MR作业通常将数据集切分为独立的chunk，这些chunk以并行的方式被map tasks处理。MR框架对map的输出进行排序，然后将这些输出作为输入给reduce tasks处理。典型的方式是作业的输入和最终输出都存储在分布式文件系统(HDFS)上。</p>
+<p>通常部署时计算节点也是存储节点，MR框架和HDFS运行在同一个集群上。这样的配置允许框架在集群的节点上有效的调度任务，当然待分析的数据已经在集群上存在，这也导致了集群内部会产生高聚合带宽现象（通常我们在集群规划部署时就需要注意这样一个特点）。</p>
+<p>MapReduce框架由一个Jobracker（通常简称JT）和数个TaskTracker（TT）组成（在cdh4中如果使用了Jobtracker HA特性，则会有2个Jobtracer，其中只有一个为active，另一个作为standby处于inactive状态）。JobTracker负责在所有tasktracker上调度任务，监控任务并重新执行失败的任务。所有的tasktracker执行jobtracker分配过来的任务。</p>
+<p>应用至少需要制定输入、输出路径，并提供实现了适当接口和(或)抽象类的map和reduce函数。这些路径和函数以及其他的任务参数组成了任务配置对象（job configuration）。Hadoop 任务客户端提交任务（jar包或者可执行程序等）和配置对象到JT。JT将任务实现和配置对象分发到数个TT（由JT分配），调度、监控任务，并向客户端返回状态和检测信息。</p>
+<p>Hadoop由JavaTM实现,用户可以使用java、基于JVM的其他语言或者以下的方式开发MR应用：</p>
+<ul>
+<li>Hadoop Streaming- 允许用户以任何一种可执行程序（如shell脚本）实现为mapper和(或)reducer来创建和运行MR任务。</li>
+<li>Hadoop Pigs - 一种兼容<a href="http://www.swig.org/">SWIG</a>(不基于JNITM)的C++ API，用来实现MapReduce应用。</li>
+</ul>
+<h3>输入和输出</h3>
+<p>MapReuce框架内部处理的是kv对(key-value pair)，因为MR将任务的输入当做一个kv对的集合，将输出看做一个kv对的集合。输出kv对的类型可以不同于输入对。</p>
+<p>key和vaue的类型必须在框架内可序列化(serializable)，所以key value 必须实现<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/io/Writable.html">Writable</a>接口。同时，key 类必须实现<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/io/WritableComparable.html">WritableComparable</a>以便框架对key进行排序。</p>
+<p>典型的MR任务输入和输出类型转换图为：</p>
+<pre><code>(input) k1-v1 -&gt; map -&gt; k2-v2 -&gt; combine -&gt; k2-v2 -&gt; reduce -&gt; k3-v3 (output)
+</code></pre>
+
+<h3>经典的WordCount1.0</h3>
+<p>玩Hadoop不得不提WordCount，CDH原文里也以这为例，当然这里也以它为例:）</p>
+<p>简单说下WordCount,它是计算输入数据中每个word的出现次数。因为足够简单所以经典，和Hello World有的一拼!</p>
+<p>上源码：</p>
+<pre><code>package org.myorg;
+
+import java.io.IOException;
+import java.util.*;
+
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.conf.*;
+import org.apache.hadoop.io.*;
+import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.util.*;
+
+public class WordCount {
+
+  public static class Map extends MapReduceBase implements Mapper&lt;LongWritable, Text, Text, IntWritable&gt; {
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    public void map(LongWritable key, Text value, OutputCollector&lt;Text, IntWritable&gt; output, Reporter reporter) throws IOException {
+      String line = value.toString();
+      StringTokenizer tokenizer = new StringTokenizer(line);
+      while (tokenizer.hasMoreTokens()) {
+        word.set(tokenizer.nextToken());
+        output.collect(word, one);
+      }
+    }
+  }
+
+  public static class Reduce extends MapReduceBase implements Reducer&lt;Text, IntWritable, Text, IntWritable&gt; {
+    public void reduce(Text key, Iterator&lt;IntWritable&gt; values, OutputCollector&lt;Text, IntWritable&gt; output, Reporter reporter) throws IOException {
+      int sum = 0;
+      while (values.hasNext()) {
+        sum += values.next().get();
+      } 
+      output.collect(key, new IntWritable(sum));
+    }
+  }
+
+  public static void main(String[] args) throws Exception {
+    JobConf conf = new JobConf(WordCount.class);
+    conf.setJobName(&quot;wordcount&quot;);
+
+    conf.setOutputKeyClass(Text.class);
+    conf.setOutputValueClass(IntWritable.class);
+
+    conf.setMapperClass(Map.class);
+    conf.setCombinerClass(Reduce.class);
+    conf.setReducerClass(Reduce.class);
+
+    conf.setInputFormat(TextInputFormat.class);
+    conf.setOutputFormat(TextOutputFormat.class);
+
+    FileInputFormat.setInputPaths(conf, new Path(args[0]));
+    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+
+    JobClient.runJob(conf);
+  }
+}
+</code></pre>
+
+<p>首先编译WordCount.java</p>
+<pre><code>$ mkdir wordcount_classes $ javac -cp classpath -d wordcount_classes WordCount.java
+</code></pre>
+
+<p>其中classpath为：</p>
+<ul>
+<li>CDH4 /usr/lib/hadoop/<em>:/usr/lib/hadoop/client-0.20/</em></li>
+<li>CDH3 /usr/lib/hadoop-0.20/hadoop-0.20.2-cdh3u4-core.jar</li>
+</ul>
+<p>打成jar包:</p>
+<pre><code>$ jar -cvf wordcount.jar -C wordcount_classes/ .
+</code></pre>
+
+<p>假定：</p>
+<ul>
+<li>/user/cloudera/wordcount/input 输入HDFS路径</li>
+<li>/user/cloudera/wordcount/output 输出HDFS路径</li>
+</ul>
+<p>创建文本格式的数据并移动到HDFS:</p>
+<pre><code>$ echo &quot;Hello World Bye World&quot; &gt; file0
+$ echo &quot;Hello Hadoop Goodbye Hadoop&quot; &gt; file1
+$ hadoop fs -mkdir /user/cloudera /user/cloudera/wordcount /user/cloudera/wordcount/input
+$ hadoop fs -put file* /user/cloudera/wordcount/input
+</code></pre>
+
+<p>运行wordcount:</p>
+<pre><code>$ hadoop jar wordcount.jar org.myorg.WordCount /user/cloudera/wordcount/input /user/cloudera/wordcount/output
+</code></pre>
+
+<p>运行完毕后查看输出:</p>
+<pre><code>$ hadoop fs -cat /user/cloudera/wordcount/output/part-00000
+Bye 1
+Goodbye 1
+Hadoop 2
+Hello 2
+World 2
+</code></pre>
+
+<p>MR应用可以用-files参数指定在当前工作目录下存在的多个文件，多个文件使用英文逗号分隔。-libjars参数可以将多个jar包添加到map和reduce的classpath。-archive参数可以将工作路径下的zip或jar包当做参数传递，而zip或jar包名字被当做一个链接(link)。更加详细的命令信息可以参考<a href="http://archive.cloudera.com/cdh/3/hadoop/commands_manual.html">Hadoop Command Guide</a>.</p>
+<p>使用-libjars和-files参数运行wordcount的命令：</p>
+<pre><code>hadoop jar hadoop-examples.jar wordcount -files cachefile.txt -libjars mylib.jar input output
+</code></pre>
+
+<p>详细看下wordcount应用</p>
+<p>14-26行实现了Mapper，通过map方法(18-25行)一次处理一行记录，记录格式为指定的TextInputFormat（行49）。然后将一条记录行根据空格分隔成一个个单词。分隔使用的是类StringTokenizer，然后以&lt;word,1&gt;形式发布kv对。</p>
+<p>在前面给定的输入中，第一个map将会输出:&lt; Hello, 1&gt; &lt; World, 1&gt; &lt; Bye, 1&gt; &lt; World, 1&gt;</p>
+<p>第二个map输出: &lt; Hello, 1&gt; &lt; Hadoop, 1&gt; &lt; Goodbye, 1&gt; &lt; Hadoop, 1&gt;</p>
+<p>我们会在本篇文章中深入学习该任务中map的大量输出的数目，并研究如何在更细粒度控制输出。</p>
+<p>WordCount 在46行指定了combiner。因此每个map的输出在根据key排序后会通过本地的combiner(实现和reducer一致)进行本地聚合。</p>
+<p>第一个map的最终输出:&lt; Bye, 1&gt; &lt; Hello, 1&gt; &lt; World, 2&gt;</p>
+<p>第二个map输出:&lt; Goodbye, 1&gt; &lt; Hadoop, 2&gt; &lt; Hello, 1&gt;</p>
+<p>Reducer实现(28-36行)通过reduce方法(29-35)仅对值进行叠加，计算每个单词的出现次数。</p>
+<p>所以wordcount的最终输出为: &lt; Bye, 1&gt; &lt; Goodbye, 1&gt; &lt; Hadoop, 2&gt; &lt; Hello, 2&gt; &lt; World, 2&gt;</p>
+<p>run方法通过JobConf对象指定了该任务的各种参数，例如输入/输出路径，kv类型，输入输出格式等等。程序通过调用 JobClient.runJob (55行)提交并开始监测任务的执行进度。</p>
+<p>后面我们将对JobConf、JobClient、Tool做进一步学习。 </p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

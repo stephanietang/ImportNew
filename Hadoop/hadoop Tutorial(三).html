@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generated-by" content="Markdown PRO, http://markdownpro.com"/>
+<title></title>
+<style type="text/css">
+html,body{margin:0;padding:0;}
+body {padding: 20px}
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,cite,code,del,dfn,em,img,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,button,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;font-size:100%;line-height:1;font-family:inherit;}
+table{border-collapse:collapse;border-spacing:0;}
+ol,ul{list-style:none;}
+q:before,q:after,blockquote:before,blockquote:after{content:"";}
+html{overflow-y:scroll;font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+a:focus{outline:thin dotted;}
+a:hover,a:active{outline:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block;}
+audio,canvas,video{display:inline-block;*display:inline;*zoom:1;}
+audio:not([controls]){display:none;}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}
+sup{top:-0.5em;}
+sub{bottom:-0.25em;}
+img{border:0;-ms-interpolation-mode:bicubic;}
+button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
+button,input{line-height:normal;*overflow:visible;}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button;}
+input[type="search"]{-webkit-appearance:textfield;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}
+input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}
+textarea{overflow:auto;vertical-align:top;}
+html,body{background-color:#ffffff;}
+body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:normal;line-height:18px;color:#404040;}
+.container{width:940px;margin-left:auto;margin-right:auto;zoom:1;}.container:before,.container:after{display:table;content:"";zoom:1;*display:inline;}
+.container:after{clear:both;}
+.container-fluid{position:relative;min-width:940px;padding-left:20px;padding-right:20px;zoom:1;}.container-fluid:before,.container-fluid:after{display:table;content:"";zoom:1;*display:inline;}
+.container-fluid:after{clear:both;}
+.container-fluid>.sidebar{float:left;width:220px;}
+.container-fluid>.content{margin-left:240px;}
+a{color:#0069d6;text-decoration:none;line-height:inherit;font-weight:inherit;}a:hover{color:#00438a;text-decoration:underline;}
+.pull-right{float:right;}
+.pull-left{float:left;}
+.hide{display:none;}
+.show{display:block;}
+.row{zoom:1;margin-left:-20px;}.row:before,.row:after{display:table;content:"";zoom:1;*display:inline;}
+.row:after{clear:both;}
+p{font-size:13px;font-weight:normal;line-height:18px;margin-bottom:9px;}p small{font-size:11px;color:#bfbfbf;}
+h1,h2,h3,h4,h5,h6{font-weight:bold;color:#404040;}h1 small,h2 small,h3 small,h4 small,h5 small,h6 small{color:#bfbfbf;}
+h1{margin-bottom:18px;font-size:30px;line-height:36px;}h1 small{font-size:18px;}
+h2{font-size:24px;line-height:36px;}h2 small{font-size:14px;}
+h3,h4,h5,h6{line-height:36px;}
+h3{font-size:18px;}h3 small{font-size:14px;}
+h4{font-size:16px;}h4 small{font-size:12px;}
+h5{font-size:14px;}
+h6{font-size:13px;color:#bfbfbf;text-transform:uppercase;}
+ul,ol{margin:0 0 18px 25px;}
+ul ul,ul ol,ol ol,ol ul{margin-bottom:0;}
+ul{list-style:disc;}
+ol{list-style:decimal;}
+li{line-height:18px;color:#808080;}
+ul.unstyled{list-style:none;margin-left:0;}
+dl{margin-bottom:18px;}dl dt,dl dd{line-height:18px;}
+dl dt{font-weight:bold;}
+dl dd{margin-left:9px;}
+hr{margin:20px 0 19px;border:0;border-bottom:1px solid #eee;}
+strong{font-style:inherit;font-weight:bold;}
+em{font-style:italic;font-weight:inherit;line-height:inherit;}
+.muted{color:#bfbfbf;}
+blockquote{margin-bottom:18px;border-left:5px solid #eee;padding-left:15px;}blockquote p{font-size:14px;font-weight:300;line-height:18px;margin-bottom:0;}
+blockquote small{display:block;font-size:12px;font-weight:300;line-height:18px;color:#bfbfbf;}blockquote small:before{content:'\2014 \00A0';}
+address{display:block;line-height:18px;margin-bottom:18px;}
+code,pre{padding:0 3px 2px;font-family:Monaco, Andale Mono, Courier New, monospace;font-size:12px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+code{padding:1px 3px;}
+pre{background-color:#f5f5f5;display:block;padding:8.5px;margin:0 0 18px;line-height:18px;font-size:12px;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;white-space:pre;white-space:pre-wrap;word-wrap:break-word;}
+form{margin-bottom:18px;}
+fieldset{margin-bottom:18px;padding-top:18px;}fieldset legend{display:block;padding-left:150px;font-size:19.5px;line-height:1;color:#404040;*padding:0 0 5px 145px;*line-height:1.5;}
+form .clearfix{margin-bottom:18px;zoom:1;}form .clearfix:before,form .clearfix:after{display:table;content:"";zoom:1;*display:inline;}
+form .clearfix:after{clear:both;}
+label,input,select,textarea{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:normal;line-height:normal;}
+label{padding-top:6px;font-size:13px;line-height:18px;float:left;width:130px;text-align:right;color:#404040;}
+form .input{margin-left:150px;}
+input[type=checkbox],input[type=radio]{cursor:pointer;}
+input,textarea,select,.uneditable-input{display:inline-block;width:210px;height:18px;padding:4px;font-size:13px;line-height:18px;color:#808080;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+input[type=checkbox],input[type=radio]{width:auto;height:auto;padding:0;margin:3px 0;*margin-top:0;line-height:normal;border:none;}
+input[type=file]{background-color:#ffffff;padding:initial;border:initial;line-height:initial;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
+input[type=button],input[type=reset],input[type=submit]{width:auto;height:auto;}
+select,input[type=file]{height:27px;line-height:27px;*margin-top:4px;}
+select[multiple]{height:inherit;}
+textarea{height:auto;}
+.uneditable-input{background-color:#ffffff;display:block;border-color:#eee;-webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.025);-moz-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.025);box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.025);cursor:not-allowed;}
+:-moz-placeholder{color:#bfbfbf;}
+::-webkit-input-placeholder{color:#bfbfbf;}
+input,textarea{-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;-moz-transition:border linear 0.2s,box-shadow linear 0.2s;-ms-transition:border linear 0.2s,box-shadow linear 0.2s;-o-transition:border linear 0.2s,box-shadow linear 0.2s;transition:border linear 0.2s,box-shadow linear 0.2s;-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);}
+input:focus,textarea:focus{outline:0;border-color:rgba(82, 168, 236, 0.8);-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);}
+input[type=file]:focus,input[type=checkbox]:focus,select:focus{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;outline:1px dotted #666;}
+form div.clearfix.error{background:#fae5e3;padding:10px 0;margin:-10px 0 10px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}form div.clearfix.error>label,form div.clearfix.error span.help-inline,form div.clearfix.error span.help-block{color:#9d261d;}
+form div.clearfix.error input,form div.clearfix.error textarea{border-color:#c87872;-webkit-box-shadow:0 0 3px rgba(171, 41, 32, 0.25);-moz-box-shadow:0 0 3px rgba(171, 41, 32, 0.25);box-shadow:0 0 3px rgba(171, 41, 32, 0.25);}form div.clearfix.error input:focus,form div.clearfix.error textarea:focus{border-color:#b9554d;-webkit-box-shadow:0 0 6px rgba(171, 41, 32, 0.5);-moz-box-shadow:0 0 6px rgba(171, 41, 32, 0.5);box-shadow:0 0 6px rgba(171, 41, 32, 0.5);}
+form div.clearfix.error .input-prepend span.add-on,form div.clearfix.error .input-append span.add-on{background:#f4c8c5;border-color:#c87872;color:#b9554d;}
+table{width:100%;margin-bottom:18px;padding:0;border-collapse:separate;*border-collapse:collapse;font-size:13px;border:1px solid #ddd;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}table th,table td{padding:10px 10px 9px;line-height:18px;text-align:left;}
+table th{padding-top:9px;font-weight:bold;vertical-align:middle;border-bottom:1px solid #ddd;}
+table td{vertical-align:top;}
+table th+th,table td+td{border-left:1px solid #ddd;}
+table tr+tr td{border-top:1px solid #ddd;}
+table tbody tr:first-child td:first-child{-webkit-border-radius:4px 0 0 0;-moz-border-radius:4px 0 0 0;border-radius:4px 0 0 0;}
+table tbody tr:first-child td:last-child{-webkit-border-radius:0 4px 0 0;-moz-border-radius:0 4px 0 0;border-radius:0 4px 0 0;}
+table tbody tr:last-child td:first-child{-webkit-border-radius:0 0 0 4px;-moz-border-radius:0 0 0 4px;border-radius:0 0 0 4px;}
+table tbody tr:last-child td:last-child{-webkit-border-radius:0 0 4px 0;-moz-border-radius:0 0 4px 0;border-radius:0 0 4px 0;}
+.zebra-striped tbody tr:nth-child(odd) td{background-color:#f9f9f9;}
+.zebra-striped tbody tr:hover td{background-color:#f5f5f5;}
+.zebra-striped .header{cursor:pointer;}.zebra-striped .header:after{content:"";float:right;margin-top:7px;border-width:0 4px 4px;border-style:solid;border-color:#000 transparent;visibility:hidden;}
+.zebra-striped .header:hover:after{visibility:visible;}
+footer{margin-top:17px;padding-top:17px;border-top:1px solid #eee;}
+.page-header{margin-bottom:17px;border-bottom:1px solid #ddd;-webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.5);-moz-box-shadow:0 1px 0 rgba(255, 255, 255, 0.5);box-shadow:0 1px 0 rgba(255, 255, 255, 0.5);}.page-header h1{margin-bottom:8px;}
+.close{float:right;color:#000000;font-size:20px;font-weight:bold;line-height:13.5px;text-shadow:0 1px 0 #ffffff;filter:alpha(opacity=20);-khtml-opacity:0.2;-moz-opacity:0.2;opacity:0.2;}.close:hover{color:#000000;text-decoration:none;filter:alpha(opacity=40);-khtml-opacity:0.4;-moz-opacity:0.4;opacity:0.4;}
+
+pre {
+	padding: 0;
+	margin: 10px 0px 10px;
+	overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
+	overflow-Y: hidden;  /*--Hides vertical scroll created by IE--*/
+}
+pre code {
+	margin: 5px;  /*--Left Margin--*/
+	padding: 0px;
+	display: block;
+    line-height: 18px;
+}
+.center { text-align:center}
+.left {text-align:left}
+.right {text-align:right}
+
+</style><style type="text/css">
+body {
+	font-family: "Geneva", Arial, sans-serif;
+	font-size: 13px;
+	margin: 10px;
+}
+
+a, a:visited {
+	color: #09c;
+}
+
+a:hover {
+	color: #336699;
+	text-decoration: none;
+}
+
+h1 {
+	margin: 0px 0px 10px;	
+	font-weight: bold;
+}
+
+h2 {
+	border-bottom: 2px dotted #ccc;
+	margin: 5px 0px 15px;	
+}
+
+h6 {
+	color: #09c;
+}
+
+blockquote {
+	font-family: "Georgia", Courier New, courier, sans-serif;
+	background: #efefef;
+	padding: 5px 10px;
+	border: solid 1px #ddd;
+	margin: 15px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+	color:  #333;
+	
+}
+
+ul, ol {
+	margin-bottom: 15px;
+}
+
+li {
+	padding: 3px;
+}
+
+
+
+code {
+	background-color: #f1f1f1;
+    color: #336699;
+}
+
+pre {
+	background-color: #f1f1f1;
+}
+
+pre > code {
+	margin: 0px;
+	padding: 5px;
+	border: 0px;
+	background-color: #f1f1f1;
+}
+
+
+</style></head>
+<body>
+<p>书接上回，继续为大家讲解<a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial/ht_topic_6_2.html">MapReduce相关</a></p>
+
+<h2>Hadoop教程(三)</h2>
+
+<h3>Job Configuration</h3>
+
+<p><a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">JobConf</a>是MR任务的配置对象，也是描述MR任务在Mapreduce框架中如何执行的主要途径，框架将如实的以该对象包含的信息来执行MR任务，但要注意以下特殊情况：</p>
+
+<ul>
+<li>一些配置参数被管理员在hadoop相关配置文件中(比如core-site.xml,mapred-site.xml)设置为<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/conf/Configuration.html">final</a>，则不能被任务参数值改变。</li>
+<li>有一些参数通过方法可以直接设定，如通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setNumReduceTasks(int)</a>等设定。但是一些其他参数和框架内部、任务配置有更复杂的关系，所以设定更为复杂，比如要通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setNumMapTasks(int)</a>来进行设定。</li>
+</ul>
+
+<p>最典型的，JobConf一般应用在确定Mapper、Combiner(如果使用的话)、Partitioner、Reducer、InputFormat、OutputFormat以及OutputCommitter的实现类上。JobConf也可以用来通过setInputPaths(JobConf, Path…)/<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/FileInputFormat.html"> addInputPath(JobConf, Path)</a>,或者setInputPaths(JobConf, String)/<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/FileInputFormat.html">addInputPaths(JobConf, String)</a>指定输入路径集合，通过setOutputPath(Path)设置任务结果输出路径。</p>
+
+<p>JobConf也会用来指定一些可选的配置（一般使用在优化或者特殊分析用途）。比如指定作业使用的Comparator(比较器，用于排序或者分组);使用 DistributedCache缓存一些必须的文件;指定作业过程中数据和/或者作业结果是否被压缩和怎样压缩。也可以通过setMapDebugScript(String)/setReduceDebugScript(String)（还没用过:(）对作业进行debug;通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setMapSpeculativeExecution(boolean)</a>/<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setReduceSpeculativeExecution(boolean)</a>指定任务执行中是否开启推测执行；通过setMaxMapAttempts(int)/setMaxReduceAttempts(int)设置每个任务的最大尝试次数；通过<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setMaxMapTaskFailuresPercent(int)</a>/<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/mapred/JobConf.html">setMaxReduceTaskFailuresPercent(int)</a>设置MR任务(map/reduce)可容忍的失败比率。</p>
+
+<p>而且，用户可以用<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/conf/Configuration.html">set(String, String)</a>/<a href="http://hadoop.apache.org/common/docs/r0.23.6/api/org/apache/hadoop/conf/Configuration.html">get(String, String</a> 设置应用需要的参数，但是对于大量数据（只读）请使用 DistributedCache。</p>
+
+<h3>MR运行参数</h3>
+
+<p>TaskTracer以独立的JVM子进程方式运行Mapper、Reducer。子任务继承TaskTracker的所有环境参数。用户可以通过在JobConf里 mapred.child.java.opts指定子jvm运行参数，例如通过-Djava.library.path=&lt;&gt;指定一些搜索共享库必须的非标准运行时链接库等等，这是可选的。如果 mapred.child.java.opts属性含有$taskid变量，这个变量值会在运行中被框架插入正在运行的任务id。</p>
+
+<p>下面这个配置例子使用多参数和变量插入特性配置了JVM GC日志，可，通过jconsole工具无密码连接的JMX服务，用来观察子进程的内存、线程，也可以获取线程dump信息。另外配置里设置了子JVM的最大堆尺寸为512MB,通过java.library.path设置了共享库路径。</p>
+
+<pre><code> &lt;property&gt;
+  &lt;name&gt;mapred.child.java.opts&lt;/name&gt;
+  &lt;value&gt;
+     -Xmx512M -Djava.library.path=/home/mycompany/lib -verbose:gc -Xloggc:/tmp/@taskid@.gc
+     -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
+  &lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h4>内存管理</h4>
+
+<p>可以通过mapred.child.ulimit参数配置子进程可使用的最大虚拟内存。注意:该属性对单个进程设置最大限制，单位为KB,值必须大于等于最大堆内存(通过-Xmx设置)。</p>
+
+<blockquote>
+<p>注意：mapred.child.java.opts只对从tasktracker分配和管理的子JVM进程有效。其他hadoop守护进程内存参数配置详见<a href="http://archive.cloudera.com/cdh/3/hadoop/cluster_setup.html">Configuring the Environment of the Hadoop Daemons</a>。</p>
+</blockquote>
+
+<p>MR框架的其他组件可用内存也是可配置的。map和reduce任务的性能可以通过从影响操作并发和数据磁盘IO次数的角度来调试。监控针对单个任务而设置的文件系统计数器，尤其是具体到map输出到reduce的数据字节量，对调试影响任务运行性能都是非常有用的。</p>
+
+<p>如果内存管理特性启用的话，用户可以选择性的覆盖一些默认配置，比如虚拟内存，RAM。下面是一些对任务有效的参数：</p>
+
+<table>
+    <tr>
+        <td>名称</td>
+        <td>类型</td>
+        <td>特点</td>
+    </tr>
+    <tr>
+        <td>mapred.task.maxvmem</td>
+        <td>int</td>
+        <td>以字节为单位指定单个map或reduce任务的最大虚拟内存。如果任务超过该值就被kill</td>
+    </tr>
+    <tr>
+        <td>mapred.task.maxpmem</td>
+        <td>int</td>
+        <td>以字节为单位指定单个map或reduce任务的最大RAM。这个值被调度器(Jobtracer)参考作为分配map\reduce任务的依据，避免让一个节点超RAM负载使用。</td>
+    </tr>
+</table>  
+              
+
+<h4>Map参数</h4>
+
+<p>map读出的一条记录将被序列化到一个buffer，元数据存储在元数据buffer中。如上面所说，当序列化buffer或者元数据buffer超出了设置的阙值，buffer中内容将被排序并在后台写入到磁盘，这个过程同时map持续输出记录行。如果buffer被写满就会发生一个spill过程，spill中map线程被阻塞。当map完成后，buffer中剩余记录写入磁盘并和在磁盘的按段存储的记录合并到一个文件中。减少spill次数可以缩短map时间，但是较大的buffer也会降低可用内存。</p>
+
+<table>
+    <tr>
+        <td>名称</td>
+        <td>类型</td>
+        <td>特点</td>
+    </tr>
+    <tr>
+        <td>io.sort.mb</td>
+        <td>int</td>
+        <td>默认100。以MB为单位设置序列化和元数据buffer的大小。</td>
+    </tr>
+    <tr>
+        <td>io.sort.record.percent</td>
+        <td>float</td>
+        <td>默认0.05。map记录序列化后数据元数据buffer所占总buffer百分比值。为了加速排序，除了序列化后本身尺寸外每条序列化后的记录需要16字节的元数据。io.sort.mb值被占用的百分比值超过设定值机会发生spill。对输出记录较少的map，值越高越可降低spill发生的次数。</td>
+    </tr>
+    <tr>
+        <td>io.sort.spill.percent</td>
+        <td>float</td>
+        <td>默认0.80。元数据和序列化数据buffer空间阀值。当两者任何一个buffer空间达到该阀值，数据将被spill到磁盘。假设io.sort.record.percent=r, io.sort.mb=x,io.sort.spill.percent=q,那么在map线程spill之前最大处理的记录量为r*x*q*2^16。注意：较大的值可能降低spill的次数甚至避免合并，但是也会增加map被阻塞的几率。通过精确估计map的输出尺寸和减少spill次数可有效缩短map处理时间。</td>
+    </tr>
+</table>
+
+<blockquote>
+<p>其他注意事项：</p>
+</blockquote>
+
+<ul>
+<li><p>如果spill阙值达到了，就会发生spill，记录收集将继续直到spill完成。例如io.sort.buffer.spill.percent设置为0.33，buffer剩余的部分被填满，spill发生，下一个spill将会包含所有收集的记录，或者是这个buffer的0.66部分，并且不会产生额外的spill过程。换句话说阙值像是定义的触发器，不会阻塞。</p></li>
+<li><p>大于序列化数据buffer的一条记录将首先触发一个spill，然后被spill到一个独立的文件中。没有配置参数来定义记录是否首先通过combiner。</p></li>
+</ul>
+
+<h4>Shuffle/Reduce参数</h4>
+
+<p>如前面所说，每个reduce通过HTTP获取map输出后读入内存，并周期性合并这些输出到磁盘。如果map输出压缩打开的话，每个输出将会解压后读入内存。下面的配置参数影响reduce处理中的合并和内存分配过程。</p>
+
+<table>
+    <tr>
+        <td>名称</td>
+        <td>类型</td>
+        <td>特点</td>
+    </tr>
+    <tr>
+        <td>io.sort.factor</td>
+        <td>int</td>
+        <td>默认值10。指定同时可合并的文件片段数目。参数限制了打开文件的数目，压缩解码器。如果文件数超过了该值，合并将分成多次。这个参数一般适用于map任务，大多数作业应该配置该项。</td>
+    </tr>
+    <tr>
+        <td>mapred.inmem.merge.threshold</td>
+        <td>int</td>
+        <td>在内存中合并到磁盘前读取已排序map输出文件的数目。类似前面说的spill阙值，该值不是一个用来分区的单元而是一个触发器。通常该值较高(1000)，或者不启用（0）,毕竟内存内合并比磁盘上合并成本更低。这个阙值只影响shuffle过程的内存合并。</td>
+    </tr>
+    <tr>
+        <td>mapred.job.shuffle.merge.percent</td>
+        <td>float</td>
+        <td>0.66。内存合并前供map输出享有的内存百分比值，超过该值就会合并数据到磁盘。过大的值会降低获取和合并的并行效率。相反如果输入恰好整个放到内存，则可以设置为1.0。该参数只影响shuffle过程的内存合并频率。</td>
+    </tr>
+    <tr>
+        <td>mapred.job.shuffle.input.buffer.percent</td>
+        <td>float</td>
+        <td>默认值0.7。shuffle过程中缓存map输出数据的内存占整个子jvm进程堆最大尺寸(通过mapred.child.java.opts设置)的百分比。该值可以视情况设置较高的值来存储大的较多的map输出。</td>
+    </tr>
+    <tr>
+        <td>mapred.job.reduce.input.buffer.percent</td>
+        <td>float</td>
+        <td>0.0 内存合并中从内存刷到磁盘，直到剩余的map输出占用的内存少于jvm最大堆的该百分比值。默认情况下，在reduce开始之前需要保证最大的内存可用，所有的内存中map输出都会被合并到磁盘。对内存不敏感的reduce任务，该值可以适当提高，来避免磁盘IO（一般不会有)。</td>
+    </tr>
+</table>
+
+<blockquote>
+<p>其他注意事项：</p>
+</blockquote>
+
+<ul>
+<li>如果map输出占用超过25%的内存去拷贝，这会直接被刷到磁盘而不会经过内存合并阶段。</li>
+<li>当combiner运行，前面所说的较高的合阙值和大的buffer不适用。因为在所有map输出都被取到之前合并就开始了，当spill发生时combiner处于运行状态。在一些实践中，用户可以通过合并输出使得磁盘spill足够小并可保证并行的spill和数据拉取来缩短reduce处理时间，而不是去不断的提高buffer尺寸。</li>
+<li>内存合并map输出并刷到磁盘时reduce过程开始，如果有多个输出片段spill到磁盘，或者至少有io.sort.factor个片段已经在磁盘上，那么中间合并过程是必须的，并且包含内存中处理map输出。</li>
+</ul>
+
+<h4>子JVM重用</h4>
+
+<p>可以通过指定mapred.job.reuse.jvm.num.tasks作业配置参数来启用jvm重用。默认是1，jvm不会被重用（每个jvm只处理1个任务）。如果设置为-1，那么一个jvm可以运行同一个作业的任意任务数目。用户可以通过JobConf.setNumTasksToExecutePerJvm(int)指定一个大于1的值。</p>
+
+<p>下面是作业执行时的配置参数：</p>
+
+<table>
+    <tr>
+        <td>名称</td>
+        <td>类型</td>
+        <td>描述</td>
+    </tr>
+    <tr>
+        <td>mapred.job.id</td>
+        <td>string</td>
+        <td>表示jobid</td>
+    </tr>
+    <tr>
+        <td>mapred.jar</td>
+        <td>string</td>
+        <td>job.jar在job路径下的位置</td>
+    </tr>
+    <tr>
+        <td>job.local.dir</td>
+        <td>string</td>
+        <td>作业共享路径</td>
+    </tr>
+    <tr>
+        <td>mapred.tip.id</td>
+        <td>string</td>
+        <td>taskid</td>
+    </tr>
+    <tr>
+        <td>mapred.task.id</td>
+        <td>string</td>
+        <td>task尝试任务id</td>
+    </tr>
+    <tr>
+        <td>mapred.task.is.map</td>
+        <td>boolean</td>
+        <td>是否是map任务</td>
+    </tr>
+    <tr>
+        <td>mapred.task.partition</td>
+        <td>int</td>
+        <td>task在job中的id</td>
+    </tr>
+    <tr>
+        <td>map.input.file</td>
+        <td>string</td>
+        <td>map输入文件路径</td>
+    </tr>
+    <tr>
+        <td>map.input.start</td>
+        <td>long</td>
+        <td>map输入split开始偏移量</td>
+    </tr>
+    <tr>
+        <td>map.input.length</td>
+        <td>long</td>
+        <td>map输入分片的字节数</td>
+    </tr>
+    <tr>
+        <td>mapred.work.output.dir</td>
+        <td>string</td>
+        <td>任务临时输出路径</td>
+    </tr>
+</table>
+
+<p>任务的标准输出和错误流日志由TaskTracker读入并写入${HADOOP<em>LOG</em>DIR}/userlogs路径。</p>
+
+<p><a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/HadoopTutorial/CDH4/Hadoop-Tutorial/ht_topic_6_7.html#topic_6_7_2_unique_1">DistributedCache</a>可以被用来发布map或者reduce用到的jar包、本地共享库。子JVM进程通常可使用java.library.path和LD<em>LIBRARY</em>PATH指定其自身的工作路径。缓存库可以通过<a href="http://java.sun.com/javase/6/docs/api/java/lang/System.html"> System.loadLibrary</a>或者<a href="http://java.sun.com/javase/6/docs/api/java/lang/System.html">System.load</a>加载。关于使用distributed cache 加载共享库详细信息可以查看 <a href="http://hadoop.apache.org/common/docs/r0.23.6/native_libraries.html">Loading native libraries through DistributedCache</a>。</p>
+
+</body>
+</html>

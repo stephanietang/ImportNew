@@ -18,7 +18,7 @@ Scala提供了一系列的集合类的实现。同时，它对于集合类型也
 * "Java collections":#java just work
 
 * <a href="#Basic">基本集合类</a> 常用的集合类型
-* <a href="#Hierarchy">继承</a> 集合类的抽象关系
+* <a href="#Hierarchy">层级关系</a> 集合类的抽象关系
 * <a href="#Method"> 方法</a>
 * <a href="#Mutable">可变性</a>
 * <a href="#Java collections">Java 集合类</a>也可直接使用
@@ -35,7 +35,7 @@ The standard linked list.
 
 标准的linked list。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> List(1, 2, 3)
 res0: List[Int] = List(1, 2, 3)
 </pre>
@@ -44,7 +44,7 @@ You can cons them up as you would expect in a functional language.
 
 你也可以像在函数式语言里一样把它们串接起来。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> 1 :: 2 :: 3 :: Nil
 res1: List[Int] = List(1, 2, 3)
 </pre>
@@ -62,7 +62,7 @@ Sets have no duplicates
 
 Set里不包含重复元素
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Set(1, 1, 2)
 res2: scala.collection.immutable.Set[Int] = Set(1, 2)
 </pre>
@@ -79,7 +79,7 @@ Sequences have a defined order.
 
 Sequence都有一个预定义的顺序。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Seq(1, 1, 2)
 res3: Seq[Int] = List(1, 1, 2)
 </pre>
@@ -100,7 +100,7 @@ Maps are key value containers.
 
 Map是保存键-值对的容器。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Map('a' -> 1, 'b' -> 2)
 res4: scala.collection.immutable.Map[Char,Int] = Map((a,1), (b,2))
 </pre>
@@ -113,9 +113,9 @@ h2(#hierarchy). The Hierarchy
 
 These are all traits, both the mutable and immutable packages have implementations of these as well as specialized implementations.
 
-## <a href="hierarchy">继承关系</a>
+## <a name="Hierarchy">层级关系</a>
 
-上面的这些都是trait，在mutable和immutable包里都有对应的实现，同时也有其他特殊用途的实现。
+上面的这些都是trait，在可变(mutable)包和不可变(immutable)包里都有对应的实现，同时也有其他特殊用途的实现。
 
 h3. Traversable
 
@@ -163,7 +163,7 @@ A collection of items with no duplicates.
 
 *See Also* "API doc":http://www.scala-lang.org/api/current/scala/collection/immutable/Set.html
 
-###　Set
+### Set
 
 一组没有重复元素的集合。
 
@@ -196,7 +196,7 @@ All of these methods below are available all the way down.  The argument and ret
 上面所有的方法在子类中都是可用的。参数和返回值可能会改变，因为子类可以覆盖它们。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 def head : A
 def tail : Traversable[A]
 </pre>
@@ -261,7 +261,7 @@ Interestingly, you can convert one collection type to another.
 
 有趣的是，集合之间可以相互进行转换。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def toArray : Array[A]
 def toArray [B >: A] (implicit arg0: ClassManifest[B]) : Array[B]
 def toBuffer [B >: A] : Buffer[B]
@@ -281,7 +281,7 @@ Let's convert a Map to an Array. You get an Array of the Key Value pairs.
 
 我们可以把一个Map转换成一个数组，然后得到一个键值对数组。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Map(1 -> 2).toArray
 res41: Array[(Int, Int)] = Array((1,2))
 </pre>
@@ -296,7 +296,7 @@ Adds access to an iterator.
 
 这个接口给你提供了一个迭代器iterator。
 
-<pre>
+<pre class="brush: java; gutter: true">
   def iterator: Iterator[A]
 </pre>
 
@@ -304,20 +304,20 @@ What does an Iterator give you?
 
 Iterator提供了什么操作呢？
 
-<pre>
+<pre class="brush: java; gutter: true">
 def hasNext(): Boolean
 def next(): A
 </pre>
 
 This is very Java-esque.  You often won't see iterators used in Scala, you are much more likely to see the functional combinators or a for-comprehension used.
 
-这个是非常Java-式的。在Scala中，你很少会见到使用iterator的地方，大部分的时候你看到的都是函数组合器以及for-comprehension。
+这个是非常‘Java式’的用法。在Scala中，你很少会见到使用iterator的地方，大部分的时候你看到的都是函数组合器以及for循环语句。
 
 h3. Set
 
 ### Set
 
-<pre>
+<pre class="brush: java; gutter: true">
   def contains(key: A): Boolean
   def +(elem: A): Set[A]
   def -(elem: A): Set[A]
@@ -335,7 +335,7 @@ Pass a List of Pairs into apply() like so
 
 可以通过给apply()方法传入一个键值对的列表来创建Map：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Map("a" -> 1, "b" -> 2)
 res0: scala.collection.immutable.Map[java.lang.String,Int] = Map((a,1), (b,2))
 </pre>
@@ -344,7 +344,7 @@ Or also like:
 
 或者按照下面的方式：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Map(("a", 2), ("b", 2))
 res0: scala.collection.immutable.Map[java.lang.String,Int] = Map((a,2), (b,2))
 </pre>
@@ -353,11 +353,11 @@ h6. Digression
 
 What is <code>-></code>? That isn't special syntax, it's a method that returns a Tuple.
 
-###### 题外话
+> 题外话
 
 `->`是什么呢？这是一个特殊的语法，它是一个返回值为元组的方法。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> "a" -> 2
 
 res0: (java.lang.String, Int) = (a,2)
@@ -366,7 +366,7 @@ res0: (java.lang.String, Int) = (a,2)
 Remember, that is just sugar for
 
 记住，它只是下面这种形式的语法糖：
-<pre>
+<pre class="brush: java; gutter: true">
 scala> "a".->(2)
 
 res1: (java.lang.String, Int) = (a,2)
@@ -376,7 +376,7 @@ You can also build one up via <code>++</code>
 
 你也可以通过`++`来构造Map
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Map.empty ++ List(("a", 1), ("b", 2), ("c", 3))
 res0: scala.collection.immutable.Map[java.lang.String,Int] = Map((a,1), (b,2), (c,3))
 </pre>
@@ -399,7 +399,7 @@ h3. Commonly-used subclasses
 *Vector* 支持快速查找和更新 <a href="http://www.scala-lang.org/api/current/scala/collection/immutable/Vector.html">Vector API</a>
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> IndexedSeq(1, 2, 3)
 res0: IndexedSeq[Int] = Vector(1, 2, 3)
 </pre>
@@ -408,8 +408,8 @@ res0: IndexedSeq[Int] = Vector(1, 2, 3)
 
 **Range** 有序的通过空格分隔的Int序列。  在之前很多用来计数的for循环经常使用它。<a href="http://www.scala-lang.org/api/current/scala/collection/immutable/Range.html">Range API</a>
 
-<pre>
-scala> for (i <- 1 to 3) { println(i) }
+<pre class="brush: java; gutter: true">
+scala> for (i &lt;- 1 to 3) { println(i) }
 1
 2
 3
@@ -418,7 +418,7 @@ scala> for (i <- 1 to 3) { println(i) }
 Ranges have the standard functional combinators available to them.
 
 Range也支持标准的函数组合器。
-<pre>
+<pre class="brush: java; gutter: true">
 scala> (1 to 3).map { i => i }
 res0: scala.collection.immutable.IndexedSeq[Int] = Vector(1, 2, 3)
 </pre>
@@ -431,7 +431,7 @@ Using apply methods on the traits will give you an instance of the default imple
 
 在trait上使用apply方法会得到该trait的一个默认实现，例如，Iterable(1,2)返回一个List作为它的默认实现。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Iterable(1, 2)
 
 res0: Iterable[Int] = List(1, 2)
@@ -441,7 +441,7 @@ Same with Seq, as we saw earlier
 
 Seq也是这样的，我们之前见过
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Seq(1, 2)
 res3: Seq[Int] = List(1, 2)
 
@@ -455,7 +455,7 @@ res2: Seq[Int] = List(1, 2)
 
 Set
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> Set(1, 2)
 res31: scala.collection.immutable.Set[Int] = Set(1, 2)
 </pre>
@@ -504,7 +504,7 @@ Scala allows us to be pragmatic, it encourages immutability but does not penaliz
 
 We favor starting with the immutable versions of collections but switching to the mutable ones if performance dictates.  Using immutable collections means you won't accidentally change things in multiple threads.
 
-Scala允许我们根据实际需求决定可变性，它鼓励我们只用不可变量，但是也不禁止我们使用变量。这个和var与val的场景非常相似。我们一开始都是使用val，当实际需要的时候会改成var。
+Scala允许我们根据实际需求决定可变性，它鼓励我们只用不可变的对象，但是也不禁止我们使用具有可变性的对象。这个和var与val的场景非常相似。我们一开始都是使用val，当实际需要的时候会改成var。
 
 h2(#mutable). Mutable
 
@@ -519,7 +519,7 @@ All of the above classes we've discussed were immutable.  Let's discuss the comm
 **HashMap** 定义了`getOrElseUpdate`, `+=` "HashMap API":http://www.scala-lang.org/api/current/scala/collection/mutable/HashMap.html
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val numbers = collection.mutable.Map(1 -> 2)
 numbers: scala.collection.mutable.Map[Int,Int] = Map((1,2))
 
@@ -566,7 +566,7 @@ You can easily move between Java and Scala collection types using conversions th
 你可以通过 <a href="http://www.scala-lang.org/api/current/index.html#scala.collection.JavaConverters$">JavaConverters 包</a>在Java和Scala的集合类之间进行转换. 它给常用的Java集合提供了`asScala`方法，同时给常用的Scala集合提供了`asJava`方法。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
    import scala.collection.JavaConverters._
    val sl = new scala.collection.mutable.ListBuffer[Int]
    val jl : java.util.List[Int] = sl.asJava
@@ -578,7 +578,7 @@ Two-way conversions:
 
 双向转换：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala.collection.Iterable <=> java.lang.Iterable
 scala.collection.Iterable <=> java.util.Collection
 scala.collection.Iterator <=> java.util.{ Iterator, Enumeration }
@@ -592,7 +592,7 @@ In addition, the following one way conversions are provided:
 
 另外，下面提供了一些单向的转换方法：
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala.collection.Seq => java.util.List
 scala.collection.mutable.Seq => java.util.List
 scala.collection.Set => java.util.Set

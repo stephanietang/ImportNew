@@ -1,4 +1,4 @@
-英文原文: [Scala School](http://http://twitter.github.io/scala_school/specs.html)，翻译：[ImportNew](http://www.importnew.com) - [朱伟杰](http://www.importnew.com/author/zhuweijie)
+英文原文: [Scala School](http://twitter.github.io/scala_school/specs.html)，翻译：[ImportNew](http://www.importnew.com) - [朱伟杰](http://www.importnew.com/author/zhuweijie)
 
 This lesson covers testing with Specs, a Behavior-Driven Design (BDD) Framework for Scala.
 
@@ -18,9 +18,9 @@ This lesson covers testing with Specs, a Behavior-Driven Design (BDD) Framework 
 * "Spies":#spies
 * "run in sbt":#sbt
 
-这个章节的内容包含使用Specs进行测试，同时介绍了一个行为驱动设计（Behavior-Driven Desing BBD)的Scala框架。
+这个章节的内容包含使用Specs进行测试，同时介绍了Scala的行为驱动设计(Behavior-Driven Desing BBD)的框架。
 
-* <a href="#example">扩展Specification</a>
+* <a href="#example">继承Specification</a>
   * 内嵌示例
 * <a href="#scope">执行模型</a>
 * <a href="#setup">环境的设置与清理</a>
@@ -28,7 +28,7 @@ This lesson covers testing with Specs, a Behavior-Driven Design (BDD) Framework 
   * doBefore
   * doAfter
 * <a href="#matchers">匹配器</a>
-  * 相等
+  * mustEqual
   * 包含
   * 数量上相同?
   * 编写自己的匹配器
@@ -41,9 +41,9 @@ h2(#example). extends Specification
 Let's just jump in.
 
 
-## <a name="example"> 扩展Specification</a>
+## <a name="example">继承Specification</a>
 
-让我们直接开始吧
+让我们直接开始吧!
 
 <pre class="brush: java; gutter: true">
 import org.specs._
@@ -70,13 +70,13 @@ object ArithmeticSpec extends Specification {
 
 @1 mustEqual 1@ is a common placeholder *expectation* before you start writing real tests.  All examples should have at least one expectation.
 
-*Arithmetic*是“基于指定规范的系统”
+*Arithmetic*是“基于指定规范(specification)的系统”
 
 *add*是一个上下文。
 
 *add two numbers* 和 *add threes numbers*都是示例。
 
-`mustEqual`表示一个*期望*
+`mustEqual`表示一个*期望(expectation)*
 
 在你真正开始写测试之前，`1 mustEqual 1`只是你的*期望*的一个占位符。所有的示例(example)最少要有一个期望（expectation)。
 
@@ -128,7 +128,7 @@ h2(#setup). Setup, Teardown
 
 h3. doBefore & doAfter
 
-## <a name="setup">环境的设置与清理</a>
+## <a name="setup">用例的设置(Setup)与清理(Teardown)</a>
 
 ### doBefore 和 doAfter
 
@@ -167,15 +167,15 @@ h2(#matchers). Matchers
 
 You have data, you want to make sure it's right. Let's tour the most commonly used matchers. (See Also "Matchers Guide"http://code.google.com/p/specs/wiki/MatchersGuide)
 
-## <a name="matchers">匹配器</a>
+## <a name="matchers">匹配器(Matchers)</a>
 
-你有一些数据，并且想要验证它是正确地。我们可以使用matcher。下面我们来看看常用的一些matcher。（参考<a href="http://code.google.com/p/specs/wiki/MatchersGuide">匹配器指南</a>）
+你有一些数据，并且想要验证它是否正确。我们可以使用matcher。下面我们来看看常用的一些matcher。（参考<a href="http://code.google.com/p/specs/wiki/MatchersGuide">匹配器指南</a>）
 
 h3. mustEqual
 
 We've seen several examples of mustEqual already.
 
-### 相等
+### mustEqual
 
 我们前面已经见过一些使用mustEqual的例子。
 

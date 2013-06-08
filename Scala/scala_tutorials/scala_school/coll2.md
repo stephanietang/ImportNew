@@ -408,12 +408,8 @@ res0: IndexedSeq[Int] = Vector(1, 2, 3)
 
 **Range** 有序的通过空格分隔的Int序列。  在之前很多用来计数的for循环经常使用它。<a href="http://www.scala-lang.org/api/current/scala/collection/immutable/Range.html">Range API</a>
 
-
 <pre class="brush: java; gutter: true">
 scala> for (i &lt;- 1 to 3) { println(i) }
-1
-2
-3
 </pre>
 
 Ranges have the standard functional combinators available to them.

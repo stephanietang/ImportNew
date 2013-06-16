@@ -25,7 +25,7 @@ Runnable has a single method that returns no value.
 
 Runnable只有一个没有返回值的方法
 
-<pre>
+<pre class="brush: java; gutter: true">
 trait Runnable {
   def run(): Unit
 }
@@ -35,7 +35,7 @@ Callable is similar to run except that it returns a value
 
 Callable的方法和run类似，只不过它有一个返回值
 
-<pre>
+<pre class="brush: java; gutter: true">
 trait Callable[V] {
   def call(): V
 }
@@ -58,7 +58,7 @@ Scala的并发是建立在Java的并发模型上的。
 
 Thread是通过Runnable构造的。要运行一个Runnable的run方法，你需要调用对应线程的`start`方法。
 
-<pre>
+<pre class="brush: java; gutter: true">
 scala> val hello = new Thread(new Runnable {
   def run() {
     println("hello world")
@@ -81,9 +81,9 @@ Here's a code snippet that works but has problems.
 
 ### 一段单线程的代码
 
-下面是一段代码片，它可以运行，但是会有问题。
+下面是一段代码片段，它可以运行，但是会有问题。
 
-<pre>
+<pre class="brush: java; gutter: true">
 import java.net.{Socket, ServerSocket}
 import java.util.concurrent.{Executors, ExecutorService}
 import java.util.Date
@@ -126,7 +126,7 @@ You could put each request in a Thread.  Simply change
 
 你可以对每个请求都单独用一个线程来响应。只需要把
 
-<pre>
+<pre class="brush: java; gutter: true">
 (new Handler(socket)).run()
 </pre>
 
@@ -134,7 +134,7 @@ to
 
 改成
 
-<pre>
+<pre class="brush: java; gutter: true">
 (new Thread(new Handler(socket))).start()
 </pre>
 
@@ -150,7 +150,7 @@ You can get an @ExecutorService@ using static methods on the @Executors@ object.
 
 Here's our old blocking network server written to allow concurrent requests.
 
-## Executors
+## <a name="executor">Executors</a>
 
 随着Java 5的发布，对于线程的管理需要一个更加抽象的接口。
 
@@ -159,7 +159,7 @@ Here's our old blocking network server written to allow concurrent requests.
 下面是我们之前的阻塞式网络服务器，现在改写成可以支持并发请求。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 import java.net.{Socket, ServerSocket}
 import java.util.concurrent.{Executors, ExecutorService}
 import java.util.Date
@@ -195,9 +195,9 @@ class Handler(socket: Socket) extends Runnable {
 
 Here's a transcript connecting to it showing how the internal threads are re-used.
 
-下面是连接的大致情况，可以这个我们可以大致了解内部的线程是怎么进行复用的。
+从下面的示例中，我们可以大致了解内部的线程是怎么进行复用的。
 
-<pre>
+<pre class="brush: java; gutter: true">
 $ nc localhost 2020
 pool-1-thread-1
 
@@ -219,14 +219,14 @@ A @Future@ represents an asynchronous computation.  You can wrap your computatio
 A @FutureTask@ is a Runnable and is designed to be run by an @Executor@
 
 
-## <a name="Future">Futures</a>
+## <a name="future">Futures</a>
 
 一个`Future`代表一次异步计算的操作。你可以把你的操作包装在一个Future里，当你需要结果的时候，你只需要简单调用一个阻塞的`get()`方法就好了。一个`Executor`返回一个`Future`。如果你使用Finagle RPC的话，你可以使用`Future`的实例来保存还没有到达的结果。
 
 `FutureTask`是一个可运行的任务，并且被设计成由`Executor`进行运行。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 val future = new FutureTask[String](new Callable[String]() {
   def call(): String = {
     searcher.search(target);
@@ -238,7 +238,7 @@ Now I need the results so let's block until its done.
 
 现在我需要结果，那就只能阻塞到直到结果返回。
 
-<pre>
+<pre class="brush: java; gutter: true">
 val blockingResult = future.get()
 </pre>
 
@@ -250,7 +250,7 @@ h2(#danger). Thread Safety Problem
 
 ## <a name="danger">线程安全问题</a>
 
-<pre>
+<pre class="brush: java; gutter: true">
 class Person(var name: String) {
   def set(changedName: String) {
     name = changedName
@@ -283,11 +283,12 @@ In the JVM, you can synchronize on any instance that's not null.
 ### 三个工具
 
 #### 同步
-Mutex提供了锁定资源的语法。当你进入一个mutex的时候，你会获得它。在JVM里使用mutex最常用的方式就是在一个对象上进行同步访问。在这里，我们会在Person上进行同步访问。
+
+互斥量(Mutex)提供了锁定资源的语法。当你进入一个互斥量的时候，你会获得它。在JVM里使用互斥量最常用的方式就是在一个对象上进行同步访问。在这里，我们会在Person上进行同步访问。
 
 在JVM里，你可以对任何非null的对象进行同步访问。
 
-<pre>
+<pre class="brush: java; gutter: true">
 class Person(var name: String) {
   def set(changedName: String) {
     this.synchronized {
@@ -309,10 +310,7 @@ With Java 5's change to the memory model, volatile and synchronized are basicall
 
 `synchronized`提供了更加细粒度的加锁控制。而`volatile`直接是对每次访问进行控制。
 
-
-
-
-<pre>
+<pre class="brush: java; gutter: true">
 class Person(@volatile var name: String) {
   def set(changedName: String) {
     name = changedName
@@ -328,7 +326,7 @@ Also in Java 5, a whole raft of low-level concurrency primitives were added. One
 
 同样的，在Java 5中新增了一系列底层的并发原语。`AtomicReference`类就是其中一个。
 
-<pre>
+<pre class="brush: java; gutter: true">
 import java.util.concurrent.atomic.AtomicReference
 
 class Person(val name: AtomicReference[String]) {
@@ -376,7 +374,7 @@ A @CountDownLatch@ is a simple mechanism for multiple threads to communicate wit
 
 `CountDownLatch`是供多个进程进行通信的一个简单机制。
 
-<pre>
+<pre class="brush: java; gutter: true">
 val doneSignal = new CountDownLatch(2)
 doAsyncWork(1)
 doAsyncWork(2)
@@ -422,15 +420,15 @@ This is written in a naive way assuming only single-threaded access.
 
 Note the alternative default constructor @this()@ that uses a @mutable.HashMap@
 
-## 我们来构建一个非线程安全的搜索引擎
+## <a name="example">我们来构建一个非线程安全的搜索引擎</a>
 
-这是一个简单的非线程安全的倒排索引。我们这个倒排索引把名字的一部分映射到指定的用户。
+这是一个简单的非线程安全的倒排索引。我们这个反向排索引把名字的一部分映射到指定的用户。
 
 下面是原生的假设只有单线程访问的写法。
 
 注意这里的使用`mutable.HashMap`的另一个构造函数`this()`。
 
-<pre>
+<pre class="brush: java; gutter: true">
 import scala.collection.mutable
 
 case class User(name: String, id: Int)
@@ -477,7 +475,7 @@ You might consider locking on userMap while adding.
 
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 def add(user: User) {
   userMap.synchronized {
     tokenizeName(user.name).foreach { term =>
@@ -491,7 +489,7 @@ Unfortunately, this is too coarse.  Always try to do as much expensive work outs
 
 不幸的是，上面的做法有点太粗糙了。能在互斥量(mutex)外面做的工作尽量都放在外面做。记住我之前说过，如果没有竞争的话，加锁的代价是非常小的。如果你在临界区尽量少做操作，那么竞争就会非常少。
 
-<pre>
+<pre class="brush: java; gutter: true">
 def add(user: User) {
   // tokenizeName was measured to be the most expensive operation.
   // tokenizeName 这个操作是最耗时的。
@@ -517,7 +515,7 @@ We can extend our existing InvertedIndex to give users an easy way to build the 
 
 我们可以扩展之前的InvertedIndex，给用户提供一种构建同步索引的简单方法。
 
-<pre>
+<pre class="brush: java; gutter: true">
 import scala.collection.mutable.SynchronizedMap
 
 class SynchronizedInvertedIndex(userMap: mutable.Map[String, User]) extends InvertedIndex(userMap) {
@@ -544,7 +542,7 @@ Java里有一个很不错的线程安全的ConcurrentHashMap。幸运的是，Ja
 实际上，我们可以无缝地把我们新的，线程安全的InvertedIndex作为老的非线程安全的一个扩展。
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 import java.util.concurrent.ConcurrentHashMap
 import scala.collection.JavaConverters._
 
@@ -563,7 +561,7 @@ h3. The naive way
 
 ### 最原始的方法
 
-<pre>
+<pre class="brush: java; gutter: true">
 
 trait UserMaker {
   def makeUser(line: String) = line.split(",") match {
@@ -592,9 +590,11 @@ h3.  A solution: Producer/Consumer
 
 A common pattern for async computation is to separate producers from consumers and have them only communicate via a @Queue@.  Let's walk through how that would work for our search engine indexer.
 
-### 解决方案：生产者/消费者
+### <a name="example">解决方案：生产者/消费者</a>
 
-<pre>
+实现非同步计算的，通常采用的方法就是将生产者同消费者分开，并让它们通过`队列(queue)`来进行通信。让我们用下面的例子来说明我们是怎么实现搜索引擎的索引的。
+
+<pre class="brush: java; gutter: true">
 import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
 
 // Concrete producer

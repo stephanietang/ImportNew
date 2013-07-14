@@ -27,7 +27,7 @@ javap is a tool that ships with the JDK.  Not the JRE.  There's a difference.  J
 
 javap是JDK附带的一个工具，而不是JRE。There's a difference.Javap反编译class文件，并且向你展示它里面放的是什么。用起来很简单。
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap MyTrait
 Compiled from "Scalaisms.scala"
 public interface com.twitter.interop.MyTrait extends scala.ScalaObject{
@@ -40,7 +40,7 @@ If you're hardcore you can look at byte code
 
 如果你想了解底层的话，你可以查看对应的字节码
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap -c MyTrait\$class
 Compiled from "Scalaisms.scala"
 public abstract class com.twitter.interop.MyTrait$class extends java.lang.Object{
@@ -82,7 +82,7 @@ We'll construct a simple scala class to show the full range of entities
 * 异常  
 
 我们来创建一个简单的scala类来展示这几个要点
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.interop
 
 import java.io.IOException
@@ -119,7 +119,7 @@ h3. Class parameters
 * 默认情况下，类参数实际上就是Java里构造函数的参数。这就意味着你不能在这个class之外访问它们。
 * 把类参数定义成一个val/var的方式和下面的代码相同
 
-<pre>
+<pre class="brush: java; gutter: true">
 class SimpleClass(acc_: String) {
   val acc = acc_
 }
@@ -144,7 +144,7 @@ h3. Vars
 
 * 变量（var）会多定义一个<name>_$eq方法。你可以这样调用来设置变量的值：
 
-<pre>
+<pre class="brush: java; gutter: true">
 foo$_eq("newfoo");
 </pre>
 
@@ -157,7 +157,7 @@ You can annotate vals and vars with the @BeanProperty annotation.  This generate
 你可以通过@BeanProperty注解来标注val和var。这样就会生成类似于POJO的getter/setter方法。假如你想要访问isFoo变量，使用
 BooleanBeanProperty注解。那么难以理解的foo$eq就可以换成：
 
-<pre>
+<pre class="brush: java; gutter: true">
 setFoo("newfoo");
 getFoo();
 </pre>
@@ -171,7 +171,7 @@ Scala doesn't have checked exceptions.  Java does.  This is a philosophical deba
 
 Scala里没有受检异常（checked exception）,但是Java里有。这是一个语言层面上的问题，我们这里不进行讨论，但是在Java里你对异常进行捕获的时候你还是要注意的。dangerFoo和dangerBar的定义里对这进行了示范。在Java里，你不能这样做
 
-<pre>
+<pre class="brush: java; gutter: true">
         // exception erasure!
         // 异常擦除！
         try {
@@ -208,7 +208,7 @@ How do you get an interface + implementation?  Let's take a simple trait definit
 我们怎样可以得到一个接口和对应的实现呢？我们简单看看trait的定义
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 trait MyTrait {
   def traitName:String
   def upperTraitName = traitName.toUpperCase
@@ -223,7 +223,7 @@ The implementation of MyTrait is what you'd expect
 
 MyTrait的实现和你猜想的差不多：
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap MyTrait
 Compiled from "Scalaisms.scala"
 public interface com.twitter.interop.MyTrait extends scala.ScalaObject{
@@ -236,7 +236,7 @@ The implementation of MyTrait$class is more interesting
 
 不过MyTrait$class的实现更加有趣：
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap MyTrait\$class
 Compiled from "Scalaisms.scala"
 public abstract class com.twitter.interop.MyTrait$class extends java.lang.Object{
@@ -253,7 +253,7 @@ Our first try is the following
 
 首先要做的是：
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.interop;
 
 public class JTraitImpl implements MyTrait {
@@ -273,7 +273,7 @@ And we get the following error
 
 然后我们会得到下面的错误：
 
-<pre>
+<pre class="brush: java; gutter: true">
 [info] Compiling main sources...
 [error] /Users/mmcbride/projects/interop/src/main/java/com/twitter/interop/JTraitImpl.java:3: com.twitter.interop.JTraitImpl is not abstract and does not override abstract method upperTraitName() in com.twitter.interop.MyTrait
 [error] public class JTraitImpl implements MyTrait {
@@ -284,7 +284,7 @@ We _could_ just implement this ourselves.  But there's a sneakier way.
 
 我们_可以_自己来实现他们。不过还有一种更加诡异的方式。
 
-<pre>
+<pre class="brush: java; gutter: true">
 package com.twitter.interop;
 
     public String upperTraitName() {
@@ -311,7 +311,7 @@ Scala对象会被编译成一个名称带有“$”后缀的类。我们来创建一个类以及对应的对象（Ob
 
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 class TraitImpl(name: String) extends MyTrait {
   def traitName = name
 }
@@ -324,13 +324,13 @@ object TraitImpl {
 
 We can na茂vely access this in Java like so
 
-<pre>
+<pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl$.MODULE$.apply("foo");
 </pre>
 
 Now you may be asking yourself, WTF?  This is a valid response.  Let's look at what's actually inside TraitImpl$
 
-<pre>
+<pre class="brush: java; gutter: true">
 local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap TraitImpl\$
 Compiled from "Scalaisms.scala"
 public final class com.twitter.interop.TraitImpl$ extends java.lang.Object implements scala.ScalaObject{
@@ -347,7 +347,7 @@ h3.  Forwarding Methods
 
 In Scala 2.8 dealing with Objects got quite a bit easier.  If you have a class with a companion object, the 2.8 compiler generates forwarding methods on the companion class.  So if you built with 2.8, you can access methods in the TraitImpl Object like so
 
-<pre>
+<pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl.apply("foo");
 </pre>
 
@@ -355,7 +355,7 @@ h2. Closures Functions
 
 One of Scala's most important features is the treatment of functions as first class citizens.  Let's define a class that defines some methods that take functions as arguments.
 
-<pre>
+<pre class="brush: java; gutter: true">
 class ClosureClass {
   def printResult[T](f: => T) = {
     println(f)
@@ -369,7 +369,7 @@ class ClosureClass {
 
 In Scala I can call this like so
 
-<pre>
+<pre class="brush: java; gutter: true">
 val cc = new ClosureClass
 cc.printResult { "HI MOM" }
 </pre>
@@ -377,7 +377,7 @@ cc.printResult { "HI MOM" }
 In Java it's not so easy, but it's not terrible either.  Let's see what ClosureClass actually compiled to:
 
 
-<pre>
+<pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap ClosureClass
 Compiled from "Scalaisms.scala"
 public class com.twitter.interop.ClosureClass extends java.lang.Object implements scala.ScalaObject{
@@ -392,7 +392,7 @@ This isn't so scary.  "f: => T" translates to "Function0", and "f: String => T" 
 Now we just need to figure out how to get those things going in Java.  Turns out Scala provides an AbstractFunction0 and an AbstractFunction1 we can pass in like so
 
 
-<pre>
+<pre class="brush: java; gutter: true">
     @Test public void closureTest() {
         ClosureClass c = new ClosureClass();
         c.printResult(new AbstractFunction0() {

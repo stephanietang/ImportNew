@@ -25,7 +25,7 @@ javap is a tool that ships with the JDK.  Not the JRE.  There's a difference.  J
 
 ## Javap
 
-javap是JDK附带的一个工具，而不是JRE。There's a difference.Javap反编译class文件，并且向你展示它里面放的是什么。用起来很简单。
+javap是JDK附带的一个工具，而不是JRE。它们之间还是有差别的。Javap反编译class文件，并且向你展示它里面放的是什么。用起来很简单。
 
 <pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap MyTrait
@@ -322,13 +322,17 @@ object TraitImpl {
 }
 </pre>
 
-We can na茂vely access this in Java like so
+We can naively access this in Java like so
+
+我们可以通过下面这种奇妙的方式在Java里访问它：
 
 <pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl$.MODULE$.apply("foo");
 </pre>
 
 Now you may be asking yourself, WTF?  This is a valid response.  Let's look at what's actually inside TraitImpl$
+
+现在你也许会问自己，这究竟是神马？这是一个很正常的反应。我们现在一起来看看TraintImpl$内部究竟是怎么实现的。
 
 <pre class="brush: java; gutter: true">
 local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap TraitImpl\$
@@ -343,9 +347,15 @@ public final class com.twitter.interop.TraitImpl$ extends java.lang.Object imple
 
 There actually aren't any static methods.  Instead it has a static member named MODULE$.  The method implementations delegate to this member.  This makes access ugly, but workable if you know to use MODULE$.
 
+其实它里面没有任何静态方法。相反，它还有一个静态成员叫做MODULE$。实际上方法的调用都是代理到这个成员变量上的。这种实现使得访问起来觉得比较恶心，但是如果你知道怎么使用MODULE$的话，其实还是很实用的。
+
 h3.  Forwarding Methods
 
 In Scala 2.8 dealing with Objects got quite a bit easier.  If you have a class with a companion object, the 2.8 compiler generates forwarding methods on the companion class.  So if you built with 2.8, you can access methods in the TraitImpl Object like so
+
+### 转发方法（Forwarding Method）
+
+在Scala 2.8里，处理Object会比较简单点。如果你有一个类以及对应的伴生对象（companion object），2.8 的编译器会在伴生对象里生成转发方法。如果使用2.8的编译器进行构建，那么你可以通过下面的方法来访问TraitImpl对象：
 
 <pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl.apply("foo");
@@ -354,6 +364,10 @@ MyTrait foo = TraitImpl.apply("foo");
 h2. Closures Functions
 
 One of Scala's most important features is the treatment of functions as first class citizens.  Let's define a class that defines some methods that take functions as arguments.
+
+## 闭包函数
+
+Scala最重要的一个特点就是把函数作为一等公民。我们来定义一个类，它里面包含一些接收函数作为参数的方法。
 
 <pre class="brush: java; gutter: true">
 class ClosureClass {
@@ -369,6 +383,8 @@ class ClosureClass {
 
 In Scala I can call this like so
 
+在Scala里我可以这样调用：
+
 <pre class="brush: java; gutter: true">
 val cc = new ClosureClass
 cc.printResult { "HI MOM" }
@@ -376,6 +392,7 @@ cc.printResult { "HI MOM" }
 
 In Java it's not so easy, but it's not terrible either.  Let's see what ClosureClass actually compiled to:
 
+但是在Java里却没有这么简单，不过也没有想象的那么复杂。我们来看看ClosureClass最终到底编译成怎样：
 
 <pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap ClosureClass
@@ -390,6 +407,10 @@ public class com.twitter.interop.ClosureClass extends java.lang.Object implement
 This isn't so scary.  "f: => T" translates to "Function0", and "f: String => T" translates to "Function1".  Scala actually defines Function0 through Function22, supporting this stuff up to 22 arguments.  Which really should be enough.
 
 Now we just need to figure out how to get those things going in Java.  Turns out Scala provides an AbstractFunction0 and an AbstractFunction1 we can pass in like so
+
+这个看起来也不是很可怕。"f: => T" 转换成"Function0"，"f: String => T" 转换成 "Function1"。Scala定义了从Function0到Function22，一直支持到22个参数。这么多确实已经足够了。
+
+现在我们只需要弄清楚，怎么在Java去实现这个功能。事实上，Scala提供了AbstractFunction0和AbstractFunction1，我们可以这样来传参：
 
 
 <pre class="brush: java; gutter: true">
@@ -409,4 +430,6 @@ Now we just need to figure out how to get those things going in Java.  Turns out
 </pre>
 
 Note that we can use generics to parameterize arguments.
+
+注意我们还可以使用泛型来参数化参数的类型。
 

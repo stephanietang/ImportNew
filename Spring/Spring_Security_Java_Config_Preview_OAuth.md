@@ -64,8 +64,8 @@ Spring Security OAuth Java配置目前支持基本的OAuth 2服务器端配置�
 
 我们这里演示的例子非常的简单，而且这也不是一个真实的例子。在我们觉得已经完善OAuth支持之前，我们不会在博客上再更新相关内容的。下面还有些更多的OAuth实例，你可以试一试：
 
-- Spring Security JavaConfig's sparklr application
-- The Spring Rest Stack's – oauth module
+- Spring Security JavaConfig's [sparklr application](https://github.com/SpringSource/spring-security-javaconfig/blob/master/samples/oauth2-sparklr/src/main/java/org/springframework/security/oauth/examples/sparklr/config/OAuth2ServerConfig.java)
+- [The Spring Rest Stack's](https://github.com/joshlong/the-spring-rest-stack) – oauth module
 
 ### 欢迎反馈
 

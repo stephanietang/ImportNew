@@ -26,7 +26,11 @@ javap is a tool that ships with the JDK.  Not the JRE.  There's a difference.  J
 
 ## Javap
 
+<<<<<<< HEAD
 javapæ˜¯JDKé™„å¸¦çš„ä¸€ä¸ªå·¥å…·ï¼Œè€Œä¸åŒ…å«åœ¨JREä¸­ã€‚Javapåç¼–è¯‘classæ–‡ä»¶ï¼Œå¹¶ä¸”å‘ä½ å±•ç¤ºå®ƒçš„å†…å®¹ã€‚ç”¨èµ·æ¥å¾ˆç®€å•ã€‚
+=======
+javapÊÇJDK¸½´øµÄÒ»¸ö¹¤¾ß£¬¶ø²»ÊÇJRE¡£ËüÃÇÖ®¼ä»¹ÊÇÓĞ²î±ğµÄ¡£Javap·´±àÒëclassÎÄ¼ş£¬²¢ÇÒÏòÄãÕ¹Ê¾ËüÀïÃæ·ÅµÄÊÇÊ²Ã´¡£ÓÃÆğÀ´ºÜ¼òµ¥¡£
+>>>>>>> 5741bfc6b00f7bc8c7f4f5a9da27bf330d39cda2
 
 <pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap MyTrait
@@ -324,13 +328,21 @@ object TraitImpl {
 }
 </pre>
 
+<<<<<<< HEAD
 We can naèŒ‚vely access this in Java like so
+=======
+We can naively access this in Java like so
+
+ÎÒÃÇ¿ÉÒÔÍ¨¹ıÏÂÃæÕâÖÖÆæÃîµÄ·½Ê½ÔÚJavaÀï·ÃÎÊËü£º
+>>>>>>> 5741bfc6b00f7bc8c7f4f5a9da27bf330d39cda2
 
 <pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl$.MODULE$.apply("foo");
 </pre>
 
 Now you may be asking yourself, WTF?  This is a valid response.  Let's look at what's actually inside TraitImpl$
+
+ÏÖÔÚÄãÒ²Ğí»áÎÊ×Ô¼º£¬Õâ¾¿¾¹ÊÇÉñÂí£¿ÕâÊÇÒ»¸öºÜÕı³£µÄ·´Ó¦¡£ÎÒÃÇÏÖÔÚÒ»ÆğÀ´¿´¿´TraintImpl$ÄÚ²¿¾¿¾¹ÊÇÔõÃ´ÊµÏÖµÄ¡£
 
 <pre class="brush: java; gutter: true">
 local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap TraitImpl\$
@@ -345,9 +357,15 @@ public final class com.twitter.interop.TraitImpl$ extends java.lang.Object imple
 
 There actually aren't any static methods.  Instead it has a static member named MODULE$.  The method implementations delegate to this member.  This makes access ugly, but workable if you know to use MODULE$.
 
+ÆäÊµËüÀïÃæÃ»ÓĞÈÎºÎ¾²Ì¬·½·¨¡£Ïà·´£¬Ëü»¹ÓĞÒ»¸ö¾²Ì¬³ÉÔ±½Ğ×öMODULE$¡£Êµ¼ÊÉÏ·½·¨µÄµ÷ÓÃ¶¼ÊÇ´úÀíµ½Õâ¸ö³ÉÔ±±äÁ¿ÉÏµÄ¡£ÕâÖÖÊµÏÖÊ¹µÃ·ÃÎÊÆğÀ´¾õµÃ±È½Ï¶ñĞÄ£¬µ«ÊÇÈç¹ûÄãÖªµÀÔõÃ´Ê¹ÓÃMODULE$µÄ»°£¬ÆäÊµ»¹ÊÇºÜÊµÓÃµÄ¡£
+
 h3.  Forwarding Methods
 
 In Scala 2.8 dealing with Objects got quite a bit easier.  If you have a class with a companion object, the 2.8 compiler generates forwarding methods on the companion class.  So if you built with 2.8, you can access methods in the TraitImpl Object like so
+
+### ×ª·¢·½·¨£¨Forwarding Method£©
+
+ÔÚScala 2.8Àï£¬´¦ÀíObject»á±È½Ï¼òµ¥µã¡£Èç¹ûÄãÓĞÒ»¸öÀàÒÔ¼°¶ÔÓ¦µÄ°éÉú¶ÔÏó£¨companion object£©£¬2.8 µÄ±àÒëÆ÷»áÔÚ°éÉú¶ÔÏóÀïÉú³É×ª·¢·½·¨¡£Èç¹ûÊ¹ÓÃ2.8µÄ±àÒëÆ÷½øĞĞ¹¹½¨£¬ÄÇÃ´Äã¿ÉÒÔÍ¨¹ıÏÂÃæµÄ·½·¨À´·ÃÎÊTraitImpl¶ÔÏó£º
 
 <pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl.apply("foo");
@@ -356,6 +374,10 @@ MyTrait foo = TraitImpl.apply("foo");
 h2. Closures Functions
 
 One of Scala's most important features is the treatment of functions as first class citizens.  Let's define a class that defines some methods that take functions as arguments.
+
+## ±Õ°üº¯Êı
+
+Scala×îÖØÒªµÄÒ»¸öÌØµã¾ÍÊÇ°Ñº¯Êı×÷ÎªÒ»µÈ¹«Ãñ¡£ÎÒÃÇÀ´¶¨ÒåÒ»¸öÀà£¬ËüÀïÃæ°üº¬Ò»Ğ©½ÓÊÕº¯Êı×÷Îª²ÎÊıµÄ·½·¨¡£
 
 <pre class="brush: java; gutter: true">
 class ClosureClass {
@@ -371,6 +393,8 @@ class ClosureClass {
 
 In Scala I can call this like so
 
+ÔÚScalaÀïÎÒ¿ÉÒÔÕâÑùµ÷ÓÃ£º
+
 <pre class="brush: java; gutter: true">
 val cc = new ClosureClass
 cc.printResult { "HI MOM" }
@@ -378,6 +402,7 @@ cc.printResult { "HI MOM" }
 
 In Java it's not so easy, but it's not terrible either.  Let's see what ClosureClass actually compiled to:
 
+µ«ÊÇÔÚJavaÀïÈ´Ã»ÓĞÕâÃ´¼òµ¥£¬²»¹ıÒ²Ã»ÓĞÏëÏóµÄÄÇÃ´¸´ÔÓ¡£ÎÒÃÇÀ´¿´¿´ClosureClass×îÖÕµ½µ×±àÒë³ÉÔõÑù£º
 
 <pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap ClosureClass
@@ -392,6 +417,10 @@ public class com.twitter.interop.ClosureClass extends java.lang.Object implement
 This isn't so scary.  "f: => T" translates to "Function0", and "f: String => T" translates to "Function1".  Scala actually defines Function0 through Function22, supporting this stuff up to 22 arguments.  Which really should be enough.
 
 Now we just need to figure out how to get those things going in Java.  Turns out Scala provides an AbstractFunction0 and an AbstractFunction1 we can pass in like so
+
+Õâ¸ö¿´ÆğÀ´Ò²²»ÊÇºÜ¿ÉÅÂ¡£"f: => T" ×ª»»³É"Function0"£¬"f: String => T" ×ª»»³É "Function1"¡£Scala¶¨ÒåÁË´ÓFunction0µ½Function22£¬Ò»Ö±Ö§³Öµ½22¸ö²ÎÊı¡£ÕâÃ´¶àÈ·ÊµÒÑ¾­×ã¹»ÁË¡£
+
+ÏÖÔÚÎÒÃÇÖ»ĞèÒªÅªÇå³ş£¬ÔõÃ´ÔÚJavaÈ¥ÊµÏÖÕâ¸ö¹¦ÄÜ¡£ÊÂÊµÉÏ£¬ScalaÌá¹©ÁËAbstractFunction0ºÍAbstractFunction1£¬ÎÒÃÇ¿ÉÒÔÕâÑùÀ´´«²Î£º
 
 
 <pre class="brush: java; gutter: true">
@@ -411,4 +440,6 @@ Now we just need to figure out how to get those things going in Java.  Turns out
 </pre>
 
 Note that we can use generics to parameterize arguments.
+
+×¢ÒâÎÒÃÇ»¹¿ÉÒÔÊ¹ÓÃ·ºĞÍÀ´²ÎÊı»¯²ÎÊıµÄÀàĞÍ¡£
 

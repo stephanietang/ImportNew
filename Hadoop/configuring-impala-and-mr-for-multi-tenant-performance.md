@@ -1,7 +1,7 @@
 原文标题：Configuring Impala and MapReduce for Multi-tenant Performance(http://blog.cloudera.com/blog/2013/06/configuring-impala-and-mapreduce-for-multi-tenant-performance/)
 
 ##为多租户场景集群配置Impala和Mapreduce##
-[Cloudera Impala](http://blog.cloudera.com/blog/2013/05/cloudera-impala-1-0-its-here-its-real-its-already-the-standard-for-sql-on-hadoop/)包含很多令人惊喜的特性，但是其给人印象最深的应该是支持以多种格式分析HDFS和HBASE中数据的能力，并且不需要ETL。此外，用户可以使用多个框架如mapreduce和impala分析相同的数据。因此，Impala 可以和mapreduce一起运行在相同的物理机器上，支持企业的关键业务。对那些多租户的集群，尽管存在着可能的对集群资源需求的潜在冲突，Impala和Mapreduce都需要运维好。
+[Cloudera Impala](http://blog.cloudera.com/blog/2013/05/cloudera-impala-1-0-its-here-its-real-its-already-the-standard-for-sql-on-hadoop/)包含很多令人惊喜的特性，但是其给人印象最深的应该是支持以多种格式分析HDFS和HBASE中数据的能力，并且不需要ETL。此外，用户可以使用多个框架如mapreduce和impala分析相同的数据。因此，Impala 可以和mapreduce一起运行在相同的物理机器上，支持企业的关键业务。对那些多租户（**这里的多租户指多计算框架，如集群运行了Impala和Mapreduce**）的集群，尽管存在着可能的对集群资源需求的潜在冲突，Impala和Mapreduce都需要运维好。
 
 这篇文章，将分享作者在配置Impala和Mapreduce过程中认为最理想的多租户运维环境的经验。目标就是帮助用户理解怎样去对多租户集群进行调优满足产品的服务水准(SLOs)，并向社区贡献一些有用的，事半功倍的测试方法和性能模型。
 
@@ -35,16 +35,70 @@ Cloudera面对的是广泛和多样的客户群体，所以这使得为现实世
 
 对于Mapreduce，对map和reduce任务数的最大值应为默认值的1-x。例如假设给了Impala所有集群资源的25%，则x=25%，那么map和reduce最大锁业数就为默认值的75%。如果并行map任务数最大默认值为16，reduce最大默认值是8，那么新值就分别应该是12和6。当每个任务在其子jvm容器中运行通过map()和reduce()方法处理数据时，这样可以有效地让Mapreduce使用其余剩余的1-x部分集群的内存资源。对应着这一变化，任何一个作业的调优与槽容量调优有关的都需要随之做变化（因为槽资源减少了）。注意，在MR1中槽是最小的调优单元。对未来的CDH5和YARN来说，反而可能会指定具体的内存使用量。YARN会对应用各主服务器（他们中得一个要运行MR作业）进行资源分配。
 
-**CPU.** 我们通过[Linux Control Groups（Cgroups）](http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Ent/latest/Cloudera-Manager-Managing-Clusters/cmmc_resource_mgmt.html)来控制CPU的使用。Cgroups是Linux kernel 提供的一个特性，用户可以通过Cloudera Manager 4.5.x及以上版本配置。CGroup cpu共享给一个角色资源越多，其在资源竞争时共享的cpu资源就越大。例如，一个进程在4核cpu上运行占有的cpu时间是在2核机器上的2倍。这个控制称为soft limits（软限制），当服务器上运行进程既有来自cloudera manager管理的角色，同时有其他系统进程时，那个设置就没有效果了。
+* **CPU.** 我们通过[Linux Control Groups（Cgroups）](http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Ent/latest/Cloudera-Manager-Managing-Clusters/cmmc_resource_mgmt.html)来控制CPU的使用。Cgroups是Linux kernel 提供的一个特性，用户可以通过Cloudera Manager 4.5.x及以上版本配置。CGroup cpu共享给一个角色资源越多，其在资源竞争时共享的cpu资源就越大。例如，一个进程在4核cpu上运行占有的cpu时间是在2核机器上的2倍。这个控制称为soft limits（软限制），当服务器上运行进程既有来自cloudera manager管理的角色，同时有其他系统进程时，那个设置就没有效果了。
 
 在多租户环境中，所有的Impala和Mapreduce进程，包含Impala后台进程，DN、TT等，可能会同时抢占cpu资源。设置cpu资源的x部分给Impala，每个节点上其余的资源的一半给dn和tt，这样即可达到将cpu的x部分给impala，mapreduce占有其余的资源。
 
 这个对mapreduce来讲是保守的设置，这里假定dn和任务计算可以同时运行，最大化cpu的使用。如果你的mr负载远远低于集群资源总量，这个设置就不那么靠谱。例如，当你只有一个mr作业，通常作业输入输出使用的DN和TTcpu使用不会同时。只有当你有非常大的负载，那么整体上可以说dn和tt使用是同时的。
 
 
+* **Disk.** 磁盘IO资源也通过Cgroups来控制。角色被授予的Cgroup IO比重越大，其IO请求的优先级就越高。这个和CPU管理效果几乎一致。
+
+我们选择了一个比较保守的磁盘资源配置：Impala后台进程使用磁盘IO比重x的部分，其余的（即1-x部分）中得一半给DN，另外的给TT。
+
+###多租户性能数据###
+
+测试目标：
+
+*    衡量未管控多租户下集群使用效果
+*    衡量使用资源管控多租户状态下的性能
+*    研究上面2种情况下的资源竞争
+*    研究面向资源控制的独立运行效能
+
+测试集群有64GB内存，12核 2.0GHz Intel Xeon， 12 * 2TB磁盘，10Gbps带宽。
+
+测试基准性能是在MapReduce和Impala均无资源控制情况，并且均独立运行。我们称为未管控独立性能（uncontrolled, stand-alone performance）。		这是非常好的基准性能，因为没有资源控制，独立安装在研究Mapreduce或者Impala集群都是公平的。
+
+### 未管控集群性能###
+
+如前所述，我们测试了多租户无资源控制情况下集群性能。测试中，MapReduce消耗了大部分集群资源，大大影响了IMpala的性能。尤其是，**没有资源控制的Mapreduce性能是未资源控制独立运行性能的90%，而Impala大概是独立运行的50%。**
+
+
+这些数据比预测的要高。原因是Impala和Mapredue资源需求并不是总是处于竞争状态。以后的测试，我们也将研究如何控制Impala和Mapreduce 负载，以便让其持续的存在资源竞争。
+
+资源管理机制在未资源控制性能上有几个方面的提升。首先 集群资源很少会过度使用。资源控制使得内存更安全，耗内存的进程导致服务器swap或者thrash的风险更低。例如如果未使用资源管理导致Impala性能低于生产的SLO（程序局部优化建议工具 Suggestions for Locality Optimizations），用户可以调整资源控制并将资源从Mapreduce转给Impala使得两者都达到期望的SLO。
+
+### 资源管理下集群性能###
+
+ 资源管理控制运行用户指定比重值x。我们测试使用参数有25-75，40-60，50-50，60-40，75-25。其中前面比值是分配给impala的，剩余的资源给Mapreduce。测试结果显示我们确实通过向某个计算框架分配资源多少控制了集群性能。
  
+下图显示了Impala和Mapreduce集群的性能。图上每个数据点显示了特定参数设置下的性能下降百分比，而竖线条显示的是25到75的测试参数矩阵各情况下性能效果。
+
+![yanpei1.png](images/yanpei1.png)
+![yanpei2.png](images/yanpei2.png)
+
+上面图形显示，Impala和Mapreduce多租户性能都达到或者超过了预期模型。一些Impala查询和Maprecuce作业的性能几乎没有收到影响（误差线接近独立运行时性能）。一些作业的性能受到的影响超过了之前的预期模型（误差线低于预期模型线(Modeled line)）。绝大多数作业达到或者超过了预期。原因还是之前说的，Impala和Mapreduce资源竞争并不是一直存在。
 
 
+###验证资源竞争###
+我们使用Cloudera Manager来检测未资源控制和做了资源控制2种情况下测试中得物理资源使用情况。内存几乎一直被打满。CPU和磁盘负载只是一些时候出现飙升和竞争现象。这个行为解释了我们测试结论：Impala和Mapreduce均超过了预期的性能。
+
+###资源管控下独立运行性能###
+多租户资源管控表现为软限制（soft limits）。换句话说，当只有一个框架处于活跃状态时，就应该表现为其拥有整个集群。上面说的cpu和磁盘控制均设计为软限制，而内存却是硬限制（hard limits）。因此我们有必要测试资源管控下的独立运行性能。注意，这不同于之前的未资源管控的独立性能基准测试。
+
+Impala 的表现像极了其拥有整个集群资源。这对于设置了内存限制的Impala也是预期就知道的。要么查询不受影响，要么当查询达到内存限制时，查询被立即干掉。
+
+对Mapreduce而言，行为表现的稍显复杂。将可用槽位设置到并行运行量的的上限。为适度降低槽位设置，仍然需要足够的并行作业使资源达到满负荷使用，这样性能影响就很小。猛降槽位数，剩余的槽位将不足以使资源得到有效利用，性能影响就非常大。
+
+适度降低槽位还是猛降槽位依赖于集群硬件。对于我们测试集群，50%槽位的降低只影响了15%的性能！然而减少槽位到25%得到的性能指标大致和多租户性能类似。意味着可用槽位而不是资源竞争变成了Mapreduce的性能限制。因此，就像之前描述的那样，根据集群硬件资源，资源管控有一个调节设置的空间。
+
+
+###下一步计划###
+大数据多租户性能是一个非常重要的工程问题，因为其会立即影响到大量用户。我们的测试方法、模型和结论高度依赖现实场景，并具有一定数学严谨性和实践实验性质。
+
+下步马上会做的就是去扩展测试场景，覆盖Impala多查询同时多MR作业运行时负载，impala和Mapreduce均设置一定的负载水平。
+
+总之，我们希望这篇文章可以帮助用户调优多租户集群去达到生产环境的SLOs，并帮助社区了解如何在共享的大数据平台上管理资源。
 
 
 

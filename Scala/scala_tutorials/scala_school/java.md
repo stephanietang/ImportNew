@@ -12,25 +12,20 @@ This lesson covers Java interoperability.
 
 这个章节主要讲解和Java进行互操作。
 
-* Javap
-* Classes
-* Excepitons
-* Traits
-* Objects
-* Closures和Functions
-* Variance
+* <a href="#javap">Javap</a>
+* <a href="#class">类</a>
+* <a href="#exception">异常</a>
+* <a href="#trait">Trait</a>
+* <a href="#object">对象</a>
+* <a href="#closure">闭包函数(closures functions)</a>
 
 h2. Javap
 
 javap is a tool that ships with the JDK.  Not the JRE.  There's a difference.  Javap decompiles class definitions and shows you what's inside.  Usage is pretty simple
 
-## Javap
+## <a name="javap">Javap</a>
 
-<<<<<<< HEAD
-javap是JDK附带的一个工具，而不包含在JRE中。Javap反编译class文件，并且向你展示它的内容。用起来很简单。
-=======
-javap��JDK������һ�����ߣ�������JRE������֮�仹���в��ġ�Javap������class�ļ�����������չʾ������ŵ���ʲô���������ܼ򵥡�
->>>>>>> 5741bfc6b00f7bc8c7f4f5a9da27bf330d39cda2
+javap是JDK附带的一个工具，而不是JRE。它们之间还是有差别的。Javap反编译class文件，并且向你展示它里面放的是什么。使用起来很简单。
 
 <pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap MyTrait
@@ -78,7 +73,7 @@ The four major items to consider when using a Scala _class_ from Java are
 
 We'll construct a simple scala class to show the full range of entities
 
-## 类
+## <a name="class">类</a>
 
 从Java的角度来使用Scala的\_class\_需要注意的四个要点如下：
 
@@ -150,7 +145,7 @@ h3. Vars
 
 ### 变量（Var）
 
-* 变量（var）会多定义一个<name>\_$eq方法。你可以这样调用来设置变量的值：
+* 变量（var）会多定义一个<name>_$eq方法。你可以这样调用来设置变量的值：
 
 <pre class="brush: java; gutter: true">
 foo$_eq("newfoo");
@@ -162,8 +157,7 @@ You can annotate vals and vars with the @BeanProperty annotation.  This generate
 
 ### BeanFactory
 
-你可以通过@BeanProperty注解来标注val和var。这样就会生成类似于POJO的getter/setter方法。假如你想要访问isFoo变量，使用
-BooleanBeanProperty注解。那么难以理解的foo$eq就可以换成：
+你可以通过@BeanProperty注解来标注val和var。这样就会生成类似于POJO的getter/setter方法。假如你想要访问isFoo变量，使用BooleanBeanProperty注解。那么难以理解的foo$eq就可以换成：
 
 <pre class="brush: java; gutter: true">
 setFoo("newfoo");
@@ -175,9 +169,9 @@ h3. Exceptions
 
 Scala doesn't have checked exceptions.  Java does.  This is a philosophical debate we won't get into, but it *does* matter when you want to catch an exception in Java.  The definitions of dangerFoo and dangerBar demonstrate this.  In Java I can't do this
 
-### 异常
+### <a name="exception">异常</a>
 
-Scala里没有受检异常（checked exception）,但是Java里有。这是一个语言层面上的问题，我们这里不进行讨论，但是在Java里你对异常进行捕获的时候你还是要注意的。dangerFoo和dangerBar的定义里对这进行了示范。在Java里，你不能这样做
+Scala里没有受检异常（checked exception），但是Java里有。这是一个语言层面上的问题，我们这里不进行讨论，但是在Java里你对异常进行捕获的时候你还是要注意的。dangerFoo和dangerBar的定义里对这进行了示范。在Java里，你不能这样做。
 
 <pre class="brush: java; gutter: true">
         // exception erasure!
@@ -193,7 +187,7 @@ Scala里没有受检异常（checked exception）,但是Java里有。这是一�
 
 Java complains that the body of s.dangerFoo never throws IOException.  We can hack around this by catching Throwable, but that's lame.
 
-Java编译器会因为s.dangerFoo不会抛出IOException而报错。我们可以通过catch Throwable来绕过这个错误，但是这样做没多大用处。
+Java编译器会因为s.dangerFoo不会抛出IOException而报错。我们可以通过捕获Throwable来绕过这个错误，但是这样做没多大用处。
 
 Instead, as a good Scala citizen it's a decent idea to use the throws annotation like we did on dangerBar.  This allows us to continue using checked exceptions in Java land.
 
@@ -211,7 +205,7 @@ h2. Traits
 
 How do you get an interface + implementation?  Let's take a simple trait definition and look
 
-## Trait
+## <a name="trait">Trait</a>
 
 我们怎样可以得到一个接口和对应的实现呢？我们简单看看trait的定义
 
@@ -311,9 +305,9 @@ Objects are the way Scala implements static methods/singletons.  Using them from
 
 A Scala object is compiled to a class that has a trailing "$".  Let's set up a class and a companion object
 
-## 对象（Object）
+## <a name="object">对象</a>
 
-在Scala里，对象是用来实现静态方法和单例模式的。在Java里使用它们就显得比较怪。在语法上没有什么比较优雅的方式来使用它们，但是在Scala 2.8里就没有那么麻烦了。
+在Scala里，是用对象来实现静态方法和单例模式的。如果在Java里使用它们就会显得比较怪。在语法上没有什么比较优雅的方式来使用它们，但是在Scala 2.8里就没有那么麻烦了。
 
 Scala对象会被编译成一个名称带有“$”后缀的类。我们来创建一个类以及对应的对象（Object）。我们来创建一个类以及对应的伴生对象（companion object)。
 
@@ -328,13 +322,9 @@ object TraitImpl {
 }
 </pre>
 
-<<<<<<< HEAD
-We can na茂vely access this in Java like so
-=======
 We can naively access this in Java like so
 
-���ǿ���ͨ��������������ķ�ʽ��Java���������
->>>>>>> 5741bfc6b00f7bc8c7f4f5a9da27bf330d39cda2
+我们可以通过下面这种奇妙的方式在Java里访问它：
 
 <pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl$.MODULE$.apply("foo");
@@ -342,7 +332,7 @@ MyTrait foo = TraitImpl$.MODULE$.apply("foo");
 
 Now you may be asking yourself, WTF?  This is a valid response.  Let's look at what's actually inside TraitImpl$
 
-������Ҳ�������Լ����⾿��������������һ���������ķ�Ӧ����������һ��������TraintImpl$�ڲ���������ôʵ�ֵġ�
+现在你也许会问自己，这究竟是神马？这是一个很正常的反应。我们现在一起来看看TraintImpl$内部究竟是怎么实现的。
 
 <pre class="brush: java; gutter: true">
 local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap TraitImpl\$
@@ -357,15 +347,15 @@ public final class com.twitter.interop.TraitImpl$ extends java.lang.Object imple
 
 There actually aren't any static methods.  Instead it has a static member named MODULE$.  The method implementations delegate to this member.  This makes access ugly, but workable if you know to use MODULE$.
 
-��ʵ������û���κξ�̬�������෴��������һ����̬��Ա����MODULE$��ʵ���Ϸ����ĵ��ö��Ǵ����������Ա�����ϵġ�����ʵ��ʹ�÷����������ñȽ϶��ģ����������֪����ôʹ��MODULE$�Ļ�����ʵ���Ǻ�ʵ�õġ�
+其实它里面没有任何静态方法。相反，它还有一个静态成员叫做MODULE$。实际上方法的调用都是代理到这个成员变量上的。这种实现使得访问起来觉得比较恶心，但是如果你知道怎么使用MODULE$的话，其实还是很实用的。
 
 h3.  Forwarding Methods
 
 In Scala 2.8 dealing with Objects got quite a bit easier.  If you have a class with a companion object, the 2.8 compiler generates forwarding methods on the companion class.  So if you built with 2.8, you can access methods in the TraitImpl Object like so
 
-### ת��������Forwarding Method��
+### 转发方法（Forwarding Method）
 
-��Scala 2.8�����Object��Ƚϼ򵥵㡣�������һ�����Լ���Ӧ�İ�������companion object����2.8 �ı��������ڰ�������������ת�����������ʹ��2.8�ı��������й�������ô�����ͨ������ķ���������TraitImpl����
+在Scala 2.8里，处理Object会比较简单点。如果你有一个类以及对应的伴生对象（companion object），2.8 的编译器会在伴生对象里生成转发方法。如果使用2.8的编译器进行构建，那么你可以通过下面的方法来访问TraitImpl对象：
 
 <pre class="brush: java; gutter: true">
 MyTrait foo = TraitImpl.apply("foo");
@@ -375,9 +365,9 @@ h2. Closures Functions
 
 One of Scala's most important features is the treatment of functions as first class citizens.  Let's define a class that defines some methods that take functions as arguments.
 
-## �հ�����
+## <a name="closure">闭包函数</a>
 
-Scala����Ҫ��һ���ص���ǰѺ�����Ϊһ�ȹ�������������һ���࣬���������һЩ���պ�����Ϊ�����ķ�����
+Scala最重要的一个特点就是把函数作为一等公民。我们来定义一个类，它里面包含一些接收函数作为参数的方法。
 
 <pre class="brush: java; gutter: true">
 class ClosureClass {
@@ -393,7 +383,7 @@ class ClosureClass {
 
 In Scala I can call this like so
 
-��Scala���ҿ����������ã�
+在Scala里我可以这样调用：
 
 <pre class="brush: java; gutter: true">
 val cc = new ClosureClass
@@ -402,7 +392,7 @@ cc.printResult { "HI MOM" }
 
 In Java it's not so easy, but it's not terrible either.  Let's see what ClosureClass actually compiled to:
 
-������Java��ȴû����ô�򵥣�����Ҳû���������ô���ӡ�����������ClosureClass���յ��ױ����������
+但是在Java里却没有这么简单，不过也没有想象的那么复杂。我们来看看ClosureClass最终到底编译成怎样：
 
 <pre class="brush: java; gutter: true">
 [local ~/projects/interop/target/scala_2.8.1/classes/com/twitter/interop]$ javap ClosureClass
@@ -418,9 +408,9 @@ This isn't so scary.  "f: => T" translates to "Function0", and "f: String => T" 
 
 Now we just need to figure out how to get those things going in Java.  Turns out Scala provides an AbstractFunction0 and an AbstractFunction1 we can pass in like so
 
-���������Ҳ���Ǻܿ��¡�"f: => T" ת����"Function0"��"f: String => T" ת���� "Function1"��Scala�����˴�Function0��Function22��һֱ֧�ֵ�22����������ô��ȷʵ�Ѿ��㹻�ˡ�
+这个看起来也不是很可怕。"f: => T" 转换成"Function0"，"f: String => T" 转换成 "Function1"。Scala定义了从Function0到Function22，一直支持到22个参数。这么多确实已经足够了。
 
-��������ֻ��ҪŪ�������ô��Javaȥʵ��������ܡ���ʵ�ϣ�Scala�ṩ��AbstractFunction0��AbstractFunction1�����ǿ������������Σ�
+现在我们只需要弄清楚，怎么在Java去实现这个功能。事实上，Scala提供了AbstractFunction0和AbstractFunction1，我们可以这样来传参：
 
 
 <pre class="brush: java; gutter: true">
@@ -441,5 +431,5 @@ Now we just need to figure out how to get those things going in Java.  Turns out
 
 Note that we can use generics to parameterize arguments.
 
-ע�����ǻ�����ʹ�÷��������������������͡�
+注意我们还可以使用泛型来参数化参数的类型。
 

@@ -14,11 +14,9 @@ Eclipse的调试功能的10个小窍门
 
 如果你仅仅对程序的某个部分感兴趣，调试视图是非常有帮助的。假设你想看看一个循环中的第十三次循环得到什么结果，或者你正在调试一个抽象父类，想看看某个具体的子类。你可以在调试视图设置条件，或者右键点击代码旁的蓝色断点符号，在弹出菜单中选择“Breakpoint Properties...”。你可以选择是在你的代码段返回真值是停止程序或者当你的代码段的值改变时停止。
 
-Extreme useful if you are interested only in a special constellation of your application. For example if you want to see the 13th run in a loop or you are debugging functionality in an abstract super class and you only want to see one concrete implementation. You can setup the conditions in the breakpoint-view or with the contextmenu on the blue breakpoint-marker next to your code (“Breakpoint Properties”). You can choose to suspend when your code-snippet gets true or when the value of your snippet changes.
+### 变量视图：显示逻辑结构
 
-### Variables View: Show Logical Structure
-
-If you want to see the values of a Map or a List in the variables view, it’s not always that easy with the default setting of eclipse. If you are using a HashMap for example, you have to click through the physical entries and you are confronted with implementation details of a HashMap. But there is a small button above the variables – “Show Logical Structure”. Very handy, especially if you don’t have meaningful toString()-methods for the objects in your structure. My boss showed me this feature a few weeks ago. You know, he is the guy who is working with PowerPoint or Excel the most time. What a shame for a developer like me ;-)
+如果你想在变量视图中查看Map或者List中的值，eclipse的默认设置可能不是那么方便。譬如你在使用HashMap，你必须要点开所有的子节点才能看到HashMap中的内容，还要受到HashMap实现细节的干扰。但是在变量上有一个小按钮-“Show Logical Structure”。它非常的方便，尤其当你没有实现某个对象的toString()代码时。我的老板前几个星期刚刚告诉我Eclipse有这个功能。你知道，他是那种每天只用对着PowerPoint和Excel的人。这对我这种号称程序员的家伙来说是件多么丢脸的事情啊！;-)
 
 ### Variables View: Change Value…
 

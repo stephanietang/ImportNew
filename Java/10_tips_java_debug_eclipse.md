@@ -10,7 +10,9 @@ Eclipse的调试功能的10个小窍门
 
 在你开启tomcat之前，应该要先问问自己：有没有什么方法可以用单元测试来检测代码的行为呢？你可以找到很多教你如何写出好的代码。而这里我主要来谈一谈eclipse的调试功能，你可能不知道，或者长时间以来有些淡忘的功能。
 
-### Breakpoint View : Conditional Breakpoints
+### 调试视图：有条件的断点
+
+如果你仅仅对程序的某个部分感兴趣，调试视图是非常有帮助的。假设你想看看一个循环中的第十三次循环得到什么结果，或者你正在调试一个抽象父类，想看看某个具体的子类。你可以在调试视图设置条件，或者右键点击代码旁的蓝色断点符号，在弹出菜单中选择“Breakpoint Properties...”。你可以选择是在你的代码段返回真值是停止程序或者当你的代码段的值改变时停止。
 
 Extreme useful if you are interested only in a special constellation of your application. For example if you want to see the 13th run in a loop or you are debugging functionality in an abstract super class and you only want to see one concrete implementation. You can setup the conditions in the breakpoint-view or with the contextmenu on the blue breakpoint-marker next to your code (“Breakpoint Properties”). You can choose to suspend when your code-snippet gets true or when the value of your snippet changes.
 

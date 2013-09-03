@@ -8,11 +8,11 @@ Eclipse的调试功能的10个小窍门
 
 有关调试的第一条要牢记的便是这条很疯狂的口号！但是我必须要在这里再说一遍：不要过分的调试！试着将复杂的逻辑分解成独立的小单元，然后写单元测试代码来保证小单元的正确运行。我经常看到某些人会这么做：在一个大型的Web应用上点击，填了几个表单，跳转了多个页面，只是为了确认最后一个页面的结果的正确性，最后在调试视图下来开发代码。
 
-在你开启tomcat之前，应该要先问问自己：有没有什么方法可以用单元测试来检测代码的行为呢？你可以找到很多教你如何写出好的代码。而这里我主要来谈一谈eclipse的调试功能，你可能不知道，或者长时间以来有些淡忘的功能。
+在你开启tomcat之前，应该要先问问自己：有没有什么方法可以用单元测试来检测代码的行为呢？你可以找到很多教你如何写出好的代码的教程。而这里我主要来谈一谈eclipse的调试功能，你可能不知道，或者长时间以来有些淡忘的功能。
 
 ### 调试视图：有条件的断点
 
-如果你仅仅对程序的某个部分感兴趣，调试视图是非常有帮助的。假设你想看看一个循环中的第十三次循环得到什么结果，或者你正在调试一个抽象父类，想看看某个具体的子类。你可以在调试视图设置条件，或者右键点击代码旁的蓝色断点符号，在弹出菜单中选择“Breakpoint Properties...”。你可以选择是在你的代码段返回真值是停止程序或者当你的代码段的值改变时停止。
+如果你仅仅对程序的某个部分感兴趣，调试视图是非常有帮助的。假设你想看看一个循环中的第十三次循环得到什么结果，或者你正在调试一个抽象父类，想看看某个具体的子类。你可以在调试视图设置条件，右键点击代码旁的蓝色断点符号，在弹出菜单中选择“Breakpoint Properties...”。你可以选择是在你的代码段返回真值是停止程序或者当你的代码段的值改变时停止。
 
 ### 变量视图：显示逻辑结构(Show Lodical Structure)
 
@@ -48,14 +48,11 @@ Ctrl+Shift+I – “Inspect”
 
 ### 断点视图：Watchpoints
 
-是什么改变了变量?!有时创建watchpoint会有很大的帮助。但调试器停在某个地方时，不管这个要监视的
+是什么改变了变量?!有时创建watchpoint会有很大的帮助。当某个要监视的field的值改变时或是读到时，调试器会停下来。双击某个field，这个watchpoint显示在断点视图中，你可以编辑它的属性。你也可以设置hit count，意思是当你输入的hit count已经达到了，调试器便会停下来。这个也适合于普通的断点。
 
-What the hell is changing this variable?! Sometimes it is usefull to create a watchpoint. Then the debugger stops, whenever the watched field is changed or just read – you can configure that. Just doubleclick on a field, then you can see the watchpoint in the Breakpoint View and edit the properties. You can even configure a hit count, means that the debugger only stops, when the entered hit count is reached. This also works for usual breakpoints.
- 
-### Human Readable Objects
+### 清晰易读的对象
 
-The Variables View is using the toString-Method of your objects to display the value. Because of this it is very, very helpful
-to provide good toString-implementations. The javadoc of the default-toString-implementation in java.lang.Object recommends the same:
+变量视图是使用toString()方法来显示一个对象的值，所以我们应该要写出清晰易读的toString()方法。java.lang.Object默认的toString()方法的javadoc也如此建议：
 
 <pre>
 * Returns a string representation of the object. In general, the
@@ -67,6 +64,6 @@ to provide good toString-implementations. The javadoc of the default-toString-im
 [...]
 </pre>
 
-You can have a look at the ToStringBuilder in commons-lang. It provides some functionality to write – quote from the javadoc – “good and consistent” toString-methods.
+你可以看一看commons-lang中的[ToStringBuilder](http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/builder/ToStringBuilder.html)。它可以帮助你写出“良好的、前后一致的”toString()方法。
 
-If you cannot modify the toString-implementation, for example if you are working with frameworks or you have to use a foreign API, it might be an option to create an “Detail Formatter” in Eclipse. To do that, you have to right click an object in the variables view and click on “New Detail Formatter…”. Then you can provide some code to display this type of Object in the future.
+如果你不能修改toString()方法，譬如你使用框架，或是外来的API，在Eclipse中创建“Detail Fomatter”可以帮到你。在变量视图中右击某个对象，然后点击“New Detail Formatter…”。然后你便能够定义代码，之后这种类型的Object都用这种形式来显示。

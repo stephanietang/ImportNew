@@ -47,17 +47,32 @@ Single Responsibility Principle (SRP)
 
 Single Responsibility Principle is another SOLID design principle, and represent  "S" on SOLID acronym. As per SRP, there should not be more than one reason for a class to change, or a class should always handle single functionality. If you put more than one functionality in one Class in Java  it introduce coupling between two functionality and even if you change one functionality there is chance you broke coupled functionality,  which require another round of testing to avoid any surprise on production environment.
 
+单一责任原理(Single Responsibility Principle (SRP))
+
+单一责任原理是另外一条"SOLID"设计理论，代表其中的“S”。每次一个类只有一个更改的原因，或者一个类只应该完成单一的功能。如果你将多过一个功能放在一个类中，它会将两个功能耦合在一起，如果你改变了其中的一个功能，可能会破坏另外一个功能，这样便需要更多的测试以确保上线时不出现什么岔子。
+
 Dependency Injection or Inversion principle
 Don't ask for dependency it will be provided to you by framework. This has been very well implemented in Spring framework, beauty of this design principle is that any class which is injected by DI framework is easy to test with mock object and easier to maintain because object creation code is centralized in framework and client code is not littered with that.There are multiple ways to  implemented Dependency injection like using  byte code instrumentation which some AOP (Aspect Oriented programming) framework like AspectJ does or by using proxies just like used in Spring. See this example of IOC and DI design pattern to learn more about this SOLID design principle. It represent "D" on SOLID acronym.
+
+依赖注入或反转原理
+
+容器会提供依赖注入，Spring非常好的实现了依赖注入。这条原理的美妙之处在于，每个被注入的类很容易的测试和维护，因为这些对象的创建代码都集中在容器中，有多种方法都可以进行依赖注射，譬如一些AOP框架如AspectJ使用的字节码注入(bytecode instrumentation)，以及Spring中使用的代理器(proxy)。来看看[这个依赖主色的例子]()吧。这一条正是SOLID中的"D"。
 
 Favor Composition over Inheritance
 Always favor composition over inheritance ,if possible. Some of you may argue this, but I found that Composition is lot more flexible than Inheritance. Composition allows to change behavior of a class at runtime by setting property during runtime and by using Interfaces to compose a class we use polymorphism which provides flexibility of to replace with better implementation any time. Even Effective Java advise to favor composition over inheritance.
 
+多用组合，少用继承
+如果可能的话，多用组合，少用继承。可能有的人会不同意，但我确实发现组合的灵活性高过继承。组合可以在运行时通过设置某个属性以及通过接口来组合某个类，我们可以使用多态，这样就能随时改变类的行为，大大提高了灵活性。Effective Java也更倾向于使用组合。
+
 Liskov Substitution Principle (LSP)
 According to Liskov Substitution Principle, Subtypes must be substitutable for super type i.e. methods or functions which uses super class type must be able to work with object of sub class without any issue". LSP is closely related to Single responsibility principle and Interface Segregation Principle. If a class has more functionality than subclass might not support some of the functionality ,and does violated LSP. In order to follow LSP SOLID design principle, derived class or sub class must enhance functionality, but not reduce them. LSP represent  "L" on SOLID acronym.
 
+
+
 Interface Segregation principle (ISP)
 Interface Segregation Principle stats that, a client should not implement an interface, if it doesn't use that. This happens mostly when one interface contains more than one functionality, and client only need one functionality and not other.Interface design is tricky job because once you release your interface you can not change it without breaking all implementation. Another benefit of this design principle in Java is, interface has disadvantage to implement all method before any class can use it so having single functionality means less method to implement.
+
+
 
 Programming for Interface not implementation
 Always program for interface and not for implementation this will lead to flexible code which can work with any new implementation of interface. So use interface type on variables, return types of method or argument type of methods in Java. This has been advised by many Java programmer including in Effective Java and head first design pattern book.
@@ -65,6 +80,4 @@ Always program for interface and not for implementation this will lead to flexib
 Delegation principle
 Don't do all stuff  by yourself,  delegate it to respective class. Classical example of delegation design principle is equals() and hashCode() method in Java. In order to compare two object for equality we ask class itself to do comparison instead of Client class doing that check. Benefit of this design principle is no duplication of code and pretty easy to modify behavior.
 
-All these object oriented design principle helps you write flexible and better code by striving high cohesion and low coupling. Theory is first step, but what is most important is to develop ability to find out when to apply these design principle. Find out, whether we are violating any design principle and compromising flexibility of code, but again as nothing is perfect in this world, don't always try to solve problem with design patterns and design principle they are mostly for large enterprise project which has longer maintenance cycle.
-
-所有的这些面相对象理论都能帮助你写出更灵活、高度一致且低耦合的代码。理论是第一步，更重要的是运用这些设计理论的能力。找出违反这些设计理论的地方，但是就像这个世界上没有什么是完美的一样，不要尝试着用设计模式和理论解决一切问题，因为它们往往是针对大型的企业级项目，有着更长的运行周期，换句话说小型的项目不一定值得这么做。
+所有的这些面相对象理论都能帮助你写出更灵活、高度一致且低耦合的代码。理论是第一步，更重要的是运用这些设计理论的能力。找出违反这些设计理论的地方，但是就像这个世界上没有什么是完美的一样，不要尝试着用设计模式和理论解决一切问题，因为它们往往是针对大型的企业级项目，有着更长的运行周期。换句话说小型的项目不一定值得这么做。

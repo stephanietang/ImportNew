@@ -19,22 +19,32 @@ Object oriented design principles and pattern in Java programming
 Though best way of learning any design principle or pattern is real world example and understanding the consequences of violating that design principle, subject of this article is Introducing Object oriented design principles for Java Programmers, who are either not exposed to it or in learning phase. I personally think each of these OOPS and SOLID design principle need an article to explain them clearly, and I will definitely try to do that here, but for now just get yourself ready for quick bike ride on design principle town :)
 
 
-虽然现实世界中
+学习任何设计理论或模式最好的方法就是现实世界中的例子，这篇文章只是要给还在学习阶段的程序员介绍面相对象理论。我想以下每一条都需要用一篇文章来详细介绍，我以后也会逐一介绍的，只是现在先来个快速浏览一下。
 
-
-拒绝重复，DRY(Don't repeat yourself)
+DRY(Don't repeat yourself)
 
 Our first object oriented design principle is DRY, as name suggest DRY (don't repeat yourself) means don't write duplicate code, instead use Abstraction to abstract common things in one place. If you have block of code in more than two place consider making it a separate method, or if you use a hard-coded value more than one time make them public final constant. Benefit of this Object oriented design principle is in maintenance. It's important  not to abuse it, duplication is not for code, but for functionality . It means, if you used common code to validate OrderID and SSN it doesn’t mean they are same or they will remain same in future. By using common code for two different functionality or thing you closely couple them forever and when your OrderID changes its format , your SSN validation code will break. So beware of such coupling and just don’t combine anything which uses similar code but are not related.
 
+避免重复，DRY(Don't repeat yourself)
 
+面相对设计理论的第一条就是避免重复，不要写重复的代码，尽量将共同的功能放在一个地方。如果你准备在不同地方写同一段代码，那么只写一个方法。如果你不止一次硬编码某个值，那么将其声明成public final常量。这么做的好处就是容易维护。但是不要滥用这一条，重复不是指代码的重复，而是指功能的重复。譬如你有一段相同的代码来验证OrderID和SSN，但它们代表的意义并不相同。如果你将两个不同的功能合并在一起，当OrderID更改了格式之后，那么检验SSN的代码就会失效。所以要警觉这种耦合，不要讲任何相似但不相关的代码合并在一起。
 
 Encapsulate What Changes
 Only one thing is constant in software field and that is "Change", So encapsulate the code you expect or suspect to be changed in future. Benefit of this OOPS Design principle is that Its easy to test and maintain proper encapsulated code. If you are coding in Java then follow principle of making variable and methods private by default and increasing access step by step e.g. from private to protected and not public. Several of design pattern in Java uses Encapsulation, Factory design pattern is one example of Encapsulation which encapsulate object creation code and provides flexibility to introduce new product later with no impact on existing code.
 
+将变化封装起来
+
+在软件领域唯一不变的就是“变化”。所以最好将你觉得将来会有改变的代码封装起来。这样做的好处就是更容易测试和维护正确的被封装的代码。你应该先将变量声明成private，然后有需要的话再扩大访问权限，如将private变成protected。Java中很多设计模式都使用了封装，工厂设计模式就是封装的一个例子，它封装了对象的创建，如果要引入新的“产品”，也不必更改现有的代码。
+
 Open Closed Design Principle
 Classes, methods or functions should be Open for extension (new functionality) and Closed for modification. This is another beautiful SOLID design principle, which prevents some-one from changing already tried and tested code. Ideally if you are adding new functionality only than your code should be tested and that's the goal of Open Closed Design principle. By the way, Open Closed principle is "O" from SOLID acronym.
 
+开放且封闭的设计理论(Open Closed Design Principle)
+
+类、方法以及功能应该对扩展开放(新的功能)，而对更改封闭。这是另一个优美的"SOLID"设计理论，这保证了有人更改已经经过测试了的代码。如果你要加入新的功能，你必须要先测试它，这正是开放且封闭的设计理论的目标。另外，Open Closed principle正是SOLID中的O的缩写。
+
 Single Responsibility Principle (SRP)
+
 Single Responsibility Principle is another SOLID design principle, and represent  "S" on SOLID acronym. As per SRP, there should not be more than one reason for a class to change, or a class should always handle single functionality. If you put more than one functionality in one Class in Java  it introduce coupling between two functionality and even if you change one functionality there is chance you broke coupled functionality,  which require another round of testing to avoid any surprise on production environment.
 
 Dependency Injection or Inversion principle
@@ -57,5 +67,4 @@ Don't do all stuff  by yourself,  delegate it to respective class. Classical exa
 
 All these object oriented design principle helps you write flexible and better code by striving high cohesion and low coupling. Theory is first step, but what is most important is to develop ability to find out when to apply these design principle. Find out, whether we are violating any design principle and compromising flexibility of code, but again as nothing is perfect in this world, don't always try to solve problem with design patterns and design principle they are mostly for large enterprise project which has longer maintenance cycle.
 
-
-Read more: http://javarevisited.blogspot.com/2012/03/10-object-oriented-design-principles.html#ixzz2iSosBhPI
+所有的这些面相对象理论都能帮助你写出更灵活、高度一致且低耦合的代码。理论是第一步，更重要的是运用这些设计理论的能力。找出违反这些设计理论的地方，但是就像这个世界上没有什么是完美的一样，不要尝试着用设计模式和理论解决一切问题，因为它们往往是针对大型的企业级项目，有着更长的运行周期，换句话说小型的项目不一定值得这么做。

@@ -10,7 +10,7 @@ Object Oriented Design Principles are core of OOPS programming, but I have seen 
 
 Bottom line is, always strive for highly cohesive and loosely couple solution, code or design. Looking open source code from Apache and Sun are good examples of learning Java and OOPS design principles. They show us,  how design principles should be used in coding and Java programs. Java Development Kit follows several design principle like Factory Pattern in BorderFactory class,  Singleton pattern in Runtime class, Decorator pattern on various java.io classes. By the way if you really interested more on Java coding practices,  read Effective Java by Joshua Bloch , a gem by the guy who wrote Java API. My another personal favorite on object oriented design pattern is,  Head First Design Pattern by Kathy Sierra and others and Head First Object Oriented Analysis and Design . These books helps a lot to write better code, taking full advantage of various Object oriented and SOLID design principles.
 
-但是我们起码要总是设计出高度一致而且松散耦合的代码。Apache和Sun的源代码就是学习Java面向对象理论的非常好的例子。JDK遵循了一些设计模式，譬如在BorderFactory中使用工厂模式，Runtime类中使用单例模式，java.io中的许多类中使用装饰者模式。如果你真的对Java编程感兴趣，请先阅读Joshua Bloch的Effective Java，正是他参与编写了Java API。另外两本我喜欢的关于设计模式的书还有，Kathy Sierra等编写的的Head First Design Pattern和Head First Object Oriented Analysis and Design。这些书帮助理解面向对象理论，并帮助我写出更好的代码。
+但是我们起码要总是设计出高度一致而且松散耦合的代码。Apache和Sun的源代码就是学习Java面向对象理论的非常好的例子。JDK遵循了一些设计模式，譬如在BorderFactory中使用工厂模式，Runtime类中使用单例模式，java.io中的许多类中使用装饰者模式。如果你真的对Java编程感兴趣，请先阅读Joshua Bloch的[Effective Java](http://www.amazon.com/gp/product/0321356683/ref=as_li_ss_tl?ie=UTF8&tag=javamysqlanta-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=0321356683)，正是他参与编写了Java API。另外两本我喜欢的关于设计模式的书还有，Kathy Sierra等编写的的[Head First Design Pattern](http://www.amazon.com/gp/product/0596007124/ref=as_li_ss_tl?ie=UTF8&tag=javamysqlanta-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=0596007124)和[Head First Object Oriented Analysis and Design](http://www.amazon.com/gp/product/0596008678/ref=as_li_ss_tl?ie=UTF8&tag=javamysqlanta-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=0596008678)。这些书帮助理解面向对象理论，并帮助我写出更好的代码。
 
 
 Object oriented design principles and pattern in Java programming
@@ -62,14 +62,14 @@ Favor Composition over Inheritance
 Always favor composition over inheritance ,if possible. Some of you may argue this, but I found that Composition is lot more flexible than Inheritance. Composition allows to change behavior of a class at runtime by setting property during runtime and by using Interfaces to compose a class we use polymorphism which provides flexibility of to replace with better implementation any time. Even Effective Java advise to favor composition over inheritance.
 
 多用组合，少用继承
-如果可能的话，多用组合，少用继承。可能有的人会不同意，但我确实发现组合的灵活性高过继承。组合可以在运行时通过设置某个属性以及通过接口来组合某个类，我们可以使用多态，这样就能随时改变类的行为，大大提高了灵活性。Effective Java也更倾向于使用组合。
+如果可能的话，多用组合，少用继承。可能有的人会不同意，但我确实发现组合的灵活性高过继承。组合可以在运行时通过设置某个属性以及通过接口来组合某个类，我们可以使用多态，这样就能随时改变类的行为，大大提高了灵活性。[Effective Java](http://www.amazon.com/gp/product/0321356683/ref=as_li_ss_tl?ie=UTF8&tag=javamysqlanta-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=0321356683)也更倾向于使用组合。
 
 Liskov Substitution Principle (LSP)
 According to Liskov Substitution Principle, Subtypes must be substitutable for super type i.e. methods or functions which uses super class type must be able to work with object of sub class without any issue". LSP is closely related to Single responsibility principle and Interface Segregation Principle. If a class has more functionality than subclass might not support some of the functionality ,and does violated LSP. In order to follow LSP SOLID design principle, derived class or sub class must enhance functionality, but not reduce them. LSP represent  "L" on SOLID acronym.
 
 Liskov替代原理(Liskov Substitution Principle (LSP))
 
-根据Liskov替代原理，子类必须可以替代父类，也就是使用父类的方法，也能够没有任何问题的和子类对象也兼容。LSP和单一责任原则以及接口分离原则的关系紧密。如果一个类比子类的功能要多的话，子类
+根据Liskov替代原理，子类必须可以替代父类，也就是使用父类的方法，也能够没有任何问题的和子类对象也兼容。LSP和单一责任原则以及接口分离原则的关系紧密。如果一个类比子类的功能要多，子类不能支持父类中的某些功能的话，就违反了LSP。为了遵循LSP原理，子类需要改进父类的功能，而不是减少功能。LSP代表SOLID中的"L"。
 
 Interface Segregation principle (ISP)
 
@@ -85,12 +85,13 @@ Always program for interface and not for implementation this will lead to flexib
 
 针对接口编程，而不是针对实现编程
 
-尽量针对接口编程，这样如果要引入任何新的接口，也有足够的灵活性。在变量的类型、方法的返回类型以及参量类型中使用接口类型。很多程序员都建议这么做，包括Effective Java和head first design patter等书。
+尽量针对接口编程，这样如果要引入任何新的接口，也有足够的灵活性。在变量的类型、方法的返回类型以及参量类型中使用接口类型。很多程序员都建议这么做，包括[Effective Java](http://www.amazon.com/gp/product/0321356683/ref=as_li_ss_tl?ie=UTF8&tag=javamysqlanta-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=0321356683)和[head first design pattern](http://www.amazon.com/gp/product/0596007124/ref=as_li_ss_tl?ie=UTF8&tag=javamysqlanta-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=0596007124)等书。
 
 Delegation principle
 Don't do all stuff  by yourself,  delegate it to respective class. Classical example of delegation design principle is equals() and hashCode() method in Java. In order to compare two object for equality we ask class itself to do comparison instead of Client class doing that check. Benefit of this design principle is no duplication of code and pretty easy to modify behavior.
 
 代理理论(Delegation principle)
+
 不要所有的事情都自己做，有时候要将任务代理给相应的类去做。运用代理模式最经典的例子就是equals()和hashCode()方法。为了比较两个对象的相等与否，我们没有用客户端代码去比较，而是让对象自己去比较。这么做的好处就是减少代码的重复，更容易更改行为。
 
 所有的这些面相对象理论都能帮助你写出更灵活、高度一致且低耦合的代码。理论是第一步，更重要的是运用这些设计理论的能力。找出违反这些设计理论的地方，但是就像这个世界上没有什么是完美的一样，不要尝试着用设计模式和理论解决一切问题，因为它们往往是针对大型的企业级项目，有着更长的运行周期。换句话说小型的项目不一定值得这么做。

@@ -21,9 +21,6 @@ Java类加载器的作用就是在运行时加载类。Java类加载器基于三
 
 3) Application类加载器 - CLASSPATH环境变量, 由-classpath或-cp选项定义,或者是JAR中的Manifest的classpath属性定义.
 
-How ClassLoader works in Java
-
-What is ClassLoader in Java, How classloader works in JavaAs I explained earlier Java ClassLoader works in three principles : delegation, visibility and uniqueness. In this section we will see those rules in detail and understand working of Java ClassLoader with example. By the way here is a diagram which explains How ClassLoader load class in Java using delegation.
 
 ### 类加载器的工作原理
 
@@ -72,7 +69,7 @@ What is ClassLoader in Java, How classloader works in JavaAs I explained earlier
 </pre>
 
 
-Output:
+输出:
 
 <pre class="brush: plain; gutter: true">
 ClassLoaderTest.getClass().getClassLoader() : sun.misc.Launcher$AppClassLoader@601bb1

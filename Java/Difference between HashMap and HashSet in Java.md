@@ -1,18 +1,19 @@
-Difference between HashMap and HashSet in Java
+## HashMap和HashSet的区别
 
- 
-HashMap vs HashSet is the most frequently asked question during any core java interview and interview is not said completed until they will not cover the Collection Framework and multi-threading interview and collections are uncompleted without Covering Hash Set and Hash Map.
-Both HashMap and HashSet are part of collection framework which allows us to work with collection of objects. Collection Framework has their own interfaces and implementation classes. Basically collection is divided as Set Interface, List and Queue Interfaces. All this interfaces have their own property also apart from they get from collection like Set allows Collection of objects but forbids duplicate value, List allows duplicate along with indexing.Queue woks on FCFS algorithm.
+HashMap和HashSet的区别是Java面试中最常被问到的问题。如果没有涉及到Collection框架以及多线程的面试可以说不完整，而Collection框架的问题不涉及到HashSet和HashMap也可以说不完整。HashMap和HashSet都是collection框架的一部分，它们让我们能够使用对象的集合。collection框架有自己的接口和实现，主要分为Set接口，List接口和Queue接口。它们有各自的特点，Set的集合里不允许对象有重复的值，List允许有重复，它对集合中的对象进行索引，Queue的工作原理是FCFS算法(First Come, First Serve)。
 
-First we have one look on What HashMap and Hashset is then will go for Differences between HashSet and HashMap
+首先让我们来看看什么是HashMap和HashSet，然后再来比较它们之间的分别。
 
 What is HashSet in Java?
 
-HashMap vs HashSet, difference between HashMap and Hashset in JavaHashSet  is implementation of Set Interface which does not allow duplicate value all the methods which are in Collection Framework are also in Set Interface by default but when we are talking about Hash set the main thing is objects which are going to be stored in HashSet must override equals() and hashCode() method so that we can check for equality and no duplicate value are stored in our set.if we have created our own objects we need to implement hashCode() and equal() in such a manner that will be able to compare objects correctly when storing in a set so that duplicate objects are not stored,if we have not override this method objects will take default implementation of this method.
+HashSet is implementation of Set Interface which does not allow duplicate value all the methods which are in Collection Framework are also in Set Interface by default but when we are talking about Hash set the main thing is objects which are going to be stored in HashSet must override equals() and hashCode() method so that we can check for equality and no duplicate value are stored in our set.if we have created our own objects we need to implement hashCode() and equal() in such a manner that will be able to compare objects correctly when storing in a set so that duplicate objects are not stored,if we have not override this method objects will take default implementation of this method.
 
 
 public boolean add(Object o)  Method is used to add element in a set which returns false if it’s a duplicate value in case of  HashSet otherwise returns true if added successfully.
 
+### 什么是HashSet
+
+HashSet实现了Set接口，它不允许集合中有重复的值，Collection框架所有的方法Set接口中都有，但是当我们讨论HashSet时，在将对象存储在HashSet之前，要先要确保对象重写equals()和hashCode()方法，这样才能比较对象的值是否相等，以确保set中没有储存相等的对象。如果我们没有重写这两个方法，将会使用这个方法的默认实现。
 
 What is HashMap?
 
@@ -21,12 +22,19 @@ HashMap is a implementation of Map Interface, which maps a key to value.Duplicat
 
 public Object put(Object Key,Object value) method is used to add element in map.
 
-You can read more about HashMap in my article How HashMap works in Java and Difference between HashMap and hashtable in Java
+### 什么是HashMap
+
+HashMap实现了Map接口，Map接口对键值对进行映射。Map中不允许重复的键。Map接口有两个基本的实现，HashMap和TreeMap。TreeMap保存了对象的排列次序，而HashMap则不能。HashMap允许键和值为null。HashMap并没有同步(synchronized)，但collection框架提供方法能保证HashMap同步，这样多个线程同时访问HashMap时，能保证只有一个线程更改Map。
+
+You can read more about HashMap in my article How HashMap works in Java and Difference between HashMap and Hashtable in Java
+
+你可以阅读[这篇文章]()看看HashMap和HashTable的区别。
 
 Difference between HashSet and HashMap in Java
 
 Following are some differences between HashMap and Hashset:
 
+### HashSet和HashMap的区别
 
 Hash Map
 Hash Set

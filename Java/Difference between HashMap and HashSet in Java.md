@@ -4,46 +4,52 @@ HashMap和HashSet的区别是Java面试中最常被问到的问题。如果没�
 
 首先让我们来看看什么是HashMap和HashSet，然后再来比较它们之间的分别。
 
-What is HashSet in Java?
-
-HashSet is implementation of Set Interface which does not allow duplicate value all the methods which are in Collection Framework are also in Set Interface by default but when we are talking about Hash set the main thing is objects which are going to be stored in HashSet must override equals() and hashCode() method so that we can check for equality and no duplicate value are stored in our set.if we have created our own objects we need to implement hashCode() and equal() in such a manner that will be able to compare objects correctly when storing in a set so that duplicate objects are not stored,if we have not override this method objects will take default implementation of this method.
-
-
-public boolean add(Object o)  Method is used to add element in a set which returns false if it’s a duplicate value in case of  HashSet otherwise returns true if added successfully.
-
 ### 什么是HashSet
 
-HashSet实现了Set接口，它不允许集合中有重复的值，Collection框架所有的方法Set接口中都有，但是当我们讨论HashSet时，在将对象存储在HashSet之前，要先要确保对象重写equals()和hashCode()方法，这样才能比较对象的值是否相等，以确保set中没有储存相等的对象。如果我们没有重写这两个方法，将会使用这个方法的默认实现。
+HashSet实现了Set接口，它不允许集合中有重复的值，当我们提到HashSet时，第一件事情就是在将对象存储在HashSet之前，要先确保对象重写equals()和hashCode()方法，这样才能比较对象的值是否相等，以确保set中没有储存相等的对象。如果我们没有重写这两个方法，将会使用这个方法的默认实现。
 
-What is HashMap?
-
-
-HashMap is a implementation of Map Interface, which maps a key to value.Duplicate keys are not allowed in a map.Basically map Interface has two implementation classes HashMap and TreeMap the main difference is TreeMap maintains order of the objects but HashMap will not.HashMap allows null values and null keys.HashMap is not synchronized,but collection framework provide methods so that we can make them synchronized if multiple threads are going to access our hashmap and one thread is structurally change our map.
-
-public Object put(Object Key,Object value) method is used to add element in map.
+public boolean add(Object o)方法用来在Set中添加元素，当元素值重复时则会立即返回false，如果成功添加的话会返回true。
 
 ### 什么是HashMap
 
-HashMap实现了Map接口，Map接口对键值对进行映射。Map中不允许重复的键。Map接口有两个基本的实现，HashMap和TreeMap。TreeMap保存了对象的排列次序，而HashMap则不能。HashMap允许键和值为null。HashMap并没有同步(synchronized)，但collection框架提供方法能保证HashMap同步，这样多个线程同时访问HashMap时，能保证只有一个线程更改Map。
+HashMap实现了Map接口，Map接口对键值对进行映射。Map中不允许重复的键。Map接口有两个基本的实现，HashMap和TreeMap。TreeMap保存了对象的排列次序，而HashMap则不能。HashMap允许键和值为null。HashMap是非synchronized的，但collection框架提供方法能保证HashMap synchronized，这样多个线程同时访问HashMap时，能保证只有一个线程更改Map。
 
-You can read more about HashMap in my article How HashMap works in Java and Difference between HashMap and Hashtable in Java
+public Object put(Object Key,Object value)方法用来将元素添加到map中。
 
-你可以阅读[这篇文章]()看看HashMap和HashTable的区别。
+你可以阅读[这篇文章](http://javarevisited.blogspot.com/2011/02/how-hashmap-works-in-java.html)看看HashMap的工作原理，以及[这篇文章](http://javarevisited.blogspot.com/2010/10/difference-between-hashmap-and.html)看看HashMap和HashTable的区别。
 
-Difference between HashSet and HashMap in Java
-
-Following are some differences between HashMap and Hashset:
 
 ### HashSet和HashMap的区别
 
-Hash Map
-Hash Set
-HashMap  is a implementation of Map interface
-HashSet is an implementation of Set Interface
-HashMap Stores data in form of  key value pair
-HashSet Store only objects
-Put method is used to add element in map
-Add method is used to add element is Set
+<table>
+<tr>
+  <td>*HashMap*</td>
+  <td>*HashSet*</td>
+</tr>
+<tr>
+  <td>HashMap实现了Map接口</td>
+  <td>HashSet实现了Set接口</td>
+</tr>
+<tr>
+  <td>HashMap储存键值对</td>
+  <td>HashSet仅仅存储对象</td>
+</tr>
+<tr>
+  <td>使用put()方法将元素放入map中</td>
+  <td>使用add()方法将元素放入set中</td>
+</tr>
+<tr>
+  <td>HashMap中使用键对象来计算hashcode值</td>
+  <td>HashSet使用成员对象来计算hashcode值，</td>
+</tr>
+<tr>
+  <td>HashMap比较快，因为</td>
+  <td></td>
+</tr>
+</table>
+
+
+
 In hash map hashcode value is calculated using key object
 Here member object is used for calculating hashcode value which can be same for two objects so equal () method is used to check for equality if it returns false that means two objects are different.
 HashMap is faster than hashset because unique key is used to access object

@@ -40,25 +40,14 @@ public Object put(Object Key,Object value)方法用来将元素添加到map中�
 </tr>
 <tr>
   <td>HashMap中使用键对象来计算hashcode值</td>
-  <td>HashSet使用成员对象来计算hashcode值，</td>
+  <td>HashSet使用成员对象来计算hashcode值，对于两个对象来说hashcode可能相同，所以equals()方法用来判断对象的相等性，如果两个对象不同的话，那么返回false</td>
 </tr>
 <tr>
-  <td>HashMap比较快，因为</td>
-  <td></td>
+  <td>HashMap比较快，因为是使用唯一的键来获取对象</td>
+  <td>HashSet较HashMap来说比较慢</td>
 </tr>
 </table>
 
-
-
-In hash map hashcode value is calculated using key object
-Here member object is used for calculating hashcode value which can be same for two objects so equal () method is used to check for equality if it returns false that means two objects are different.
-HashMap is faster than hashset because unique key is used to access object
-HashSet is slower than Hashmap
-
-
-Please let me know if you need any other difference between HashSet and HashMap in Java and I will add them here.
-
-
-
+如果你还知道其它的什么不同点，请留言。
 
 http://javarevisited.blogspot.hk/2011/09/difference-hashmap-vs-hashset-java.html

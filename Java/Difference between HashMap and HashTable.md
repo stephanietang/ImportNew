@@ -1,43 +1,39 @@
-Difference between HashMap and HashTable? Can we make hashmap synchronized?
-
 ## HashMap和HashTable的区别？我们是否能使HashMap synchronized?
+
+HashMap和HashTable的比较是Java面试中的常见问题，用来考验程序员是否能够正确使用集合类以及是否可以随机应变使用多种思路解决问题。HashMap的工作原理、ArrayList与Vector的比较以及这个问题是有关Java 集合框架的最经典的问题。HashTable是个过时的集合类，存在于Java API中很久了。在Java 4中被重写了，实现了Map接口，所以自此以后也成了Java集合框架中的一部分。HashTable和HashMap在Java面试中相当容易被问到，甚至成为了集合框架面试题中最常被考的问题，所以在参加任何Java面试之前，都不要忘了准备这一题。
+
+这篇文章中，我们不仅将会看到HashMap和HashTable的区别，还将看到它们之间的相似之处。
+
+### HashMap和HashTable的区别
+
+HashMap和HashTable都实现了Map接口，但决定用哪一个之前先要弄清楚它们之间的分别。主要的区别有：线程安全性，同步(synchronization)，以及速度。
+
+1. HashMap几乎可以等价于HashTable，除了HashMap是非synchronized的，并可以接受null(HashMap可以接受为null的键值(key)和值(value)，而HashTable则不行)。
+
+2. HashMap是非synchronized，而HashTable是synchronized，这意味着HashTable是线程安全的，多个线程可以共享一个HashTable；而如果没有正确的同步的话，多个线程是不能共享HashMap的。Java 5提供了ConcurrentHashMap，它是HashTable的替代，比HashTable的扩展性更好。
+
+3. 另一个区别是HashMap的迭代器(Iterator)是fail-fast迭代器，而HashTable的enumerator迭代器不是fail-fast的。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的分别。
  
-HashMap vs Hashtable in Java
+4. 由于HashTable是线程安全的也是synchronized，所以在单线程环境下它比HashMap要慢。如果你不需要同步，只需要单一线程，那么使用HashMap性能要好过HashTable。
 
-Difference between HashMap and Hashtable in Java question oftenly asked in core Java interviews to check whether candidate understand correct usage of collection classes and aware of alternative solutions available. Along with How HashMap internally works in Java and ArrayList vs Vector, this  is one of the oldest question from Collection framework in Java. Hashtable is a legacy Collection class and it's there in Java API from long time but it got refactored to implement Map interface in Java 4 and from there Hashtable became part of Java Collection framework. Hashtable vs HashMap in Java is so popular a question that it can top any list of Java Collection interview Question. You just can't afford not to prepare HashMap vs Hashtable before going to any Java programming interview. In this Java article we will not only see some important differences between HashMap and Hashtable but also some similarities between these two collection classes. Let's first see How different they are :
-
-HashMap和HashTable的比较是Java面试中的常见问题，用来考验程序员是否能够正确使用collection的类以及是否可以随机应变使用多种思路解决问题。HashMap的工作原理、ArrayList与Vector的比较以及这个问题是有关Java Collection框架的最老的问题。
-
-Difference between HashMap and Hashtable in Java
-
-Both HashMap and Hashtable implements Map interface but there are some significant difference between them which is important to remember before deciding whether to use HashMap or Hashtable in Java. Some of them is thread-safety, synchronization and speed. here are those differences :
-
-1. The HashMap class is roughly equivalent to Hashtable, except that it is non synchronized and permits nulls. (HashMap allows null values as key and value whereas Hashtable doesn't allow nulls).
-
-2. One of the major differences between HashMap and Hashtable is that HashMap is non synchronized whereas Hashtable is synchronized, which means Hashtable is thread-safe and can be shared between multiple threads but HashMap can not be shared between multiple threads without proper synchronization. Java 5 introduces ConcurrentHashMap which is an alternative of Hashtable and provides better scalability than Hashtable in Java.
-
-3. Another significant difference between HashMap vs Hashtable is that Iterator in the HashMap is  a fail-fast iterator  while the enumerator for the Hashtable is not and throw ConcurrentModificationException if any other Thread modifies the map structurally  by adding or removing any element except Iterator's own remove() method. But this is not a guaranteed behavior and will be done by JVM on best effort. This is also an important difference between Enumeration and Iterator in Java. 
-
-4. One more notable difference between Hashtable and HashMap is that because of thread-safety and synchronization Hashtable is much slower than HashMap if used in Single threaded environment. So if you don't need synchronization and HashMap is only used by one thread, it out perform Hashtable in Java.
-
-5. HashMap does not guarantee that the order of the map will remain constant over time.
-
-Difference between HashMap and Hashtable in Java | HashMap vs Hashtable
+5. HashMap不能保证随着时间的推移Map中的元素次序是不变的。
 
 
+### 要注意的一些重要术语：
 
+1) sychronized意味着在一次仅有一个线程能够更改HashTable。就是说任何线程要更新HashTable时要首先获得同步锁，其它线程要等到同步锁被释放之后才能再次获得同步锁更新HashTable。
 
-Note on Some Important Terms
-1)Synchronized means only one Thread can modify a hash table at one point of time. Basically, it means that any thread before performing an update on a Hashtable will have to acquire a lock on the object while others will wait for lock to be released.
+2) Fail-safe和iterator迭代器相关。如果某个集合对象创建了Iterator或者ListIterator，然后其它的线程试图“结构上”更改集合对象，将会抛出ConcurrentModificationException异常。但其它线程可以通过set(0方法更改集合对象是允许的，因为这并没有从“结构上”更改集合。但是假如已经从结构上进行了更改，再调用set()方法，将会抛出IllegalArgumentException异常。
 
-2)Fail-safe is relevant from the context of iterators. If an Iterator or ListIterator has been created on a collection object and some other thread tries to modify the collection object "structurally", a concurrent modification exception will be thrown. It is possible for other threads though to invoke "set" method since it doesn't modify the collection "structurally". However, if prior to calling "set", the collection has been modified structurally, "IllegalArgumentException" will be thrown.
+3) 结构上的更改指的是删除或者插入一个元素，这样会影响到map的结构。
 
-3)Structurally modification means deleting or inserting element which could effectively change the structure of map.
+### 我们能否让HashMap同步？
 
-HashMap can be synchronized by
-
+HashMap可以通过下面的语句进行同步：
 Map m = Collections.synchronizeMap(hashMap);
 
-In Summary there are significant differences between Hashtable and HashMap in Java e.g. thread-safety and speed and based upon that only use Hashtable if you absolutely need thread-safety, if you are running Java 5 consider using ConcurrentHashMap in Java.
+### 结论
+
+HashTable和HashMap有几个主要的不同：线程安全以及速度。仅在你需要完全的线程安全的时候使用HashTable，而如果你使用Java 5或以上的话，请使用ConcurrentHashMap吧。
 
 http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html

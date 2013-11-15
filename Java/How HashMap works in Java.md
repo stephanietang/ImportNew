@@ -30,17 +30,7 @@ HashMap的工作原理是近年来常见的Java面试题。几乎每个Java程�
 
 当重新调整HashMap大小的时候，确实存在条件竞争，因为如果两个线程都发现HashMap需要重新调整大小了，它们会同时试着调整大小。在调整大小的过程中，存储在LinkedList中的元素的次序会反过来，因为移动到新的bucket位置的时候，HashMap并不会将元素放在LinkedList的尾部，而是放在头部，这是为了避免尾部遍历(tail traversing)。如果条件竞争发生了，那么就死循环了。这个时候，你可以质问面试官，为什么这么奇怪，要在多线程的环境下使用HashMap呢？：）
 
-Few more question on HashMap in Java which is contributed by readers of Javarevisited blog  :
-1) Why String, Integer and other wrapper classes are considered good keys ?
-String, Integer and other wrapper classes are natural candidates of HashMap key, and String is most frequently used key as well because String is immutable and final,and overrides equals and hashcode() method. Other wrapper class also shares similar property. Immutabiility is required, in order to prevent changes on fields used to calculate hashCode() because if key object return different hashCode during insertion and retrieval than it won't be possible to get object from HashMap. Immutability is best as it offers other advantages as well like thread-safety, If you can  keep your hashCode same by only making certain fields final, then you go for that as well. Since equals() and hashCode() method is used during reterival of value object from HashMap, its important that key object correctly override these methods and follow contact. If unequal object return different hashcode than chances of collision will be less which subsequently improve performance of HashMap.
-
-2) Can we use any custom object as key in HashMap ?
-This is an extension of previous questions. Ofcourse you can use any Object as key in Java HashMap provided it follows equals and hashCode contract and its hashCode should not vary once the object is inserted into Map. If custom object is Immutable than this will be already taken care because you can not change it once created.
-
-3) Can we use ConcurrentHashMap in place of Hashtable ?
-This is another question which getting popular due to increasing popularity of ConcurrentHashMap. Since we know Hashtable is synchronized but ConcurrentHashMap provides better concurrency by only locking portion of map determined by concurrency level. ConcurrentHashMap is certainly introduced as Hashtable and can be used in place of it but Hashtable provide stronger thread-safety than ConcurrentHashMap. See my post difference between Hashtable and ConcurrentHashMap for more details.
-
-读者贡献了更多的关于HashMap的问题：
+热心的读者贡献了更多的关于HashMap的问题：
 
 - 1. 为什么String, Interger这样的wrapper类适合作为键？
 String, Interger这样的wrapper类作为HashMap的键是再适合不过了，而且String最为常用。因为String是不可变的，也是final的，而且已经重写了equals()和hashCode()方法了。其他的wrapper类也有这个特点。不可变性是必要的，因为为了要计算hashCode()，就要防止键值改变，如果键值在放入时和获取时返回不同的hashcode的话，那么就不能从HashMap中找到你想要的对象。不可变性还有其他的优点如线程安全。如果你可以仅仅通过将某个field声明成final就能保证hashCode是不变的，那么请这么做吧。因为获取对象的时候要用到equals()和hashCode()方法，那么键对象正确的重写这两个方法是非常重要的。如果两个不相等的对象返回不同的hashcode的话，那么碰撞的几率就会小些，这样就能提高HashMap的性能。
@@ -52,16 +42,7 @@ String, Interger这样的wrapper类作为HashMap的键是再适合不过了，�
 
 - 3. 我们可以使用CocurrentHashMap来代替HashTable吗？
 
-这是另外一个很热门的面试题，因为ConcurrentHashMap越来越多人用了。我们知道HashTable是synchronized的，但是ConcurrentHashMap同步性能更好，因为它仅仅根据同步级别对map的一部分进行上锁。ConcurrentHashMap当然可以代替HashTable，但是HashTable提供更强的线程安全性。看看[这篇博客]()查看Hashtable和ConcurrentHashMap的区别。
-
-Personally, I like this question because of its depth and number of concept it touches indirectly, if you look at questions asked during interview this HashMap  questions has verified
-
-Concept of hashing
-Collision resolution in HashMap
-Use of equals () and hashCode () and there importance in HashMap?
-Benefit of immutable object?
-Race condition on HashMap  in Java
-Resizing of Java HashMap
+这是另外一个很热门的面试题，因为ConcurrentHashMap越来越多人用了。我们知道HashTable是synchronized的，但是ConcurrentHashMap同步性能更好，因为它仅仅根据同步级别对map的一部分进行上锁。ConcurrentHashMap当然可以代替HashTable，但是HashTable提供更强的线程安全性。看看[这篇博客](http://javarevisited.blogspot.sg/2011/04/difference-between-concurrenthashmap.html)查看Hashtable和ConcurrentHashMap的区别。
 
 我个人很喜欢这个问题，因为它深度很大，也不直接的涉及到不同的钙奶。让我们再来看看这些问题设计哪些知识点：
 
@@ -72,20 +53,15 @@ Resizing of Java HashMap
 - HashMap多线程的条件竞争
 - 重新调整HashMap的大小
 
-Just to summarize here are the answers which does makes sense for above questions
-
-How HashMap  works in Java
-HashMap  works on principle of hashing, we have put() and get() method for storing and retrieving object form HashMap .When we pass an both key and value to put() method to store on HashMap , it uses key object hashcode() method to calculate hashcode and they by applying hashing on that hashcode it identifies bucket location for storing value object. While retrieving it uses key object equals method to find out correct key value pair and return value object associated with that key. HashMap  uses linked list in case of collision and object will be stored in next node of linked list.
-Also HashMap  stores both key+value tuple in every node of linked list.
-
-What will happen if two different HashMap  key objects have same hashcode?
-They will be stored in same bucket but no next node of linked list. And keys equals () method will be used to identify correct key value pair in HashMap .
-
-In terms of usage Java HashMap is very versatile and I have mostly used HashMap as cache in electronic trading application I have worked . Since finance domain used Java heavily and due to performance reason we need caching HashMap and ConcurrentHashMap  comes as very handy there. You can also check following articles form Javarevisited to learn more about HashMap and Hashtable in Java :
-
 ### 总结
 
 #### HashMap的工作原理
-HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象。当我们
+HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象。当我们将键值对传递给put()方法时，它调用键对象的hashCode()方法来计算hashcode，让后找到bucket位置来储存值对象。当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回值对象。HashMap使用LinkedList来解决碰撞问题，当发生碰撞了，对象将会储存在LinkedList的下一个节点中。
+HashMap在每个LinkedList节点中储存键值对对象。
+
+当两个不同的键对象的hashcode相同时会发生什么？
+它们会储存在同一个bucket位置的LinkedList中。键对象的equals()方法用来找到键值对。
+
+因为HashMap的好处非常多，我曾经在电子商务的应用中使用HashMap作为缓存。因为金融领域非常多的运用Java，也出于性能的考虑，我们会经常用到HashMap和ConcurrentHashMap。你可以查看更多的关于HashMap和HashTable的文章。
 
 http://javarevisited.blogspot.hk/2011/02/how-hashmap-works-in-java.html

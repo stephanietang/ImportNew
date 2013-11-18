@@ -1,0 +1,18 @@
+## CocurrentHashMap和Hashtable的区别
+ 
+集合类是java API的核心，但是我觉得要用好它们是一种艺术。我总结了一些个人的经验，譬如使用ArrayList能够提高性能，而不再需要过时的Vector了，等等。JDK 1.5引入了一些好用的并发集合类，它们对于大型的、要求低延迟的电子商务系统来说非常的有用。这篇文章中将会看看ConcurrentHashMap和Hashtable之间的区别。
+
+这篇文章是[HashMap的工作原理]()以及[HashMap和Hashtable的区别]()的后续。如果你已经读过的话，那么我相信你读完本篇之后会有所收获。
+
+### 为什么我们需要ConcurrentHashMap和CopyOnWriteArrayList
+
+同步的集合类（Hashtable和Vector），同步的封装类（使用Collections.synchronizedMap()方法和Collections.synchronizedList()方法返回的对象）可以创建出线程安全的Map和List。但是有些因素使得它们不适合高并发的系统。它们仅有单个锁，对整个集合加锁，以及为了防止ConcurrentModificationException异常经常要在迭代的时候要将集合锁定一段时间，这些特性对可扩展性来说都是障碍。
+
+ConcurrentHashMap和CopyOnWriteArrayList保留了线程安全的同时，也提供了更高的并发性。ConcurrentHashMap和CopyOnWriteArrayList并不是处处都需要用，大部分时候你只需要用到HashMap和ArrayList，它们用于应对一些普通的情况。
+
+### ConcurrentHashMap和Hashtable的区别
+
+Hashtable和ConcurrentHashMap有什么分别呢？它们都可以用于多线程的环境，但是当Hashtable的大小增加到一定的时候，性能会急剧下降，因为迭代时需要被锁定很长的时间。因为ConcurrentHashMap引入了分割(segmentation)，不论它变得多么大，仅仅需要锁定map的某个部分，而其它的线程不需要等到迭代完成才能访问map。简而言之，在迭代的过程中，ConcurrentHashMap仅仅锁定map的某个部分，而Hashtable则会锁定整个map。
+
+
+http://javarevisited.blogspot.sg/2011/04/difference-between-concurrenthashmap.html

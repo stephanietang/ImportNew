@@ -32,9 +32,9 @@ public static int addInts(int i, int...js){
 
 <pre>
 static{
-    //can be used to initialize resources when class is loaded
+    //在类被加载的时候用于初始化资源
     System.out.println("StaticExample static block");
-    //can access only static variables and methods
+    //仅能访问静态变量和静态方法
     str="Test";
     setCount(2);
 }
@@ -53,7 +53,7 @@ public class StaticExample {
  
     //静态块
     static{
-        //用于初始化某些资源
+        //在类被加载的时候用于初始化某些资源
         System.out.println("StaticExample static block");
         //仅能访问静态变量和静态方法
         str="Test";
@@ -110,11 +110,11 @@ public class TestStatic {
         StaticExample.str = "abc";
         StaticExample se = new StaticExample();
         System.out.println(se.getCount());
-        //class and instance static variables are same
+        //类的静态变量和实例的静态变量是一样的
         System.out.println(StaticExample.str +" is same as "+se.str);
         System.out.println(StaticExample.str == se.str);
          
-        //static nested classes are like normal top-level classes
+        //静态嵌套类和其他外层类一样
         StaticExample.MyStaticClass myStaticClass = new StaticExample.MyStaticClass();
         myStaticClass.count=10;
          

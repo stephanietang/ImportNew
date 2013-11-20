@@ -141,3 +141,5 @@ true
 </pre>
 
 注意静态块仅在类加载到内存时执行了一次。
+
+http://www.journaldev.com/1365/static-in-java-methods-variables-block-class

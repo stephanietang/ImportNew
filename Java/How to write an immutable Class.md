@@ -1,29 +1,30 @@
-## How to write an immutable Class?
-
 ## 如何写一个不可变类？
 
-Immutable objects are instances whose state doesn’t change after it has been initialized. For example, String is an immutable class and once instantiated its value never changes.
+不可变的对象指的是一旦创建之后，它的状态就不能改变。String类就是个不可变类，它的对象一旦创建之后，值就不能被改变了。
 
-Read: [Why String in immutable in Java]()
+阅读更多: [为什么String类是不可变的](http://www.importnew.com/7440.html)
 
-Immutable objects are good for caching purpose because you don’t need to worry about the value changes. Other benefit of immutable class is that it is inherently thread-safe, so you don’t need to worry about thread safety in case of multi-threaded environment.
+不可变对象对于缓存是非常好的选择，因为你不需要担心它的值会被更改。不可变类的另外一个好处是它自身是线程安全的，你不需要考虑多线程环境下的线程安全问题。
 
-Read: Java Thread Tutorial and Java Multi-Threading Interview Questions.
+阅读更多: [Java线程教程](http://www.journaldev.com/1079/java-thread-tutorial)以及[Java多线程面试问题](http://www.journaldev.com/1162/java-multi-threading-concurrency-interview-questions-with-answers)
 
 Here I am providing a way to create immutable class via an example for better understanding.
 
-To create a class immutable, you need to follow following steps:
+下面是创建不可变类的方法，我也给出了代码，加深理解。
 
-Declare the class as final so it can’t be extended.
-Make all fields private so that direct access is not allowed.
-Don’t provide setter methods for variables
-Make all mutable fields final so that it’s value can be assigned only once.
-Initialize all the fields via a constructor performing deep copy.
-Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
-To understand points 4 and 5, let’s run the sample Final class that works well and values doesn’t get altered after instantiation.
+要创建不可变类，要实现下面几个步骤：
+
+1. 将类声明为final，所以它不能被继承
+2. 将所有的成员声明为私有的，这样就不允许直接访问这些成员
+3. 对变量不要提供setter方法
+4. 将所有可变的成员声明为final，这样只能对它们赋值一次
+5. 通过构造器初始化所有成员，进行深拷贝(deep copy)
+6. 在getter方法中，不要直接返回对象本身，而是克隆对象，并返回对象的拷贝
+
+为了理解第5和第6条，我将使用FinalClassExample来阐明。
 
 FinalClassExample.java
-<pre>
+<pre class="brush: java; gutter: true">
 package com.journaldev.java;
  
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public final class FinalClassExample {
     }
  
     /**
-     * Accessor function for mutable objects
+     * 可变对象的访问方法
      */
     public HashMap<String, String> getTestMap() {
         //return testMap;
@@ -55,7 +56,7 @@ public final class FinalClassExample {
     }
  
     /**
-     * Constructor performing Deep Copy
+     * 实现深拷贝(deep copy)的构造器
      * @param i
      * @param n
      * @param hm
@@ -77,7 +78,7 @@ public final class FinalClassExample {
      
      
     /**
-     * Constructor performing Shallow Copy
+     * 实现浅拷贝(shallow copy)的构造器
      * @param i
      * @param n
      * @param hm
@@ -92,7 +93,8 @@ public final class FinalClassExample {
     */
      
     /**
-     * To test the consequences of Shallow Copy and how to avoid it with Deep Copy for creating immutable classes
+     * 测试浅拷贝的结果
+     * 为了创建不可变类，要使用深拷贝
      * @param args
      */
     public static void main(String[] args) {
@@ -132,9 +134,9 @@ public final class FinalClassExample {
 }
 </pre>
 
-Output of the above program is:
+输出：
 
-<pre>
+<pre class="brush: plain; gutter: true">
 Performing Deep Copy for Object initialization
 true
 false
@@ -147,9 +149,9 @@ ce testMap after local variable change:{2=second, 1=first}
 ce testMap after changing variable from accessor methods:{2=second, 1=first}
 </pre>
 
-Now lets comment the constructor providing deep copy and uncomment the constructor providing shallow copy. Also uncomment the return statement in getTestMap() method that returns the actual object reference and then execute the program once again.
+现在我们注释掉深拷贝的构造器，取消对浅拷贝构造器的注释。也对getTestMap()方法中的返回语句取消注释，返回实际的对象引用。然后再一次执行代码。
 
-<pre>
+<pre class="brush: plain; gutter: true">
 Performing Shallow Copy for Object initialization
 true
 true
@@ -162,12 +164,11 @@ ce testMap after local variable change:{3=third, 2=second, 1=first}
 ce testMap after changing variable from accessor methods:{3=third, 2=second, 1=first, 4=new}
 </pre>
 
-As you can see from the output, HashMap values got changed because of shallow copy in the constructor and providing direct reference to the original object in the getter function.
+从输出可以看出，HashMap的值被更改了，因为构造器实现的是浅拷贝，而且在getter方法中返回的是原本对象的引用。
 
 If I have missed something here, feel free to comment.
+如果我漏掉了某些细节，请指出。
 
-Further Reading: If the immutable class has a lot of attributes and some of them are optional, we can use [builder pattern to create immutable classes](http://www.journaldev.com/1432/how-to-create-immutable-class-in-java-using-builder-pattern).
+更多阅读: 如果不可变类有许多成员，而其中一些是可选的，那么我们可以[使用构造模式(builder pattern)来创建不可变类](http://www.journaldev.com/1432/how-to-create-immutable-class-in-java-using-builder-pattern)。
 
 http://www.journaldev.com/129/how-to-write-an-immutable-class
-
-http://javarevisited.blogspot.hk/2011/12/final-variable-method-class-java.html

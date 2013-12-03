@@ -1,26 +1,25 @@
-## What is final in Java? Final variable , Method and Class Example
+## 深入理解Java中的final关键字
 
-Final in java is very important keyword and can be applied to class, method, and variables in Java. In this java final tutorial we will see what is final keyword in Java, what does it mean by making final variable, final method and final class in java and what are primary benefits of using final keywords in Java and finally some examples of final in Java. Final is often used along with static keyword in Java to make static final constant and you will see how final in Java can increase performance of Java application.
+Java中的final关键字非常重要，它可以应用于类、方法以及变量。这篇文章中我将带你看看什么是final关键字？将变量，方法和类声明为final代表了什么？使用final的好处是什么？最后也有一些使用final关键字的实例。final经常和static一起使用来声明常量，你也会看到final是如何改善应用性能的。
 
-Example of Final variable, Final method and Class in Java
+### final关键字的含义?
 
-What is final keyword in Java?
+final在Java中是一个保留的关键字，可以声明成员变量、方法、类以及本地变量。一旦你将引用声明作final，你将不能改变这个引用了，编译器会检查代码，如果你试图将变量再次初始化的话，编译器会报编译错误。
 
-Final keyword, final variable, final method and class in java exampleFinal is a keyword or reserved word in java and can be applied to member variables, methods, class and local variables in Java. Once you make a reference final you are not allowed to change that reference and compiler will verify this and raise compilation error if you try to re-initialized final variables in java.
+### 什么是final变量？
 
-What is final variable in Java?
-Any variable either member variable or local variable (declared inside method or block) modified by final keyword is called final variable. Final variables are often declare with static keyword in java and treated as constant. Here is an example of final variable in Java
-
+凡是对成员变量或者本地变量(在方法中的或者代码块中的变量称为本地变量)声明为final的都叫作final变量。final变量经常和static关键字一起使用，作为常量。下面是final变量的例子：
 
 <pre class="brush: java; gutter: true">
 	public static final String LOAN = "loan";
 	LOAN = new String("loan") //invalid compilation error
 </pre>
 
-Final variables are by default read-only.
+final变量是只读的。
 
-### What is final method in Java
-Final keyword in java can also be applied to methods. A java method with final keyword is called final method and it can not be overridden in sub-class. You should make a method final in java if you think it’s complete and its behavior should remain constant in sub-classes. Final methods are faster than non-final methods because they are not required to be resolved during run-time and they are bonded on compile time. Here is an example of final method in Java:
+### 什么是final方法?
+
+final也可以声明方法。方法前面加上final关键字，代表这个方法不可以被子类的方法重写。如果你认为一个方法的功能已经足够完整了，子类中不需要改变的话，你可以声明此方法为final。final方法比非final方法要快，因为在编译的时候已经静态绑定了，不需要在运行时再动态绑定。下面是final方法的例子：
 
 <pre class="brush: java; gutter: true">
 	class PersonalLoan{
@@ -38,9 +37,9 @@ Final keyword in java can also be applied to methods. A java method with final k
 
 </pre>
 
-### What is final Class in Java
+### 什么是final类？
 
-Java class with final modifier is called final class in Java. Final class is complete in nature and can not be sub-classed or inherited. Several classes in Java are final e.g. String, Integer and other wrapper classes. Here is an example of final class in java
+使用final来修饰的类叫作final类。final类通常功能是完整的，它们不能被继承。Java中有许多类是final的，譬如String, Interger以及其他包装类。下面是final类的实例：
 
 <pre class="brush: java; gutter: true">
 	final class PersonalLoan{
@@ -52,63 +51,57 @@ Java class with final modifier is called final class in Java. Final class is com
 }
 </pre>
 
-### Benefits of final keyword in Java
+### final关键字的好处
 
-Here are few benefits or advantage of using final keyword in Java:
+下面总结了一些使用final关键字的好处
 
-1. Final keyword improves performance. Not just JVM can cache final variable but also application can cache frequently use final variables.
+1. final关键字提高了性能。JVM和Java应用都会缓存final变量。
+2. final变量可以安全的在多线程环境下进行共享，而不需要额外的同步开销。
+3. 使用final关键字，JVM会对方法、变量及类进行优化。
 
-2. Final variables are safe to share in multi-threading environment without additional synchronization overhead.
+### 不可变类
 
-3. Final keyword allows JVM to optimized method, variable or class.
+创建不可变类要使用final关键字。不可变类是指它的对象一旦被创建了就不能被更改了。String是不可变类的代表。不可变类有很多好处，譬如它们的对象是只读的，可以在多线程环境下安全的共享，不用额外的同步开销等等。
 
+相关阅读：[为什么String是不可变的](http://www.importnew.com/7440.html)以及[如何写一个不可变类](http://www.importnew.com/7535.html)。
 
-### Final and Immutable Class in Java
+### 关于final的重要知识点
 
-Final keyword helps to write immutable class. Immutable classes are the one which can not be modified once it gets created and String is primary example of immutable and final class which I have discussed in detail on Why String is final or immutable in Java. Immutable classes offer several benefits one of them is that they are effectively read-only and can be safely shared in between multiple threads without any synchronization overhead. You can not make a class immutable without making it final and hence final keyword is required to make a class immutable in java.
+1. final关键字可以用于成员变量、本地变量、方法以及类。
 
-### Example of Final in Java
+2. final成员变量必须在声明的时候初始化或者在构造器中初始化，否则就汇报编译错误。
 
-Java has several system classes in JDK which are final, some example of final classes are String, Integer, Double and other wrapper classes. You can also use final keyword to make your code better whenever it required. See relevant section of java final tutorial for example of final variable, final method and final class in Java.
+3. 你不能够对final变量再次赋值。
 
+4. 本地变量必须在声明时赋值。
 
-### Important points on final in Java
+5. 在匿名类中所有变量都必须是final变量。
 
-1. Final keyword can be applied to member variable, local variable, method or class in Java.
-2. Final member variable must be initialized at the time of declaration or inside constructor, failure to do so will result in compilation error.
+6. final方法不能被重写。
 
-3. You can not reassign value to final variable in Java.
+7. final类不能被继承。
 
-4. Local final variable must be initializing during declaration.
+8. final关键字不同于finally关键字，后者用于异常处理。
 
-5. Only final variable is accessible inside anonymous class in Java.
+9. final关键字容易与finalize()方法搞混，后者是在Object类中定义的方法，是在垃圾回收之前被JVM调用的方法。
 
-6. Final method can not be overridden in Java.
+10. 接口中声明的所有变量是final的。
 
-7. Final class can not be inheritable in Java.
+11. final和abstract这两个关键字是反相关的，final类就不可能是abstract的。
 
-8. Final is different than finally keyword which is used on Exception handling in Java.
+12. final方法在编译阶段绑定，称为静态绑定(static binding)。
 
-9. Final should not be confused with finalize() method which is declared in object class and called before an object is garbage collected by JVM.
+13. 没有在声明时初始化final变量的称为空白final变量(blank final variable)，它们必须在构造器中初始化，或者调用this()初始化。不这么做的话，编译器会报错“final变量(变量名)需要进行初始化”。
 
-10. All variable declared inside java interface are implicitly final.
+14. 将类、方法、变量声明为final能够提高性能，这样JVM就有机会进行估计，然后优化。
 
-11. Final and abstract are two opposite keyword and a final class can not be abstract in java.
-
-12. Final methods are bonded during compile time also called static binding.
-
-13. Final variables which is not initialized during declaration are called blank final variable and must be initialized on all constructor either explicitly or by calling this(). Failure to do so compiler will complain as "final variable (name) might not be initialized".
-
-14. Making a class, method or variable final in Java helps to improve performance because JVM gets an opportunity to make assumption and optimization.
-
-
-15. As per Java code convention final variables are treated as constant and written in all Caps e.g.
+15. 按照Java代码惯例，final变量就是常量，而且通常常量名要大写：
 
 <pre class="brush: java; gutter: true">
-	private final int COUNT=10;	
+	private final int COUNT = 10;	
 </pre>
 
-16. Making a collection reference variable final means only reference can not be changed but you can add, remove or change object inside collection. For example:
+16. 对于集合对象声明为final指的是引用不能被更改，但是你可以向其中增加，删除或者改变内容。譬如：
 
 <pre class="brush: java; gutter: true">
 	private final List Loans = new ArrayList();
@@ -117,7 +110,6 @@ Java has several system classes in JDK which are final, some example of final cl
 	loans = new Vector();  //not valid	
 </pre>
 
-That’s all on final in Java. We have seen what final variable, final method is and final class in Java and what does those mean. In Summary whenever possible start using final in java it would result in better and faster code.
-
+我们已经指的final变量、final方法以及final类是什么了。必要的时候使用final，能写出更快、更好的代码的。
 
 http://javarevisited.blogspot.hk/2011/12/final-variable-method-class-java.html

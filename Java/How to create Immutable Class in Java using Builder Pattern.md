@@ -122,3 +122,5 @@ public class ImmutableBuilderTest {
 - The immutable class will have a private constructor with Builder object as parameter that will be used to create the immutable class.
 - If the immutable class attributes are not immutable, for example HashMap, we should perform deep copy or cloning to avoid modification of its attributes.
 - Using Builder pattern is easy when number of optional attributes are more in the immutable class.
+
+http://www.journaldev.com/1432/how-to-create-immutable-class-in-java-using-builder-pattern

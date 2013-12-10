@@ -1,13 +1,14 @@
-Dynamic Binding vs Static Binding in Java
-
+## 动态绑定 vs 静态绑定
  
+### Dynamic Binding or Late Binding
 
-Difference between Dynamic Binding & Static Binding in Java
-
-Dynamic Binding or Late Binding
+### 动态绑定(又名后期绑定)
 
 Dynamic Binding refers to the case where compiler is not able to resolve the call and the binding is done at runtime only. Let's try to understand this. Suppose we have a class named 'SuperClass' and another class named 'SubClass' extends it. Now a 'SuperClass' reference can be assigned to an object of the type 'SubClass' as well. If we have a method (say 'someMethod()') in the 'SuperClass' which we override in the 'SubClass' then a call of that method on a 'SuperClass' reference can only be resolved at runtime as the compiler can't be sure of what type of object this reference would be pointing to at runtime.
 
+动态绑定是指编译器在编译阶段不知道要调用哪个方法，直到运行时才能确定。让我们用个例子来解释。譬如我们有一个叫作'SuperClass'的父类，还有一个继承它的子类'SubClass'。现在SuperClass引用也可以赋给SubClass类型的对象。如果SuperClass中有个someMethod()的方法，而子类也重写了这个方法，那么当SuperClass引用调用这个方法的时候，编译器不知道该调用父类还是子类的方法，因为编译器不知道对象到底是什么类型，只有到运行时才知道这个引用指向什么对象。
+
+<pre>
 ...
 SuperClass superClass1 = new SuperClass();
 SuperClass superClass2 = new SubClass();
@@ -16,6 +17,7 @@ SuperClass superClass2 = new SubClass();
 superClass1.someMethod(); // SuperClass version is called
 superClass2.someMethod(); // SubClass version is called
 ....
+</pre>
 
 Here, we see that even though both the object references superClass1 and superClass2 are of type 'SuperClass' only, but at run time they refer to the objects of types 'SuperClass' and 'SubClass' respectively.
 

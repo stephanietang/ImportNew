@@ -21,8 +21,6 @@ superClass2.someMethod(); // SubClass version is called
 
 所以方法的动态绑定是基于实际的对象类型，而不是它们声明的对象引用类型。
 
-### Static Binding or Early Binding
-
 ### 静态绑定(又名前期绑定)
 
 

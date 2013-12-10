@@ -1,12 +1,8 @@
 ## 动态绑定 vs 静态绑定
  
-### Dynamic Binding or Late Binding
-
 ### 动态绑定(又名后期绑定)
 
-Dynamic Binding refers to the case where compiler is not able to resolve the call and the binding is done at runtime only. Let's try to understand this. Suppose we have a class named 'SuperClass' and another class named 'SubClass' extends it. Now a 'SuperClass' reference can be assigned to an object of the type 'SubClass' as well. If we have a method (say 'someMethod()') in the 'SuperClass' which we override in the 'SubClass' then a call of that method on a 'SuperClass' reference can only be resolved at runtime as the compiler can't be sure of what type of object this reference would be pointing to at runtime.
-
-动态绑定是指编译器在编译阶段不知道要调用哪个方法，直到运行时才能确定。让我们用个例子来解释。譬如我们有一个叫作'SuperClass'的父类，还有一个继承它的子类'SubClass'。现在SuperClass引用也可以赋给SubClass类型的对象。如果SuperClass中有个someMethod()的方法，而子类也重写了这个方法，那么当SuperClass引用调用这个方法的时候，编译器不知道该调用父类还是子类的方法，因为编译器不知道对象到底是什么类型，只有到运行时才知道这个引用指向什么对象。
+动态绑定是指编译器在编译阶段不知道要调用哪个方法，直到运行时才能确定。让我们用个例子来解释。譬如我们有一个叫作'SuperClass'的父类，还有一个继承它的子类'SubClass'。现在SuperClass引用也可以赋给SubClass类型的对象。如果SuperClass中有个someMethod()的方法，而子类也重写了这个方法，那么当调用SuperClass引用的这个方法的时候，编译器不知道该调用父类还是子类的方法，因为编译器不知道对象到底是什么类型，只有到运行时才知道这个引用指向什么对象。
 
 <pre>
 ...
@@ -19,18 +15,24 @@ superClass2.someMethod(); // SubClass version is called
 ....
 </pre>
 
-Here, we see that even though both the object references superClass1 and superClass2 are of type 'SuperClass' only, but at run time they refer to the objects of types 'SuperClass' and 'SubClass' respectively.
+我们可以看到虽然对象引用superClass1和superClass2都是SuperClass类型的，但是在运行时它们分别指向SuperClass和SubClass类型的对象。
 
-Hence, at compile time the compiler can't be sure if the call to the method 'someMethod()' on these references actually refer to which version of the method - the super class version or the sub class version.
+所以在编译阶段，编译器不清楚调用引用的someMethod()到底是调用子类还是父类的该方法。
 
-Thus, we see that dynamic binding in Java simply binds the method calls (inherited methods only as they can be overriden in a sub class and hence compiler may not be sure of which version of the method to call) based on the actual object type and not on the declared type of the object reference.
+所以方法的动态绑定是基于实际的对象类型，而不是它们声明的对象引用类型。
 
-Static Binding or Early Binding
+### Static Binding or Early Binding
 
-If the compiler can resolve the binding at the compile time only then such a binding is called Static Binding or Early Binding. All the instance method calls are always resolved at runtime, but all the static method calls are resolved at compile time itself and hence we have static binding for static method calls. Because static methods are class methods and hence they can be accessed using the class name itself (in fact they are encourgaed to be used using their corresponding class names only and not by using the object references) and therefore access to them is required to be resolved during compile time only using the compile time type information. That's the reason why static methods can not actually be overriden. Read more - Can you override static methods in Java?
+### 静态绑定(又名前期绑定)
 
-Similarly, access to all the member variables in Java follows static binding as Java doesn't support (in fact, it discourages) polymorphic behavior of member variables. For example:-
 
+如果编译器可以在编译阶段就完成绑定，就叫作静态绑定或前期绑定。基本上实例方法都在运行时绑定，所有的静态方法都在编译时绑定，所以静态方法是静态绑定的。因为静态方法是属于类的方法，可以通过类名来访问(我们也应该使用类名来访问静态方法，而不是使用对象引用来访问)，所以要访问它们就必须在编译阶段就使用编译类型信息来进行绑定。这也就解释了[为什么静态方法实际上不能被重写](http://geekexplains.blogspot.hk/2008/06/can-you-override-static-methods-in-java.html)。
+
+更多阅读：[可以重写静态方法吗？](http://geekexplains.blogspot.hk/2008/06/can-you-override-static-methods-in-java.html)
+
+类似的，访问成员变量也是静态绑定的，因为Java不支持(实际上是不鼓励)成员变量的多态行为。下面看个例子：
+
+<pre>
 class SuperClass{
 ...
 public String someVariable = "Some Variable in SuperClass";
@@ -52,10 +54,16 @@ System.out.println(superClass1.someVariable);
 System.out.println(superClass2.someVariable);
 ...
 
-Output:-
-Some Variable in SuperClass
-Some Variable in SuperClass
+</pre>
 
-We can observe that in both the cases, the member variable is resolved based on the declared type of the object reference only, which the compiler is capable of finding as early as at the compile time only and hence a static binding in this case. Another example of static binding is that of 'private' methods as they are never inherited and the compile can resolve calls to any private method at compile time only.
+输出：
+
+<pre>
+Some Variable in SuperClass
+Some Variable in SuperClass
+</pre>
+
+
+我们可以发现成员变量由对象引用声明的类型决定，是由编译器在编译阶段就知道的信息，所以是静态绑定。另外一个静态绑定的例子是私有的方法，因为它们不会被继承，编译器在编译阶段就完成私有方法的绑定了。
 
 http://geekexplains.blogspot.hk/2008/06/dynamic-binding-vs-static-binding-in.html

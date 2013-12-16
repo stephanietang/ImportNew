@@ -1,10 +1,11 @@
-## How to create Immutable Class in Java using Builder Pattern
+## 如何使用建造者模式(Builder Pattern)创建不可变类
 
-In my last post, I explained about Builder Pattern in Java. Sometime back I wrote an article about how to create immutable class in java. In this post, we will see how easy its to create immutable classes using Builder pattern. Using builder pattern to create immutable class is a good approach when the number of arguments in the Constructor is more that can cause confusion in their ordering.
+我写过一篇《如何创建不可变类》。这篇文章中，我们将看到如何使用建造者模式创建不可变类。当构造器中的参数很多时，并且参数的顺序会给人造成困扰的时候，那么使用建造者模式来创建不可变类就是非常好的方法了。
 
-### Immutable Class using Builder Pattern
 
-Here is the implementation of an immutable class using Builder pattern.
+### 使用建造者模式来创建不可变类
+
+下面是使用建造者模式来创建不可变类的例子：
 
 ImmutableClass.java
 <pre>
@@ -78,7 +79,7 @@ public class ImmutableClass {
 }
 </pre>
 
-Here is the test program to check if the object we create is immutable or not.
+下面的测试代码为我们测试到底创建的对象是不是不可变的。
 
 ImmutableBuilderTest.java
 <pre>
@@ -107,7 +108,6 @@ public class ImmutableBuilderTest {
          
         //lets modify the Object passed as argument or get from the Object
         hm1.put("test", "test");
-        hm.put("test", "test");
          
         //check that immutable class properties are not changed
         System.out.println(immutableClass1.getProperties());
@@ -116,11 +116,11 @@ public class ImmutableBuilderTest {
 }
 </pre>
 
-### Important Points
+### 重要的知识点
 
-- The immutable class should have only getter methods.
-- The immutable class will have a private constructor with Builder object as parameter that will be used to create the immutable class.
-- If the immutable class attributes are not immutable, for example HashMap, we should perform deep copy or cloning to avoid modification of its attributes.
-- Using Builder pattern is easy when number of optional attributes are more in the immutable class.
+- 不可变类只有getter方法
+- 不可变类只有一个私有的构造器，以Builder对象作为参数来创建不可变对象
+- 如果不可变类的成员变量是可变的（譬如HashMap），我们需要使用深拷贝(deep copy)或者克隆来防止成员变量被更改
+- 当可选的成员变量很多的时候，使用建造者模式创建不可变类是不错的方法
 
 http://www.journaldev.com/1432/how-to-create-immutable-class-in-java-using-builder-pattern

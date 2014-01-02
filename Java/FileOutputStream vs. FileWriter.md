@@ -1,7 +1,5 @@
 ## FileOutputStream vs. FileWriter
   
-When we use Java to write something to a file, we can do it in the following two ways. One uses FileOutputStream, the other uses FileWriter.
-
 当我们要用Java写文件时通常有两个方法：使用FileOutputStream或者FileWriter。
 
 使用FileOutputStream:
@@ -21,22 +19,14 @@ out.write("something");
 
 两种方法都可以写文件，但是使用FileOutputStream和FileWriter有什么分别呢？
 
-Both will work, but what is the difference between FileOutputStream and FileWriter?
-
-There are a lot of discussion on each of those classes, they both are good implements of file i/o concept that can be found in a general operating systems. However, we don’t care how it is designed, but only how to pick one of them and why pick it that way.
-
 对比这两个类有很多讨论，它们都实现了普通操作系统的i/o概念。我们不需要关心它们是怎么设计的，我们仅仅需要知道选择使用哪个，以及为什么使用它。
 
-From Java API Specification:
+Java API中的解释：
 
-FileOutputStream is meant for writing streams of raw bytes such as image data. For writing streams of characters, consider using FileWriter.
+> FileOutputStream是用来输出原始字节流的，如图像数据。要输出字符流，则使用FileWriter。
 
-If you are familiar with design patterns, FileWriter is a typical usage of Decorator pattern actually. I have use a simple tutorial to demonstrate the Decorator pattern, since it is very important and very useful for many designs.
+如果你对于设计模式也熟悉的话，FileWriter是典型的装饰者模式。我已经写过[教程](http://www.programcreek.com/2012/05/java-design-pattern-decorator-decorate-your-girlfriend/)来解释装饰者模式了，因为它对于很多设计来说都很重要。
 
-One application of FileOutputStream is converting a file to a byte array.
-
-Java API的解释：
-
-FileOutputStream是用来写
+FileOutputStream的一个应用就是[将文件转换成字节数组](http://www.programcreek.com/2009/02/java-convert-a-file-to-byte-array-then-convert-byte-array-to-a-file/)。
 
 http://www.programcreek.com/2011/03/fileoutputstream-vs-filewriter/

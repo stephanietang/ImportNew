@@ -286,3 +286,5 @@ red dog - 10
 white dog - 20
 black dog - 15
 </pre>
+
+http://www.programcreek.com/2013/03/hashmap-vs-treemap-vs-hashtable-vs-linkedhashmap/

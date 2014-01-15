@@ -66,3 +66,5 @@ public int hashCode(){
 	return this.color.length();	
 }
 </pre>
+
+http://www.programcreek.com/2011/07/java-equals-and-hashcode-contract/
